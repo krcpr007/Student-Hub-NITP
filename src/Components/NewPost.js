@@ -4,7 +4,7 @@ import {MdVideoLibrary} from 'react-icons/md'
 import {MdEventAvailable} from 'react-icons/md'
 function NewPost() {
     return (
-        <div className='sm:w-3/4 lg:w-1/3 shadow rounded'>
+        <div className='sm:w-3/4 lg:w-2/3 shadow rounded'>
             <div className='flex p-2 m-2'>
             <img src="https://avatars.githubusercontent.com/u/80947662?v=4" alt="" className='w-10 rounded-3xl border-2 border-gray-400' />
              <input type="text" className='px-8 border-2 w-full border-gray-300 rounded-3xl' placeholder='Start a conversation' />
