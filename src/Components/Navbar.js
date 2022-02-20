@@ -9,13 +9,13 @@ function Navbar() {
   <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
     <h1 className="leading-none text-2xl font-medium text-grey-darkest">
       <a className="no-underline text-grey-darkest hover:text-black" href="/">
-      <span className='text-yellow-500'>CAMP</span><span className='bg-yellow-400'>YELLOW</span>
+      <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
       </a>
     </h1>
   </div>
   <input className="menu-btn hidden" type="checkbox" id="menu-btn"/>
   <label className="menu-icon block cursor-pointer md:hidden px-2 py-4 relative select-none" htmlFor="menu-btn">
-    <span className="navicon bg-grey-darkest flex items-center relative"></span>
+    {/*<span className="navicon bg-grey-darkest flex items-center relative"></span>*/}
   </label>
   <ul className='menu'>
   <input className="px-10 py-1  rounded-lg border-2 border-yellow-200 md:w-auto " placeholder="Search" type="text"/>
