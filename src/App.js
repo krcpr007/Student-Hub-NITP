@@ -6,6 +6,7 @@ import Signup from './Components/Auth/Signup'
 import Login from './Components/Auth/Login'
 import Footer from './Components/Footer/Footer'
 import Feed from "./Components/Feed/Feed";
+import Profile from "./Components/profile/Profile";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Feed />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<Error />} />
           </Routes>
           {/* <ToastContainer theme="dark" /> */}
