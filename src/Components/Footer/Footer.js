@@ -8,7 +8,7 @@ function Footer() {
   return (
   <div className='border-t-4'>
         <div className="md:flex">
-            <div className="md:w-1/4 p-6 m-2 hover:border-x-4">
+            <div className="md:w-1/4 p-6 m-2 ">
               <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
                 <h1 className="leading-none text-2xl font-medium text-grey-darkest">
                 <a className="no-underline text-grey-darkest hover:text-black" href="/">
@@ -20,7 +20,7 @@ function Footer() {
             <p className="text-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           </div>
         </div>
-        <div className="md:w-1/4 p-6 m-2 hover:border-x-4">
+        <div className="md:w-1/4 p-6 m-2 ">
           <p>Useful links</p>
           <ul className="text-xs">
             <li>Link 1</li>
@@ -30,7 +30,7 @@ function Footer() {
             <li>Link 5</li>
           </ul>
         </div>
-        <div className="md:w-1/4 p-6 m-2 hover:border-x-4">
+        <div className="md:w-1/4 p-6 m-2 ">
           <h3>Contact Us</h3>
           <div className='p-2'>
             <label className="flex text-xs">E-Mail</label>
@@ -38,7 +38,7 @@ function Footer() {
           </div>
           <button type="button" className="bg-yellow-400 p-2 text-xs m-2 rounded-lg">Subscribe</button>
         </div>
-        <div className="md:w-1/4 p-6 m-2 hover:border-x-4">
+        <div className="md:w-1/4 p-6 m-2 ">
         <div >
           <span className="footer-title">Social Links</span> 
           <div className="grid grid-flow-col gap-4 my-6 ">
