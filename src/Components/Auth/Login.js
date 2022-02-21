@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import bg1 from './bgimg/bgLogin.png';
-import { BiShowAlt } from 'react-icons/bi'
 import { FcGoogle } from 'react-icons/fc';
 import { SiGithub } from 'react-icons/si'
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
+import ContextProvider from "../context/ContextProvider";
 function Login() {
+  const {googleSignUp , githubSignUp} = useContext(ContextProvider);
   const [showPass, setShowPass] = useState(false);
   const handleLogin = (e) => {
     e.preventDefault()
@@ -57,12 +58,12 @@ function Login() {
             </div>
             <hr />
             <div className="mt-2 flex">
-              <button className="login-signup-btn mx-3">Login with
+              <button onClick={googleSignUp} className="login-signup-btn mx-3">Login with
                 <div className="icon">
                   <FcGoogle />
                 </div>
               </button>
-              <button className="login-signup-btn">Login with
+              <button onClick={githubSignUp} className="login-signup-btn">Login with
                 <div className="icon">
                   <SiGithub />
                 </div>
