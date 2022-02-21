@@ -1,5 +1,7 @@
 import React from "react";
 import {BiRightArrowAlt} from 'react-icons/bi'
+import bg1 from './bgimg/bgLogin.png'
+
 function Login() {
   return (
     <>
@@ -47,9 +49,9 @@ function Login() {
     &copy;2020 Acme Corp. All rights reserved.
   </p>
 </div> */}
-      <div class="flex h-screen">
-        <div class="m-auto">
-          <div className=" shadow-2xl px-8 pt-6 pb-8 mb-4">
+      <div className="flex h-screen bg-center bg-contain" style={{ backgroundImage:`url(${bg1})`}}>
+        <div className="m-auto">
+          <div className=" shadow-2xl px-8 pt-6 pb-8 mb-4 bg-white">
             <div className="mb-10">
               <h1 className="text-left text-4xl font-medium">Sign in</h1>
               <span className="text-sm">Stay updated on your Nitp world</span>
@@ -74,7 +76,7 @@ function Login() {
                 />
                 <a href="#">Forgot password?</a> <br />
                 <div className="py-2">
-                <button class="login-btn">
+                <button className="login-btn">
                 <span>Sign in</span>
                 <BiRightArrowAlt className="inline"/>
               </button>
