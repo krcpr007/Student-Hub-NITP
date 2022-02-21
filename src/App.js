@@ -7,10 +7,12 @@ import Login from './Components/Auth/Login'
 import Footer from './Components/Footer/Footer'
 import Feed from "./Components/Feed/Feed";
 import Profile from "./Components/profile/Profile";
+import Darkmode from "./Components/DarkMode/Darkmode";
+
 function App() {
   return (
     <>
-     <BrowserRouter>
+        <BrowserRouter>
           <Navbar />
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
@@ -22,7 +24,10 @@ function App() {
           </Routes>
           {/* <ToastContainer theme="dark" /> */}
           <Footer />
-      </BrowserRouter>
+          <div className="sticky ">
+            <Darkmode />
+          </div>
+        </BrowserRouter>
     </>
   );
 }

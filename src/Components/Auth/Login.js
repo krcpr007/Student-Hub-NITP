@@ -45,7 +45,7 @@ function Login() {
                     id=""
                   /> <BiShowAlt className="text-lg relative -top-7 left-72 cursor-pointer" onClick={showPassord}/>
                 </div>
-                <a href="#">Forgot password?</a> <br />
+                <a href="!">Forgot password?</a> <br />
                 <div className="py-2 ">
                   <button className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleLogin}>
                     <span>Sign in</span>
