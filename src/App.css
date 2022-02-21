@@ -50,60 +50,58 @@
   }
   
   /* login btn */
-  /* From cssbuttons.io by @alexmaracinaru */
-.login-btn {
-  position: relative;
-  margin: auto;
-  padding: 12px 18px;
-  transition: all 0.2s ease;
+  
+ /* login and signup via google and github */
+.login-signup-btn {
+  background: #fcd34d;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
   border: none;
-  background: none;
- }
- 
- .login-btn:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  border-radius: 50px;
-  background: #b1dae7;
-  width: 45px;
-  height: 45px;
-  transition: all 0.3s ease;
- }
- 
- .login-btn span {
-  position: relative;
-  font-family: "Ubuntu", sans-serif;
-  font-size: 18px;
-  font-weight: 700;
   letter-spacing: 0.05em;
-  color: #234567;
- }
- 
- .login-btn svg {
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #fcd34d;
+  overflow: hidden;
   position: relative;
-  top: 0;
-  margin-left: 10px;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke: #234567;
-  stroke-width: 2;
-  transform: translateX(-5px);
-  transition: all 0.3s ease;
+  height: 2.8em;
+  padding-right: 3.3em;
  }
  
- .login-btn:hover:before {
-  width: 100%;
-  background: #b1dae7;
+ .login-signup-btn .icon {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #fcd34d;
+  right: 0.3em;
+  transition: all 0.3s;
  }
  
- .login-btn:hover svg {
-  transform: translateX(0);
+ .login-signup-btn:hover .icon {
+  width: calc(100% - 0.6em);
  }
  
- .login-btn:active {
+ .login-signup-btn .icon svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #fcd34d;
+ }
+ 
+ .login-signup-btn:hover .icon svg {
+  transform: translateX(0.1em);
+ }
+ 
+ .login-signup-btn:active .icon {
   transform: scale(0.95);
  }
+ 
