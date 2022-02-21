@@ -3,6 +3,8 @@ import bg1 from './bgimg/bgLogin.png';
 import { BiShowAlt } from 'react-icons/bi'
 import { FcGoogle } from 'react-icons/fc';
 import { SiGithub } from 'react-icons/si'
+import {AiFillEye} from 'react-icons/ai'
+import {AiFillEyeInvisible} from 'react-icons/ai'
 function Login() {
   const [showPass, setShowPass] = useState(false);
   const handleLogin = (e) => {
@@ -43,7 +45,7 @@ function Login() {
                     name="password"
                     placeholder="Password"
                     id=""
-                  /> <BiShowAlt className="text-lg relative -top-7 left-72 cursor-pointer" onClick={showPassord}/>
+                  />  {showPass?(<AiFillEye onClick={showPassord} className="text-lg relative -top-7 left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassord} className="text-lg relative -top-7 left-72 cursor-pointer"/>)}
                 </div>
                 <a href="!">Forgot password?</a> <br />
                 <div className="py-2 ">
