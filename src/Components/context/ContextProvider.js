@@ -1,30 +1,49 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState  } from 'react';
 import { app } from '../../Firebase'
-import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
+import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup , signInWithEmailAndPassword} from 'firebase/auth'
 const DataContext = createContext();
 
 export function ContextProvider({ children }) {
     const [userData, setUserData] = useState();
-    const auth = getAuth();
-    const googleprovider = new GoogleAuthProvider();
-    const githubAuthProvider = new GithubAuthProvider();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [darkMode, setDarkMode] = useState(true);
     const changeMode = () => {
         darkMode ? setDarkMode(false) : setDarkMode(true)
     }
-    const githubSignUp =  () => {
+    // login work 
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        console.log(email , password); 
+        try {
+            const auth = getAuth(); 
+            const userCreadential = await signInWithEmailAndPassword(auth, email ,password)
+            if(userCreadential.user){
+                alert("sign in succefully"); 
+                console.log(userCreadential.user);
+            }
+            
+        } catch (error) {
+             console.log(error); 
+        }
+      }
+    const githubSignUp = () => {
+        const auth = getAuth();
+        const githubAuthProvider = new GithubAuthProvider();
         signInWithPopup(auth, githubAuthProvider)
-        .then((resp) => {
-            console.log(resp);
-        })
+            .then((resp) => {
+                console.log(resp);
+            })
     }
-    const googleSignUp = async() => {
-     const result= await   signInWithPopup(auth, googleprovider)
-      const user= result.user; 
-      console.log(user);
-      setUserData(user); 
-      localStorage.setItem('st-hub',userData);
-        
+    const googleSignUp = async () => {
+        const auth = getAuth();
+    const googleprovider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, googleprovider)
+        const user = result.user;
+        console.log(user);
+        setUserData(user);
+        localStorage.setItem('st-hub', userData);
+
     }
     return (
         < DataContext.Provider value={{
@@ -32,7 +51,9 @@ export function ContextProvider({ children }) {
             setDarkMode,
             changeMode,
             googleSignUp,
-            githubSignUp
+            githubSignUp,
+            email, setEmail, password, setPassword,
+            handleLogin,
         }}>
             {children}
         </DataContext.Provider>
