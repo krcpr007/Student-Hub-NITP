@@ -24,7 +24,7 @@ const signup = () =>{
                 <p className="text-gray-700 text-sm mt-2 text-center">
                     By clicking Agree and signup, you become a part of NIT Patna community 🙂
                 </p>
-                <button type="button" className="bg-yellow-400 w-11/12 p-2 m-2 rounded-2xl text-center">Agree and Sign up</button>
+                <button type="button" className="bg-yellow-400 w-11/12 p-2 m-2 rounded-2xl text-center hover:bg-yellow-300 active:bg-yellow-200">Agree and Sign up</button>
                 <p className="text-center">or</p>
                 <button  className="login-signup-btn rounded-full m-3 w-11/12">Login with
                 <div className="icon">
