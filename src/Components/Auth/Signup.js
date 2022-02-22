@@ -5,14 +5,14 @@ const signup = () =>{
     return (
         <>
         <div className='h-screen'>
-        <div className='md:flex flex-col'>
+        <div className='md:flex flex-col '>
             <div className='grid h-fit w-screen p-5'>
                 <div className="place-self-center text-2xl">
                 <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
                 </div>
                 <p className="place-self-center">Welcome to community of NIT Patna</p>
             </div>
-            <div className='h-1/2 md:w-3/12 bg-yellow-50 place-self-center p-4 rounded-lg m-4' >
+            <div className='h-1/2 md:w-3/12 bg-yellow-50 place-self-center p-4 rounded-lg m-4 shadow-2xl' >
                 <div className=''>
                     <label className='block text-gray-700 text-sm mt-2'>Email or phone number</label>
                     <input className="appearance-none border border-gray-700 rounded w-full py-2 px-3 text-slate-900 leading-tight focus:outline-none focus:shadow-outlineborder focus:border-yellow-400"/>
