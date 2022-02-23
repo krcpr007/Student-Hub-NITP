@@ -1,11 +1,14 @@
-import React from 'react'
+import React ,{useContext} from 'react'
 import {ImHome} from 'react-icons/im'
 import {BiNetworkChart} from 'react-icons/bi'
 import {FaMedal} from 'react-icons/fa'
+import ContextProvider from "../context/ContextProvider";
 function Navbar() {
+  
+  const {darkMode } = useContext(ContextProvider);
     return (
  <>
-<nav className="nav flex flex-wrap items-center justify-between px-4 shadow">
+<nav className={`nav flex flex-wrap items-center justify-between px-4 shadow-inner ${darkMode?'bg-slate-900 text-white':"bg-white"}`}>
   <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
     <h1 className="leading-none text-2xl font-medium text-grey-darkest">
       <a className="no-underline text-grey-darkest hover:text-black" href="/">

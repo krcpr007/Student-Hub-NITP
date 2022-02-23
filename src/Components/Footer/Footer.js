@@ -1,19 +1,21 @@
-import React from 'react'
+import React ,{useContext} from 'react'
+import { Link } from 'react-router-dom';
 import { FaFacebook } from 'react-icons/fa';
 import { FaGithubAlt } from 'react-icons/fa';
 import { IoLogoYoutube } from 'react-icons/io';
 import { AiOutlineTwitter } from 'react-icons/ai';
-
+import ContextProvider from "../context/ContextProvider";
 function Footer() {
+  const {darkMode } = useContext(ContextProvider);
   return (
-  <div className='border-t-4'>
+  <div className={`border-t-2 shadow-2xl  ${darkMode ?'bg-slate-900 border-black text-white':null}`}>
         <div className="md:flex">
             <div className="md:w-1/4 p-6 m-2 ">
-              <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
+              <div className="flex flex-no-shrink items-center lg:ml-3 sm:ml-10 py-3 text-grey-darkest">
                 <h1 className="leading-none text-2xl font-medium text-grey-darkest">
-                <a className="no-underline text-grey-darkest hover:text-black" href="/">
+                <Link to='/' className="no-underline text-grey-darkest hover:text-black">
                   <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
-                </a>
+                </Link>
             </h1>
             </div>
           <div className="m-2 px-2.5">
