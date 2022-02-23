@@ -5,7 +5,7 @@ import ContextProvider from '../context/ContextProvider'
 function Darkmode() {
     const {darkMode, changeMode} = useContext(ContextProvider); 
   return (
-    <div className=''>
+    <div className={`sticky bottom-0 ${!darkMode?"bg-white ":'bg-slate-900 text-white'}`}>
         <button onClick={changeMode} className='text-xl'>
             {darkMode?<BsSun/>:<BsMoonFill/>}
         </button>
