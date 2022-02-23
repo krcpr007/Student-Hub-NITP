@@ -1,42 +1,85 @@
-import React, { useState , useContext } from "react";
+import { useContext , useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import {AiFillEye} from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { SiGithub } from 'react-icons/si'
+import bg1 from './bgimg/bgLogin.png';
+import {AiFillEyeInvisible} from 'react-icons/ai'
 import ContextProvider from "../context/ContextProvider";
-const signup = () =>{
+const Signup = () =>{
+    const {googleSignUp , githubSignUp , handleLogin, email ,setEmail ,password ,setPassword ,darkMode } = useContext(ContextProvider);
+    const [showPass, setShowPass] = useState(false);
+    const showPassord = ()=>{
+        showPass?setShowPass(false):setShowPass(true);
+    }
     return (
         <>
-        <div className='h-screen'>
-        <div className='md:flex flex-col '>
-            <div className='grid h-fit w-screen p-5'>
-                <div className="place-self-center text-2xl">
+         <div className={`flex h-screen bg-center bg-contain ${darkMode?'bg-slate-900':"bg-white"}`} >
+        <div className="m-auto">
+          <div className={ ` shadow-2xl px-6 pt-6 pb-8 mb-4 ${darkMode?'bg-slate-900 text-white':"bg-white"}`}>
+            <div className="mb-2 text-center">
+            <div className="place-self-center text-2xl">
                 <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
                 </div>
                 <p className="place-self-center">Welcome to community of NIT Patna</p>
             </div>
-            <div className='h-1/2 md:w-3/12 bg-yellow-50 place-self-center p-4 rounded-lg m-4 shadow-2xl' >
-                <div className=''>
-                    <label className='block text-gray-700 text-sm mt-2'>Email or phone number</label>
-                    <input className="appearance-none border border-gray-700 rounded w-full py-2 px-3 text-slate-900 leading-tight focus:outline-none focus:shadow-outlineborder focus:border-yellow-400"/>
-                </div>
+            <div>
+              <form action="" className="">
                 <div>
-                    <label className='block text-gray-700 text-sm mt-2'> Password (6 or more characters) </label>
-                    <input className="appearance-none border rounded w-full py-2 px-3 text-gray-700 border-gray-600 leading-tight focus:outline-none focus:shadow-outlineborder focus:border-yellow-400"/>
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outlineborder focus:border-yellow-400"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={e=>setEmail(e.target.value)}
+                    placeholder="College email"
+                    autoComplete="on"
+                    required
+                  />
                 </div>
-                <p className="text-gray-700 text-sm mt-2 text-center">
-                    By clicking Agree and signup, you become a part of NIT Patna community 🙂
-                </p>
-                <button type="button" className="bg-yellow-400 w-11/12 p-2 m-2 rounded-2xl text-center hover:bg-yellow-300 active:bg-yellow-200">Agree and Sign up</button>
-                <p className="text-center">or</p>
-                <button  className="login-signup-btn rounded-full m-3 w-11/12">Login with
+                <div className="form-control" >
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
+                  <input
+                    type={`${showPass?'text':'password'}`}
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outlineborder focus:border-yellow-400"
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={e=>setPassword(e.target.value)}
+                    id="password"
+                    autoComplete="on"
+                    required
+                  />  {showPass?(<AiFillEye onClick={showPassord} className="text-lg relative -top-7 left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassord} className="text-lg relative -top-7 left-72 cursor-pointer"/>)}
+                </div>
+                <a href="!">Already have account?</a> <Link to="/login">Login</Link> <br />
+                <div className="py-2 ">
+                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleLogin}>
+                    <span>Sign Up</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <hr />
+            <div className="mt-2 flex">
+              <button onClick={googleSignUp} className="login-signup-btn mx-3">SignUp with
                 <div className="icon">
                   <FcGoogle />
                 </div>
               </button>
-              <p className="text-gray-700 text-sm mt-2 text-center">Already on Student Hub? <a href="#" className="text-indigo-500 underline decoration-indigo-500">Login</a></p>
+              <button onClick={githubSignUp} className="login-signup-btn">signUp with
+                <div className="icon">
+                  <SiGithub />
+                </div>
+              </button>
             </div>
+          </div>
         </div>
-    </div>
-        
+      </div>
         </>
     )
 }
-export  default  signup;
+export  default  Signup;
