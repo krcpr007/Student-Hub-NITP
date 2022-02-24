@@ -1,17 +1,29 @@
-import { useContext , useState } from 'react';
+import { useContext , useState , useEffect  } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import {AiFillEye} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SiGithub } from 'react-icons/si'
-import bg1 from './bgimg/bgLogin.png';
 import {AiFillEyeInvisible} from 'react-icons/ai'
+import { onAuthStateChanged , getAuth  } from 'firebase/auth';
 import ContextProvider from "../context/ContextProvider";
 const Signup = () =>{
-    const {googleSignUp , githubSignUp , handleLogin, email ,setEmail ,password ,setPassword ,darkMode } = useContext(ContextProvider);
+    const auth = getAuth(); 
+    const navigate = useNavigate();
+    useEffect(()=>{
+      onAuthStateChanged(auth, (user)=>{
+        console.log(user)
+        if(user){
+          navigate('/')
+        }
+      })
+  },[]) 
+    const {googleSignUp , githubSignUp , email ,setEmail ,password ,setPassword ,darkMode, handleSignUp } = useContext(ContextProvider);
     const [showPass, setShowPass] = useState(false);
     const showPassord = ()=>{
         showPass?setShowPass(false):setShowPass(true);
     }
+   
     return (
         <>
          <div className={`flex h-screen bg-center bg-contain ${darkMode?'bg-slate-900':"bg-white"}`} >
@@ -57,7 +69,7 @@ const Signup = () =>{
                 </div>
                 <a href="!">Already have account?</a> <Link to="/login">Login</Link> <br />
                 <div className="py-2 ">
-                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleLogin}>
+                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleSignUp}>
                     <span>Sign Up</span>
                   </button>
                 </div>
