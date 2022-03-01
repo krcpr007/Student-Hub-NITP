@@ -27,10 +27,9 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
-          {/* <ToastContainer theme="dark" /> */}
-
-          <Footer />
           <Darkmode />
+          {/* <ToastContainer theme="dark" /> */}
+          <Footer />
         </ContextProvider>
       </BrowserRouter>
     </>
