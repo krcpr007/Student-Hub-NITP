@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom';
 import { getAuth } from "firebase/auth";
+import  ContextProvider  from '../context/ContextProvider';
 function LeftAboutCard() {
+    const {darkMode} = useContext(ContextProvider); 
     const auth = getAuth(); 
     return (
-        <div className='shadow w-2/3 mt-2 rounded ml-10'>
+        <div className={`shadow w-2/3 mt-2 rounded ml-10 ${darkMode?'bg-slate-900 text-white':null}`}>
             <div className='ml-12 mt-2 '>
-               <a href="/"><img src={`${auth.currentUser?auth.currentUser.photoURL:'https://avatars.githubusercontent.com/u/80947662?v=4'}`} alt="" className='w-2/3 content-center rounded-full' /></a>
+               <Link to="/profile"><img src={`${auth.currentUser?auth.currentUser.photoURL:'https://avatars.githubusercontent.com/u/80947662?v=4'}`} alt="" className='w-2/3 content-center rounded-full' /></Link>
             </div>
             <h1 className='mt-1 font-medium text-xl text-center px-5'>{auth.currentUser?`${auth.currentUser.displayName}`:'</Rajan kumar>'}</h1>
             <p className='text-sm text-gray-500 px-5 text-center'>
