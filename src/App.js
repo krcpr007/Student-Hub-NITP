@@ -3,7 +3,8 @@ import "./App.css";
 import Navbar from "./Components/NavBar/Navbar";
 import Error from "./Components/Error/404";
 import Signup from './Components/Auth/Signup'
-import Login from './Components/Auth/Login'
+import Login from './Components/Auth/Login'; 
+import PrivateComp from "./Components/Auth/PrivateComp";
 import Footer from './Components/Footer/Footer'
 import Feed from "./Components/Feed/Feed";
 import Profile from "./Components/profile/Profile";
@@ -20,9 +21,11 @@ function App() {
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/*" element={<Error />} />
+            <Route element={<PrivateComp/>}>
             <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/*" element={<Error />} />
+            </Route>
           </Routes>
           {/* <ToastContainer theme="dark" /> */}
 
