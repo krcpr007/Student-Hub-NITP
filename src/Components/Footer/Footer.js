@@ -19,7 +19,7 @@ function Footer() {
             </h1>
             </div>
           <div className="m-2 px-2.5">
-            <p className="text-xs">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p className="text-sm text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           </div>
         </div>
         <div className="md:w-1/4 p-6 m-2 ">
@@ -35,10 +35,10 @@ function Footer() {
         <div className="md:w-1/4 p-6 m-2 ">
           <h3>Contact Us</h3>
           <div className='p-2'>
-            <label className="flex text-xs">E-Mail</label>
-            <input className="border-2 border-yellow-500 h-1/2 my-2"></input>
+            <label className="flex text-sm">E-Mail</label>
+            <input type="email" className={` border-yellow-500 h-1/2 my-2 rounded appearance-none bg-transparent bg-gray-100 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none ${darkMode?'bg-slate-800 text-gray-100':null} `} placeholder="Your Email"></input>
           </div>
-          <button type="button" className="bg-yellow-400 p-2 text-xs m-2 rounded-lg">Subscribe</button>
+          <button type="button" className="btn-sub">Subscribe</button>
         </div>
         <div className="md:w-1/4 p-6 m-2 ">
         <div >

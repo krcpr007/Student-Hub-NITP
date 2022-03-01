@@ -20,7 +20,7 @@ function Profile() {
             />
           </div>
           <div className="relative -top-10 md:-top-24 md:left-5">
-          <h1 className="text-3xl font-medium">{auth.currentUser?`${auth.currentUser.displayName}`:'Ankit is Pig'}</h1>
+          <h1 className="text-3xl font-medium">{auth.currentUser?`${auth.currentUser.displayName}`:'</Rajan kumar>'}</h1>
           <span className="text-sm">Full stack MERN Developer|| CSE Student at NITP || React Fronted Developer</span> <br />
           <span className="text-xs">Patna, Bihar,India</span> <Link className="text-sm text-blue-600" to="/contactInfo">Contact info</Link>
           </div>
