@@ -10,6 +10,7 @@ import Feed from "./Components/Feed/Feed";
 import Profile from "./Components/profile/Profile";
 import Darkmode from "./Components/DarkMode/Darkmode";
 import { ContextProvider } from './Components/context/ContextProvider'
+import EditProfile from "./Components/profile/EditProfile";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
             <Route element={<PrivateComp/>}>
             <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/editProfile" element={<EditProfile />} />
             </Route>
           </Routes>
           <Darkmode />
