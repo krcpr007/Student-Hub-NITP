@@ -37,7 +37,7 @@ function Navbar() {
         <span className="navicon bg-grey-darkest flex items-center relative"></span>
       </label>
       <ul className='menu'>
-      <input className="px-10 py-1  rounded-lg border-2 border-yellow-200 md:w-auto " placeholder="Search" type="text"/>
+      <input className="px-7 py-1 border-2 border-yellow-300 md:w-auto text-slate-700 shadow-sm  rounded-lg m-2 active:border-yellow-400 focus:ring-2 focus:ring-yellow-200 focus:border-yellow-400 " placeholder="Search..." type="text"/>
       </ul>
        <ul className="menu border-b md:border-none flex justify-end list-reset m-0 w-full md:w-auto">
       
@@ -55,7 +55,7 @@ function Navbar() {
         </li>
         <li className="border-t md:border-none">
           <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker">
-          <img src="https://avatars.githubusercontent.com/u/80947662?v=4" alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
+          <img src={`${auth.currentUser?auth.currentUser.photoURL:'https://avatars.githubusercontent.com/u/80947662?v=4'}`} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
             <span className='text-sm mx-2 lg:mx-0' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
             </Link>
         </li>
