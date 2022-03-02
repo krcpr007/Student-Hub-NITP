@@ -11,6 +11,8 @@ import Profile from "./Components/profile/Profile";
 import Darkmode from "./Components/DarkMode/Darkmode";
 import { ContextProvider } from './Components/context/ContextProvider'
 import EditProfile from "./Components/profile/EditProfile";
+import Messages from "./Components/Messages/Messages";
+import Chat from "./Components/Messages/Chat";
 function App() {
   return (
     <>
@@ -26,6 +28,8 @@ function App() {
             <Route element={<PrivateComp/>}>
             <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/chat/:user" element={<Chat />} />
             <Route path="/editProfile" element={<EditProfile />} />
             </Route>
           </Routes>
