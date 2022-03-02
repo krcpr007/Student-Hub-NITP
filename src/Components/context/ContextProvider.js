@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { app } from '../../Firebase'
+// import { app } from '../../Firebase'
 import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 const DataContext = createContext();
@@ -39,7 +39,17 @@ export function ContextProvider({ children }) {
             console.log(error); 
         }
     }
+    const googleSignUp = ()=>{
+        const githubAuthProvider = new GithubAuthProvider();
+        signInWithPopup(auth, githubAuthProvider)
+            .then((resp) => {
+                console.log(resp);
+            })
 
+    }
+    const githubSignUp = ()=>{
+
+    }
     // login work 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -59,7 +69,7 @@ export function ContextProvider({ children }) {
     }
     const githubSignIn = () => {
 
-        const githubAuthProvider = new GithubAuthProvider();
+        const githubAuthProvider = new  GithubAuthProvider();
         signInWithPopup(auth, githubAuthProvider)
             .then((resp) => {
                 console.log(resp);
@@ -84,7 +94,10 @@ export function ContextProvider({ children }) {
             githubSignIn,
             email, setEmail, password, setPassword,
             handleLogin,
-            handleSignUp
+            handleSignUp,
+            googleSignUp, 
+            githubSignUp, 
+
         }}>
             {children}
         </DataContext.Provider>
