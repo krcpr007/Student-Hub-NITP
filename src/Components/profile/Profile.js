@@ -1,26 +1,44 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {BiMessageSquareEdit} from 'react-icons/bi'
 import {AiFillCloseCircle} from 'react-icons/ai'
 import {RiEditCircleFill} from 'react-icons/ri'
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { getDoc, doc } from "firebase/firestore";
-import  ContextProvider  from '../context/ContextProvider'
-import {db} from '../../Firebase'
+import { getDoc, doc ,updateDoc } from "firebase/firestore";
+import { db, storage } from '../../Firebase';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+// import  ContextProvider  from '../context/ContextProvider'
 function Profile() {
   const auth = getAuth(); 
-  const {darkMode}= useContext(ContextProvider); 
-  console.log(darkMode);
+  // const {darkMode}= useContext(ContextProvider); 
   const [profileData ,SetProfileData]=useState({});
+  const [profileImg ,setProfileImg]=useState();
   const [showModal, setShowModal] = React.useState(false);
   useEffect(() => {
-    getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
-      if (docSnap.exists) {
-        console.log(docSnap.data());
+     getDoc(doc(db, 'users', auth.currentUser.uid)).then((docSnap)=>{
+      if(docSnap.exists){
         SetProfileData(docSnap.data());
+        console.log(docSnap.data())
       }
     });
-  }, [])
+    if (profileImg) {
+      const uploadImg = async () => {
+        const imgRef = ref(storage, `avatar/${new Date().getTime()} - ${profileImg.name}`)
+        const snap = await uploadBytes(imgRef, profileImg);
+        
+        const url = await getDownloadURL(ref(storage, snap.ref.fullPath))
+        
+        await  updateDoc(doc(db, 'users', auth.currentUser.uid),{
+          profileImg:url,
+          profileImgPath: snap.ref.fullPath,
+        })
+        setProfileImg('');
+        console.log(snap.ref.fullPath);
+        console.log(url);
+      }
+      uploadImg();
+    }
+  }, [profileImg])
   
   return (
     <>
@@ -35,7 +53,7 @@ function Profile() {
               className="md:rounded-t-lg w-full md:h-72"
               />
             <img
-              src={`${auth.currentUser?auth.currentUser.photoURL:'https://avatars.githubusercontent.com/u/80947662?v=4'}`}
+              src={`${auth.currentUser?profileData.profileImg:'https://avatars.githubusercontent.com/u/80947662?v=4'}`}
               alt=""
               onClick={() => setShowModal(true)}
               className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-gray-400"
@@ -74,7 +92,7 @@ function Profile() {
                 {/*body*/}
                 <div className="relative p-4 flex-auto">
                 <img
-                  src={`${auth.currentUser?auth.currentUser.photoURL:'https://avatars.githubusercontent.com/u/80947662?v=4'}`}
+                  src={`${(auth.currentUser && profileData.profileImg) ?profileData.profileImg:'https://avatars.githubusercontent.com/u/80947662?v=4'}`}
                   alt=""
                   className="w-full rounded-full border-2 border-gray-400"
                 />
@@ -89,12 +107,16 @@ function Profile() {
                     <AiFillCloseCircle className="text-3xl"/>
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                   <RiEditCircleFill/>
-                  </button>
+                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+
+                    >
+                      <label htmlFor="profileImg">
+
+                        <RiEditCircleFill />
+                      </label>
+                      <input type="file" accept="image/*" style={{ display: "none" }} id="profileImg" onChange={e => setProfileImg(e.target.files[0])} />
+                    </button>
                 </div>
               </div>
             </div>
