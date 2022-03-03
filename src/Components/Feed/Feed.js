@@ -29,7 +29,7 @@ function Feed() {
             <NewPost />
             <PostCard />
           </div>
-          <div className="hidden md:inline">
+          <div className="hidden md:inline md:mr-10">
             <PeersNews />
             <Opportunities />
           </div>
