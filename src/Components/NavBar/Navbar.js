@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
@@ -6,19 +6,19 @@ import { IoMdLogIn } from 'react-icons/io'
 import { AiFillCaretDown } from 'react-icons/ai'
 import { AiFillMessage } from 'react-icons/ai'
 import { BiNetworkChart } from 'react-icons/bi'
-// import {FaMedal} from 'react-icons/fa';
 import { getAuth, signOut } from 'firebase/auth';
 import ContextProvider from "../context/ContextProvider";
 function Navbar() {
   const auth = getAuth();
   console.log(auth);
-  const { darkMode } = useContext(ContextProvider);
+  const { darkMode , profileData , userInformation } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const handleLogout = () => {
     if (auth.currentUser) {
       signOut(auth)
         .then(() => {
           alert("logout")
+          localStorage.removeItem('st-hub')
         })
         .catch((err) => { console.log(err) })
     } else {
@@ -26,6 +26,9 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
+  useEffect(()=>{
+   userInformation(); 
+  },[])
   const showAndHideDropDown =()=>{
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }
@@ -62,10 +65,10 @@ function Navbar() {
             </li>
             <li className="border-t md:border-none flex md:block">
               <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker">
-                <img src={`${auth.currentUser ? auth.currentUser.photoURL : 'https://avatars.githubusercontent.com/u/80947662?v=4'}`} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
-                <span className='text-sm mx-2 lg:-mx-2 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
+                <img src={profileData.profileImg || 'https://www.w3schools.com/howto/img_avatar.png '} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
+                <span className='text-sm mx-2 lg:-mx-1.5 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
               </Link>
-                <AiFillCaretDown className='inline mt-4' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
+                <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
                 {showDropDown ? (<>
                   <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                     <div className="py-1" role="none">
@@ -79,8 +82,6 @@ function Navbar() {
                   </div>
 
                 </>) : null}
-
-
             </li>
           </>) : (
             <>

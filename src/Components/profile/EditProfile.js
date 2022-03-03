@@ -12,14 +12,14 @@ function EditProfile() {
         
     })
     const {headline ,bio }=formData; 
-    useEffect(() => {
-        getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
-          if (docSnap.exists) {
-            console.log(docSnap.data());
-            setFormData(docSnap.data());
-          }
-        });
-      }, [])
+    // useEffect(() => {
+    //     getDoc(doc(db, "users", auth.currentUser.uid)).then((docSnap) => {
+    //       if (docSnap.exists) {
+    //         console.log(docSnap.data());
+    //         setFormData(docSnap.data());
+    //       }
+    //     });
+    //   }, [])
     return (
     <> 
         <div className={`${darkMode?'bg-slate-800':''}`}>
