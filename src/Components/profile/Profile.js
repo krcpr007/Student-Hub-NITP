@@ -5,7 +5,8 @@ import {BsFillCameraFill} from 'react-icons/bs'
 import {MdDelete} from 'react-icons/md'
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { getDoc, doc ,updateDoc  } from "firebase/firestore";
+import Loader from "../Loader/Loader";
+import { doc ,updateDoc  } from "firebase/firestore";
 import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import  ContextProvider  from '../context/ContextProvider'
@@ -14,10 +15,12 @@ function Profile() {
   const {darkMode ,profileData ,userInformation}= useContext(ContextProvider); 
   const [profileImg ,setProfileImg]=useState();
   const [showModal, setShowModal] = React.useState(false);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     userInformation();
     if (profileImg) {
       const uploadImg = async () => {
+        setLoader(true)
         const imgRef = ref(storage, `avatar/${new Date().getTime()} - ${profileImg.name}`)
         try {
           
@@ -33,11 +36,12 @@ function Profile() {
           profileImgPath: snap.ref.fullPath,
         })
         setProfileImg('');
-        console.log(snap.ref.fullPath);
-        console.log(url);
+        // console.log(snap.ref.fullPath);
+        // console.log(url);
       } catch (e) {
         console.log(e.message); 
       }
+      setLoader(false); 
       }
       uploadImg();
     }
@@ -147,7 +151,7 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
         </>
       ) : null}
     </div>
