@@ -31,7 +31,7 @@ const Signup = () =>{
         <>
          <div className={`flex h-screen bg-center bg-contain ${darkMode?'bg-slate-900':"bg-white"}`} >
         <div className="m-auto">
-          <div className={ ` shadow-2xl px-6 pt-6 pb-8 mb-4 ${darkMode?'bg-slate-900 text-white':"bg-white"}`}>
+          <div className={ ` shadow-2xl px-6 pt-6 pb-8 mb-4 ${darkMode?'bg-slate-900 text-white':"bg-white text-gray-600"}`}>
             <div className="mb-2 text-center">
             <div className="place-self-center text-2xl">
                 <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
@@ -42,7 +42,7 @@ const Signup = () =>{
               <form action="" className="">
                 
                 <div className="relative z-0 mb-6 w-full group">
-                    <input type="email" name="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "id="email"
+                    <input type="email" name="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-700 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "id="email"
                     value={email}
                     onChange={e=>setEmail(e.target.value)}
                     autoComplete="on"
@@ -50,7 +50,7 @@ const Signup = () =>{
                     <label htmlFor="floating_email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">College email address</label>
                 </div>
                 <div className="relative z-0 mb-6 w-full group">
-                    <input type={`${showPass?'text':'password'}`} name="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={password}
+                    <input type={`${showPass?'text':'password'}`} name="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-700 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={password}
                     onChange={e=>setPassword(e.target.value)}
                     id="password"
                     autoComplete="on"
