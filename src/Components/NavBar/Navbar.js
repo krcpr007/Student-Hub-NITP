@@ -8,6 +8,7 @@ import { AiFillMessage } from 'react-icons/ai'
 import { BiNetworkChart } from 'react-icons/bi'
 import { getAuth, signOut } from 'firebase/auth';
 import ContextProvider from "../context/ContextProvider";
+import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
   const auth = getAuth();
   console.log(auth);
@@ -42,6 +43,7 @@ function Navbar() {
             </Link>
           </h1>
         </div>
+        <Darkmode/>
         <input className="menu-btn hidden" type="checkbox" id="menu-btn" />
         <label className="menu-icon block cursor-pointer md:hidden px-2 py-4 relative select-none" htmlFor="menu-btn">
           <span className="navicon bg-grey-darkest flex items-center relative"></span>

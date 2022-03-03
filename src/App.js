@@ -8,7 +8,6 @@ import PrivateComp from "./Components/Auth/PrivateComp";
 import Footer from './Components/Footer/Footer'
 import Feed from "./Components/Feed/Feed";
 import Profile from "./Components/profile/Profile";
-import Darkmode from "./Components/DarkMode/Darkmode";
 import { ContextProvider } from './Components/context/ContextProvider'
 import EditProfile from "./Components/profile/EditProfile";
 import Messages from "./Components/Messages/Messages";
@@ -33,7 +32,6 @@ function App() {
             <Route path="/editProfile" element={<EditProfile />} />
             </Route>
           </Routes>
-          <Darkmode />
           {/* <ToastContainer theme="dark" /> */}
           <Footer />
         </ContextProvider>

@@ -144,12 +144,3 @@
  .btn-sub:hover:before {
   transform: translateX(15em);
  }
- /* darkMode */
- .darkMode{
-   margin-bottom: 2px;
-   width: 50px;
-   position: sticky;
-   bottom: 2px;
-   padding: 15px 10px 15px 20px;
-   border-radius: 0px 10px 10px 0px;
- }
