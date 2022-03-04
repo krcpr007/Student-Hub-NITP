@@ -1,16 +1,14 @@
 import React, { useState , useContext ,useEffect} from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, } from "react-router-dom";
 import bg1 from './bgimg/bgLogin.png';
 import { FcGoogle } from 'react-icons/fc';
 import { SiGithub } from 'react-icons/si'
 import {AiFillEye} from 'react-icons/ai'
 import {AiFillEyeInvisible} from 'react-icons/ai'
 import ContextProvider from "../context/ContextProvider";
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
-
+import {onAuthStateChanged} from 'firebase/auth'
+import {auth} from '../../Firebase'
 function Login() {
-  
-  const auth = getAuth(); 
   const navigate = useNavigate();
   const {googleSignIn , githubSignIn , handleLogin, email ,setEmail ,password ,setPassword , darkMode } = useContext(ContextProvider);
   const [showPass, setShowPass] = useState(false);
@@ -18,16 +16,15 @@ function Login() {
       showPass?setShowPass(false):setShowPass(true);
   }
   useEffect(()=>{
+    setEmail("");
+    setPassword('');
     onAuthStateChanged(auth, (user)=>{
       if(user){
         navigate('/')
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 },[]) 
-useEffect(()=>{
-  setEmail("");
-  setPassword('');
-},[])
   return (
     <>
       <div className={`flex h-screen bg-center bg-contai`} style={{ backgroundImage: `url(${bg1})` }}>

@@ -5,28 +5,27 @@ import {AiFillEye} from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { SiGithub } from 'react-icons/si'
 import {AiFillEyeInvisible} from 'react-icons/ai'
-import { onAuthStateChanged , getAuth  } from 'firebase/auth';
+import { onAuthStateChanged  } from 'firebase/auth';
+import {auth} from '../../Firebase'
 import ContextProvider from "../context/ContextProvider";
 const Signup = () =>{
-    const auth = getAuth(); 
     const navigate = useNavigate();
     useEffect(()=>{
+      setEmail("");
+      setPassword('');
       onAuthStateChanged(auth, (user)=>{
         console.log(user)
         if(user){
           navigate('/')
         }
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]) 
     const {googleSignUp , githubSignUp , email ,setEmail ,password ,setPassword ,darkMode, handleSignUp } = useContext(ContextProvider);
     const [showPass, setShowPass] = useState(false);
     const showPassord = ()=>{
         showPass?setShowPass(false):setShowPass(true);
     }
-   useEffect(()=>{
-     setEmail("");
-     setPassword('');
-   },[])
     return (
         <>
          <div className={`flex h-screen bg-center bg-contain ${darkMode?'bg-slate-900':"bg-white"}`} >
