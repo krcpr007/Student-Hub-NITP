@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoMdLogIn } from 'react-icons/io'
-import { AiFillCaretDown } from 'react-icons/ai'
-import { AiFillMessage } from 'react-icons/ai'
+import { AiFillCaretDown ,AiFillMessage } from 'react-icons/ai'
 import { BiNetworkChart } from 'react-icons/bi'
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import avatar from '../assets/img_avatar.png'
+import {auth} from '../../Firebase'
 import ContextProvider from "../context/ContextProvider";
 import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
-  const auth = getAuth();
   console.log(auth);
   const { darkMode , profileData , userInformation } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -29,6 +29,7 @@ function Navbar() {
   }
   useEffect(()=>{
    userInformation(); 
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const showAndHideDropDown =()=>{
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
@@ -67,7 +68,7 @@ function Navbar() {
             </li>
             <li className="border-t md:border-none flex md:block">
               <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker">
-                <img src={profileData.profileImg || 'https://www.w3schools.com/howto/img_avatar.png '} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
+                <img src={profileData.profileImg || avatar} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
                 <span className='text-sm mx-2 lg:-mx-1.5 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
               </Link>
                 <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
@@ -76,7 +77,7 @@ function Navbar() {
                     <div className="py-1" role="none">
                       {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                       <Link to="/editProfile" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</Link>
-                      <a href="#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Support</a>
+                      <a href="/#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Support</a>
                       <Link to='/nitpatna' className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-2">License</Link>
                       <Link to="/login" onClick={handleLogout} className="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</Link>
                       <button onClick={showAndHideDropDown} className="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">close</button>

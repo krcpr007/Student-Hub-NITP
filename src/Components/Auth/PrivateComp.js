@@ -1,8 +1,9 @@
 import React from 'react'
 import {Outlet , Navigate} from 'react-router-dom'; 
-import {getAuth} from 'firebase/auth'
+// import {getAuth} from 'firebase/auth'
+import {auth} from '../../Firebase'
 function PrivateComp() {
-    const auth = getAuth(); 
+
     return auth.currentUser? <Outlet/>:<Navigate to="/login"/> 
 }
 

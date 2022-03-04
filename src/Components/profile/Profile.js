@@ -4,14 +4,13 @@ import {AiFillCloseCircle} from 'react-icons/ai'
 import {BsFillCameraFill} from 'react-icons/bs'
 import {MdDelete} from 'react-icons/md'
 import { Link } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 import { doc ,updateDoc  } from "firebase/firestore";
-import { db, storage } from '../../Firebase';
+import { db, storage , auth} from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import  ContextProvider  from '../context/ContextProvider'
 function Profile() {
-  const auth = getAuth(); 
   const {darkMode ,profileData ,userInformation}= useContext(ContextProvider); 
   const [profileImg ,setProfileImg]=useState();
   const [showModal, setShowModal] = React.useState(false);
@@ -68,7 +67,7 @@ function Profile() {
      {/* https://www.w3schools.com/howto/img_avatar.png */}
     <div>
       <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
-        <div className="shadow-2xl">
+        <div className={`shadow-2xl md:rounded-t-lg ${darkMode?'bg-slate-900 text-white' :null}`}>
           <div> 
             <img
               src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
@@ -76,10 +75,10 @@ function Profile() {
               className="md:rounded-t-lg w-full md:h-72"
               />
             <img
-              src={profileData.profileImg || 'https://www.w3schools.com/howto/img_avatar.png '}
+              src={profileData.profileImg || avatar}
               alt=""
               onClick={() => setShowModal(true)}
-              className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-gray-400"
+              className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400"
               />
           </div>
           <div className="relative -top-10 md:-top-24 md:left-5">
@@ -115,7 +114,7 @@ function Profile() {
                 {/*body*/}
                 <div className="relative p-4 flex-auto">
                 <img
-                  src={`${(auth.currentUser && profileData.profileImg) ?profileData.profileImg:'https://www.w3schools.com/howto/img_avatar.png'}`}
+                  src={profileData.profileImg || avatar}
                   alt=""
                   className="w-full rounded-full border-2 border-gray-400"
                 />
