@@ -1,7 +1,7 @@
 import React,{useEffect, useState } from 'react'
 import SenderProfile from './SenderProfile'
-import {getAuth} from 'firebase/auth'
-import { db, storage } from "../../Firebase";
+// import {getAuth} from 'firebase/auth'
+import { db, storage , auth} from "../../Firebase";
 import {
   collection,
   query,
@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 
 function Messages() {
-  const auth = getAuth();
+  // const auth = getAuth();
   const [users, setUsers] = useState([]);
     useEffect(() => {
       const usersRef = collection(db, "users");
@@ -37,7 +37,7 @@ function Messages() {
   return (
     <div>
        {users.map((sender)=>{
-         return <SenderProfile key= {sender.uid} profileImg={sender.profileImg} />
+         return <SenderProfile key= {sender.uid} profileImg={sender.profileImg} sender={sender} />
        })}
     </div>
   )

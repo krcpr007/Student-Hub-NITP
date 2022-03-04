@@ -1,12 +1,11 @@
 import React, { createContext, useState } from 'react';
-import { db  } from '../../Firebase'
+import { db ,auth } from '../../Firebase'
 import { setDoc, doc, Timestamp , getDoc } from "firebase/firestore";
-import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 const DataContext = createContext();
 
 export function ContextProvider({ children }) {
-    const auth = getAuth();
     const navigate = useNavigate();
     const [profileData ,SetProfileData]=useState({});
     const [email, setEmail] = useState('');
@@ -17,7 +16,7 @@ export function ContextProvider({ children }) {
     }
     //  user Information 
     const userInformation = async() =>{
-        getDoc(doc(db, 'users', auth.currentUser.uid)).then((docSnap)=>{
+        getDoc(doc(db, 'users',auth? auth.currentUser.uid:null )).then((docSnap)=>{
             if(docSnap.exists){
               SetProfileData(docSnap.data());
               console.log(docSnap.data())
@@ -103,7 +102,7 @@ export function ContextProvider({ children }) {
         e.preventDefault()
         console.log(email, password);
         try {
-            const auth = getAuth();
+            
             const userCreadential = await signInWithEmailAndPassword(auth, email, password)
             if (userCreadential.user) {
                 alert("sign in succefully");
