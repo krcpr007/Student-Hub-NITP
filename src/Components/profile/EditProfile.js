@@ -1,95 +1,119 @@
 import React , {useState, useContext, useEffect} from 'react'
 import  ContextProvider  from '../context/ContextProvider'
 import { getDoc, doc , updateDoc } from "firebase/firestore";
-// import {getAuth} from 'firebase/auth';
 import {db, auth} from '../../Firebase'
 function EditProfile() {
-    // const auth= getAuth(); 
+    let contactInfo={
+
+    };
     const {darkMode ,profileData, userInformation}= useContext(ContextProvider); 
-    const [formData, setFormData]= useState({
-        headline:'', 
-        bio:'', 
-        name:auth.currentUser.displayName,
-        CurrentPostion:"", 
-        constactInfo:{
-            home:'', 
-            phoneNo:''
-        },
-        skills:['','','',''],
-        socialMedia_urls:['','',''],
-        
-    })
     useEffect(()=>{
         userInformation(); 
     },[])
-    const {headline ,bio, name , skills, socialMedia_urls, constactInfo }=formData; 
-   const {home , phoneNo}= constactInfo ;
+    const[loading , setLoading] = useState(false); 
+    const [ instalink ,setInstalink] =useState(profileData.socialMedia_urls[0]); 
+    const [ gtihublink ,setGithublink] =useState(profileData.socialMedia_urls[1]); 
+    const [ linkedin ,setLinkedinlink] =useState(profileData.socialMedia_urls[2]); 
+    const [home, setHome] =useState(profileData.contactInfo.home);
+    const [phoneNo, setPhoneNo] =useState(profileData.contactInfo.phoneNo);
+      contactInfo={
+          home:home, 
+          phoneNo:phoneNo , 
+      }
+    const [formData, setFormData]= useState({
+        headline:profileData.headline, 
+        bio:profileData.bio, 
+        name:auth.currentUser.displayName?auth.currentUser.displayName:profileData.name,
+        CurrentPosition:profileData.CurrentPosition,
+        socialMedia_urls:[instalink,gtihublink,linkedin],
+        skills:['','','','','']
+    })
+    const {headline ,bio, name , skills, socialMedia_urls ,CurrentPosition }=formData;
+   const handleChange = (e)=>{
+       setFormData({...formData, [e.target.name]:e.target.value})
+   }
+   const onSubmit = async(e)=>{
+       e.preventDefault();
+       setLoading(true); 
+    //    console.warn(name, bio, headline,CurrentPostion ,socialMedia_urls, constactInfo ,skills )
+    // console.warn(home, phoneNo, instalink, linkedin)
+       const snapshot = doc(db,'users', auth.currentUser.uid); 
+       await updateDoc(snapshot, {
+        name, bio, headline,CurrentPosition , contactInfo, socialMedia_urls:[linkedin,instalink, gtihublink],
+      }); 
+      setLoading(false); 
+   }
     return (
     <> 
-        <div className={`${darkMode?'bg-slate-800 text-white':''}`}>
+        <div className={`bg-slate-600/80`}>
             <div>
                <div className='p-10'>
 
                 <form>
                 <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_email" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'text-white':"text-gray-600"}`} placeholder=" " value={name} required=""/>
+                    <input type="text" name="name" className={`block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " value={name} onChange={handleChange}  required=""/>
                     <label htmlFor="floating_email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
-                    <label htmlFor="floating_email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current Postion (Ex. Ecell web dev)</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="headline" id="floating_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
+                </div>
+                <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="CurrentPosition" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " required="" value={CurrentPosition} onChange={handleChange}/>
+                    <label htmlFor="floating_email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current Position (Ex. Ecell web dev)</label>
+                </div>
+                <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="headline" id="floating_password" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " required="" value={headline} onChange={handleChange}/>
                     <label htmlFor="floating_password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Headline</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="bio" id="floating_repeat_password" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
+                </div>
+                <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="bio" id="floating_repeat_password" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " required="" value={bio} onChange={handleChange}/>
                     <label htmlFor="floating_repeat_password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Bio (tell about yourself)</label>
-                    </div>
-                    <div className="grid xl:grid-cols-2 xl:gap-6">
-                    <div className="relative z-0 mb-6 w-full group">
+                </div>
+            <div className="grid xl:grid-cols-2 xl:gap-6">
+                <div className="relative z-0 mb-6 w-full group">
                     <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No1. Skill</label>
-                    </div> 
-                    <div className="relative z-0 mb-6 w-full group">
+                </div> 
+                <div className="relative z-0 mb-6 w-full group">
                     <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No2. skill</label>
-                    </div> 
-                    <div className="relative z-0 mb-6 w-full group">
+                </div> 
+                <div className="relative z-0 mb-6 w-full group">
                     <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No3. Skill</label>
-                    </div> 
-                    <div className="relative z-0 mb-6 w-full group">
+                </div> 
+                <div className="relative z-0 mb-6 w-full group">
                     <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No4. skill</label>
-                    </div> 
-                    <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_first_name" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
-                    <label htmlFor="floating_first_name" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
-                    </div>
-                    <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_last_name" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
-                    <label htmlFor="floating_last_name" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number (+91 1234567890)</label>
-                    </div>
-                    </div>
-                    <div className="grid xl:grid-cols-2 xl:gap-6">
+                </div> 
+                <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="home" id="floating_first_name" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " required="" />
+                    <label htmlFor="address" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No5. skill</label>
+                </div>
+                <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="phoneNo" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={home} onChange={e=>setHome(e.target.value)} required="" />
+                    <label htmlFor="floating_last_name" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
+                </div>
+                </div>
+            <div className="grid xl:grid-cols-2 xl:gap-6">
                     
                     <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
+                    <input type="text" name="floating_company" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " value={phoneNo} onChange={e=>setPhoneNo(e.target.value)} required=""/>
+                    <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number (+91 1234567890)</label>
+                    </div>
+                    <div className="relative z-0 mb-6 w-full group">
+                    <input type="text" name="floating_company" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " required="" value={linkedin} onChange={e=>setLinkedinlink(e.target.value)} />
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Linkedin Link</label>
                     </div>
                     <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
+                    <input type="text" name="floating_company" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" "value={instalink} onChange={e=>setInstalink(e.target.value)} required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Instagram Link</label>
-                    </div>
+                    </div> 
                     <div className="relative z-0 mb-6 w-full group">
-                    <input type="text" name="floating_company" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required=""/>
+                    <input type="text" name="floating_company" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode?'input-dark':"input-non-dark"}`} placeholder=" " value={gtihublink} onChange={e=>setGithublink(e.target.value)} required=""/>
                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Github Link</label>
                     </div> 
                     
                     </div>
-                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                    <button type="submit" className={`btn-sub ${loading?'animate-pulse':"null"}`} onClick={onSubmit}>
+                        {loading?'Pls wait...':'Submit'}</button>
                 </form>
 
                 </div>
