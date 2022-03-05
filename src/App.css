@@ -104,7 +104,7 @@
  .login-signup-btn:active .icon {
   transform: scale(0.95);
  }
- /* Subscribe button */
+ /* Subscribe button and submit button */
  /* From cssbuttons.io by @adamgiebl */
 .btn-sub {
   --green: #1BFD9C;
@@ -143,4 +143,10 @@
  
  .btn-sub:hover:before {
   transform: translateX(15em);
+ }
+ .input-dark{
+   color: snow !important;
+ }
+ .input-non-dark{
+   color: rgb(0, 0, 0) !important ;
  }
