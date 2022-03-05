@@ -10,6 +10,7 @@ import Feed from "./Components/Feed/Feed";
 import Profile from "./Components/profile/Profile";
 import { ContextProvider } from './Components/context/ContextProvider'
 import EditProfile from "./Components/profile/EditProfile";
+import UsersProfile from "./Components/profile/UsersProfile";
 import Messages from "./Components/Messages/Messages";
 import Chat from "./Components/Messages/Chat";
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/messages" element={<Messages />} />
             <Route path="/chat/:user" element={<Chat />} />
             <Route path="/editProfile" element={<EditProfile />} />
+            <Route path="/user/:uid" element={<UsersProfile/>} />
             </Route>
           </Routes>
           {/* <ToastContainer theme="dark" /> */}
