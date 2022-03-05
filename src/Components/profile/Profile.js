@@ -1,12 +1,15 @@
 import React, {useState, useContext, useEffect} from "react";
 import {BiMessageSquareEdit} from 'react-icons/bi'
 import {AiFillCloseCircle} from 'react-icons/ai'
-import {BsFillCameraFill} from 'react-icons/bs'
+import {BsFillCameraFill} from 'react-icons/bs';
+import {FaGithub} from 'react-icons/fa'
+import  {ImLinkedin} from 'react-icons/im'
+import {RiInstagramFill} from 'react-icons/ri'
 import {MdDelete} from 'react-icons/md'
 import { Link } from "react-router-dom";
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
-import { doc ,updateDoc  } from "firebase/firestore";
+import {collection, doc, onSnapshot, query, updateDoc, where} from "firebase/firestore";
 import { db, storage , auth} from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import  ContextProvider  from '../context/ContextProvider'
@@ -14,9 +17,16 @@ function Profile() {
   const {darkMode ,profileData ,userInformation}= useContext(ContextProvider); 
   const [profileImg ,setProfileImg]=useState();
   const [showModal, setShowModal] = React.useState(false);
+  const [showContactModal, setShowContactModal] = useState(true);
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     userInformation();
+    // const userRef = collection(db, "users");
+    // const q = query(userRef, where('uid', '==', profileData.uid));
+    // const unsub = onSnapshot(q,(querySnapshot)=>{
+    //   console.log( "query" ,querySnapshot);
+    // })
+    // unsub()
     if (profileImg) {
       const uploadImg = async () => {
         setLoader(true)
@@ -82,8 +92,24 @@ function Profile() {
               />
           </div>
           <div className="relative -top-10 md:-top-24 md:left-5">
-            <Link to="/editProfile" ><BiMessageSquareEdit className="relative -top-14 left-3/4 text-xl cursor-pointer"/></Link>
+             <div className='absolute -top-14 left-40 md:left-3/4 '>
+
+               <div className='flex'>
+                 <a href={profileData.socialMedia_urls[1]} target='_blank' rel='noreferrer'>
+                   <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'}/>
+                 </a>
+                 <a href={profileData.socialMedia_urls[2]} target='_blank' rel='noreferrer'>
+                   <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'}/>
+                 </a>
+                 <a href={profileData.socialMedia_urls[0]} target='_blank' rel='noreferrer'>
+                   <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'}/>
+                 </a>
+                 <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer"/></Link>
+               </div>
+             </div>
+
             <h1 className="text-3xl font-medium">{auth.currentUser.displayName?`${auth.currentUser.displayName}`:`${profileData.name}`}</h1>
+
             <span className="text-sm">{profileData && profileData.headline}</span> <br />
             <span className="text-xs">Patna, Bihar,India</span> <Link className="text-sm text-blue-600" to="/contactInfo">Contact info</Link>
           </div>
