@@ -26,12 +26,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/*" element={<Error />} />
             <Route element={<PrivateComp/>}>
-            <Route path="/" element={<Feed />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/chat/:uid" element={<Chat />} />
-            <Route path="/editProfile" element={<EditProfile />} />
-            <Route path="/user/:uid" element={<UsersProfile/>} />
+                <Route path="/" element={<Feed />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/messages" element={<Messages />} />
+                <Route path="/chat/:uid" element={<Chat />} />
+                <Route path="/editProfile" element={<EditProfile />} />
+                <Route path="/user/:uid" element={<UsersProfile/>} />
             </Route>
           </Routes>
           {/* <ToastContainer theme="dark" /> */}

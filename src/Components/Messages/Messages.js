@@ -43,7 +43,7 @@ function Messages() {
     <div className='md:flex'>
       <div className='lg:w-1/4'>
        {users.map((sender)=>{
-         return <SenderProfile key={sender.uid} sender={sender} />
+         return <SenderProfile key={sender.uid} sender={sender} user1={auth.currentUser.uid} />
         })}
         </div>
         <div className="bg-slate-500 w-full">
