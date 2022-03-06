@@ -90,8 +90,8 @@ function Chat() {
   }
   return (
     <>
-      <div>
-        <div className={`${darkMode?"bg-slate-900 text-gray-500":null}`}>
+      <div className=''>
+        <div className={`${darkMode?"bg-gradient-to-t from-slate-300 via-slate-700 to-slate-900 ":null}`}>
           <Link to={`/user/${user.uid}`} className='flex'>
             <div className='mt-2'>
               <img src={user.profileImg || Img} alt="" className='w-12 rounded-full border border-slate-900' />
@@ -115,7 +115,7 @@ function Chat() {
             </label>
             <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => setMedia(e.target.files[0])} name='file' id='file' />
             <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className='bg-slate-500 px-2 py-2 w-full' placeholder='Message...' />
-            <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-r w-full'>Send</button>
+            <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-md w-48 hover:bg-yellow-500'>Send</button>
           </form>
         </div>
       </div>
