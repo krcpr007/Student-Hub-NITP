@@ -8,7 +8,7 @@ function Error() {
     <>
     <div className={`p-0 h-fit ${darkMode ? 'bg-gradient-to-b from-slate-900 to-slate-700 text-white' : "bg-white"}`}>
       <div className="md:grid h-screen grid-cols-2 gap-4 px-11 place-item-center">
-       <img src={bgimg} className="m-5 md:w-[60rem]" alt="" />
+       <img src={bgimg} className="mt-0 py-2 md:w-3/4 w-full" alt="" />
       <div className='font-mono md:mx-12 md:flex items-center'>
         <div className='md:mx-8'>
         <h1 className=' block md:text-9xl text-7xl text-center min-w-full font-extra-bold'>404</h1>
