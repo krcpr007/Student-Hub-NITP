@@ -16,8 +16,6 @@ import {
 } from "firebase/firestore";
 
 function Messages() {
-  // const auth = getAuth();
-  console.warn(auth.currentUser.uid )
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -32,6 +30,7 @@ function Messages() {
           users.push(doc.data());
         });
         setUsers(users);
+        console.table(users)
         setLoading(false)
       });
 
@@ -44,7 +43,7 @@ function Messages() {
     <div className='md:flex'>
       <div className='lg:w-1/4'>
        {users.map((sender)=>{
-         return <SenderProfile key= {sender.uid} sender={sender} />
+         return <SenderProfile key={sender.uid} sender={sender} />
         })}
         </div>
         <div className="bg-slate-500 w-full">

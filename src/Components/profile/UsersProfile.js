@@ -25,15 +25,6 @@ function UserProfile() {
   useEffect(() => {
     // userInformation();
     const docRef = doc(db, "users", userid);
-    // const docSnap = await getDoc(docRef);
-
-    // if (docSnap.exists()) {
-    //   console.log("Document data:", docSnap.data());
-    //   setUser(docSnap.data());
-    // } else {
-    //   // doc.data() will be undefined in this case
-    //   console.log("No such document!");
-    // }
       getDoc(docRef).then((docSnap)=>{
         if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());

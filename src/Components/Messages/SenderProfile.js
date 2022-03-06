@@ -6,10 +6,15 @@ function SenderProfile({sender}) {
         <div>
             <div className='flex'>
                 <div className='mt-2'>
-                    <Link to={`/user/${sender.uid}`}><img src={sender.profileImg ||Img } alt="" className='w-16 rounded-full border border-slate-900' /></Link>
+                    <Link to={`/user/${sender.uid}`}>
+                        <img src={sender.profileImg ||Img } alt="" className='w-16 rounded-full border border-slate-900' />
+                        
+                        </Link>
                 </div>
                 <div className='m-1'>
-                    <h1 className='font-medium'><Link to={`/chat/${sender.uid}`}>{sender.name?sender.name:"Lorem ipsum"}</Link></h1>
+                        <Link to={`/chat/${sender.uid}`}>
+                         <h1 className='font-medium'>{sender.name?sender.name:"Lorem ipsum"} </h1>
+                        </Link>
                     <p className='text-xs'>{sender.headline? sender.headline:null}</p>
                 </div>
             </div>
