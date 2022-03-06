@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
@@ -26,12 +26,7 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
-  useEffect(()=>{
-    if(localStorage.getItem('st-hub')){
-      userInformation(); 
-    }
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+
   const showAndHideDropDown =()=>{
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }

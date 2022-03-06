@@ -10,11 +10,6 @@ import {getAuth} from 'firebase/auth'
 function Feed() {
   const navigate= useNavigate();
   const auth = getAuth(); 
-  useEffect(()=>{
-     if(!auth.currentUser){
-       navigate('/login')
-     }
-  },[])
   return (
     <div>
       <div className="">
