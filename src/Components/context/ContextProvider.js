@@ -1,59 +1,59 @@
 import React, { createContext, useState } from 'react';
-import { db ,auth } from '../../Firebase'
-import { setDoc, doc, Timestamp , getDoc } from "firebase/firestore";
+import { db, auth } from '../../Firebase'
+import { setDoc, doc, getDoc, serverTimestamp} from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 const DataContext = createContext();
 
 export function ContextProvider({ children }) {
     const navigate = useNavigate();
-    const [profileData ,SetProfileData]=useState({});
+    const [profileData, SetProfileData] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [darkMode, setDarkMode] = useState(false);
     const changeMode = () => {
         darkMode ? setDarkMode(false) : setDarkMode(true)
+        // const darkMode = localStorage.setItem('mode', JSON.parse(1))
     }
     //  user Information 
-    const userInformation = async() =>{
-        getDoc(doc(db, 'users',auth? auth.currentUser.uid:null )).then((docSnap)=>{
-            if(docSnap.exists){
-              SetProfileData(docSnap.data());
-              console.log(docSnap.data())
+    const userInformation = async () => {
+        getDoc(doc(db, 'users', auth ? auth.currentUser.uid : null)).then((docSnap) => {
+            if (docSnap.exists) {
+                SetProfileData(docSnap.data());
+                console.log(docSnap.data())
             }
-          });
+        });
     }
-     
+
     // sign up work 
-    
-    const handleSignUp =(e) => {
+    //Register user with email and password only
+    const handleSignUp = (e) => {
         e.preventDefault()
-        console.log(email, password);
         try {
             createUserWithEmailAndPassword(auth, email, password)
-                .then(async(userCredential) => {
+                .then(async (userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
                     console.log(user);
                     localStorage.setItem('st-hub', JSON.stringify(user));
                     await setDoc(doc(db, "users", user.uid), {
-                        uid:user.uid,
-                        name:'',
-                        headline:'', 
-                        bio:'', 
-                        currentPosition:'', 
-                        connections:0, 
-                        contactInfo:{
-                            phoneNo:'', 
-                            home:'',
+                        uid: user.uid,
+                        name: '',
+                        headline: '',
+                        bio: '',
+                        currentPosition: '',
+                        connections: 0,
+                        contactInfo: {
+                            phoneNo: '',
+                            home: '',
                         },
-                        socialMedia_urls:[`${''}`,`${''}`,`${''}`],
-                        skills:['React' ,'tailwindcss'],
-                        posts:[], 
-                        profileImg:"https://www.w3schools.com/howto/img_avatar.png ", 
-                        profileImgPath:"", 
-                        
-                      });
+                        socialMedia_urls: [`${''}`, `${''}`, `${''}`],
+                        skills: ['React', '', '', '', ''],
+                        posts: [],
+                        profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
+                        profileImgPath: "",
+                        timeStamp:serverTimestamp()
+                    });
                     navigate("/");
 
                     // ...
@@ -65,44 +65,14 @@ export function ContextProvider({ children }) {
                     // ..
                 });
         } catch (error) {
-            console.log(error); 
+            console.log(error);
         }
-    }
-    const googleSignUp =async ()=>{
-        const googleprovider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, googleprovider)
-        const user = result.user;
-        console.log(user);
-        localStorage.setItem('st-hub', JSON.stringify(user));
-        //    await setDoc(doc(db, "users", user.uid), {
-        //                 uid:user.uid,
-        //             //     name:'',
-        //             // headline:'', 
-        //             // bio:'', 
-        //             // currentPosition:'', 
-        //             // connections:0, 
-        //             // contactInfo:{
-        //             //     phoneNo:'', 
-        //             //     home:'',
-        //             // },
-        //             // socialMedia_urls:[`${''}`,`${''}`,`${''}`],
-        //             // skills:['React' ,'tailwindcss'],
-        //             // posts:[], 
-        //             profileImg:"https://www.w3schools.com/howto/img_avatar.png", 
-        //             profileImgPath:"", 
-                    
-        //         });
-
-    }
-    const githubSignUp = ()=>{
-
     }
     // login work 
     const handleLogin = async (e) => {
         e.preventDefault()
-        console.log(email, password);
         try {
-            
+
             const userCreadential = await signInWithEmailAndPassword(auth, email, password)
             if (userCreadential.user) {
                 alert("sign in succefully");
@@ -115,56 +85,71 @@ export function ContextProvider({ children }) {
             setPassword('')
         }
     }
-    const githubSignIn = async() => {
+    const githubSignIn = async () => {
+        const githubAuthProvider = new GithubAuthProvider();
+        const userCredential = await signInWithPopup(auth, githubAuthProvider) //credentials
+        const user = userCredential.user;
+        localStorage.setItem('st-hub', JSON.stringify(user));
+        // Check for user
+        const docRef = doc(db, 'users', user.uid)
+        const docSnap = await getDoc(docRef)
+        // If user, doesn't exist, create user
+        //  here i faced the bigest problem is that whenevry try to login its overide the user data again and again but now its solved
 
-        const githubAuthProvider = new  GithubAuthProvider();
-       const userCreadential = await signInWithPopup(auth, githubAuthProvider)
-        const user = userCreadential.user; 
-    //     await setDoc(doc(db, "users", user.uid), {
-    //         uid:user.uid,
-    //         name:'',
-    //     headline:'', 
-    //     bio:'', 
-    //     currentPosition:'', 
-    //     connections:0, 
-    //     contactInfo:{
-    //         phoneNo:'', 
-    //         home:'',
-    //     },
-    //     socialMedia_urls:[`${''}`,`${''}`,`${''}`],
-    //     skills:['React' ,'tailwindcss'],
-    //     posts:[], 
-    //     profileImg:"https://www.w3schools.com/howto/img_avatar.png", 
-    //     profileImgPath:"", 
-        
-    // });
+        if (!docSnap.exists()) {
+            await setDoc(doc(db, 'users', user.uid), {
+                uid: user.uid,
+                name: '',
+                headline: '',
+                bio: '',
+                CurrentPosition: '',
+                connections: 0,
+                contactInfo: {
+                    phoneNo: '',
+                    home: '',
+                },
+                socialMedia_urls: [`${''}`, `${''}`, `${''}`],
+                skills: ['React', 'tailwindcss'],
+                posts: [],
+                profileImg: "https://www.w3schools.com/howto/img_avatar.png",
+                timeStamp:serverTimestamp()
+
+            })
+        }
     }
     const googleSignIn = async () => {
-
-        const googleprovider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, googleprovider)
+        const googleProvider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, googleProvider)
         const user = result.user;
-        console.log(user);
+        // console.log(user);
         localStorage.setItem('st-hub', JSON.stringify(user));
-    //          await setDoc(doc(db, "users", user.uid), {
-    //         uid:user.uid,
-    //     //     name:'',
-    //     // headline:'', 
-    //     // bio:'', 
-    //     // currentPosition:'', 
-    //     // connections:0, 
-    //     // contactInfo:{
-    //     //     phoneNo:'', 
-    //     //     home:'',
-    //     // },
-    //     // socialMedia_urls:[`${''}`,`${''}`,`${''}`],
-    //     // skills:['React' ,'tailwindcss'],
-    //     // posts:[], 
-    //     profileImg:"https://www.w3schools.com/howto/img_avatar.png", 
-    //     profileImgPath:"", 
-        
-    // });
+        // Check for user
+        const docRef = doc(db, 'users', user.uid)
+        const docSnap = await getDoc(docRef)
+        // If user, doesn't exist, create user
+        //  here i faced the bigest problem is that whenevry try to login its overide the user data again and again but now its solved
 
+        if (!docSnap.exists()) {
+            await setDoc(doc(db, 'users', user.uid), {
+                uid: user.uid,
+                name: '',
+                headline: '',
+                bio: '',
+                CurrentPosition: '',
+                connections: 0,
+                contactInfo: {
+                    phoneNo: '',
+                    home: '',
+                },
+                socialMedia_urls: [`${''}`, `${''}`, `${''}`],
+                skills: ['React', 'tailwindcss'],
+                posts: [],
+                profileImg: "https://www.w3schools.com/howto/img_avatar.png",
+                timeStamp:serverTimestamp()
+
+            })
+            // navigate('/editProfile')
+        }
     }
     return (
         < DataContext.Provider value={{
@@ -176,10 +161,8 @@ export function ContextProvider({ children }) {
             email, setEmail, password, setPassword,
             handleLogin,
             handleSignUp,
-            googleSignUp, 
-            githubSignUp, 
             // everyones profile
-            profileData, 
+            profileData,
             userInformation
 
 
