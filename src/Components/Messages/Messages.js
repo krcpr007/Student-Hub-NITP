@@ -1,25 +1,27 @@
 import React,{useEffect, useState } from 'react'
 import SenderProfile from './SenderProfile'
-// import {getAuth} from 'firebase/auth'
-import { db, storage , auth} from "../../Firebase";
+import { db , auth} from "../../Firebase";
 import {
   collection,
   query,
   where,
   onSnapshot,
-  addDoc,
-  Timestamp,
-  orderBy,
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
+  // addDoc,
+  // Timestamp,
+  // orderBy,
+  // setDoc,
+  // doc,
+  // getDoc,
+  // updateDoc,
 } from "firebase/firestore";
 
 function Messages() {
   // const auth = getAuth();
+  console.warn(auth.currentUser.uid )
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
     useEffect(() => {
+      setLoading(true)
       const usersRef = collection(db, "users");
       // create query object
       const q = query(usersRef, where("uid", "not-in", [auth.currentUser.uid]));
@@ -30,15 +32,25 @@ function Messages() {
           users.push(doc.data());
         });
         setUsers(users);
+        setLoading(false)
       });
+
       return () => unsub();
     }, []);
-  console.log(users);
+  if(loading){
+    return<h1>Loading...</h1>
+  }
   return (
-    <div>
+    <div className='md:flex'>
+      <div className='lg:w-1/4'>
        {users.map((sender)=>{
-         return <SenderProfile key= {sender.uid} profileImg={sender.profileImg} sender={sender} />
-       })}
+         return <SenderProfile key= {sender.uid} sender={sender} />
+        })}
+        </div>
+        <div className="bg-slate-500 w-full">
+          <h1 className='text-center'>Lorem ipsum</h1>
+
+        </div>
     </div>
   )
 }
