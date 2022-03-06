@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { db, auth } from '../../Firebase'
-import { setDoc, doc, getDoc, serverTimestamp} from "firebase/firestore";
+import { setDoc, doc, getDoc, serverTimestamp, Timestamp} from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate, } from 'react-router-dom';
 const DataContext = createContext();
@@ -99,7 +99,7 @@ export function ContextProvider({ children }) {
         if (!docSnap.exists()) {
             await setDoc(doc(db, 'users', user.uid), {
                 uid: user.uid,
-                name: '',
+                name: user.displayName,
                 headline: '',
                 bio: '',
                 CurrentPosition: '',
@@ -111,9 +111,8 @@ export function ContextProvider({ children }) {
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['React', 'tailwindcss'],
                 posts: [],
-                profileImg: "https://www.w3schools.com/howto/img_avatar.png",
+                profileImg: user.photoURL ,
                 timeStamp:serverTimestamp()
-
             })
         }
     }
@@ -121,7 +120,6 @@ export function ContextProvider({ children }) {
         const googleProvider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, googleProvider)
         const user = result.user;
-        // console.log(user);
         localStorage.setItem('st-hub', JSON.stringify(user));
         // Check for user
         const docRef = doc(db, 'users', user.uid)
@@ -132,7 +130,7 @@ export function ContextProvider({ children }) {
         if (!docSnap.exists()) {
             await setDoc(doc(db, 'users', user.uid), {
                 uid: user.uid,
-                name: '',
+                name: user.displayName,
                 headline: '',
                 bio: '',
                 CurrentPosition: '',
@@ -144,7 +142,7 @@ export function ContextProvider({ children }) {
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['React', 'tailwindcss'],
                 posts: [],
-                profileImg: "https://www.w3schools.com/howto/img_avatar.png",
+                profileImg: user.photoURL,
                 timeStamp:serverTimestamp()
 
             })
@@ -164,8 +162,6 @@ export function ContextProvider({ children }) {
             // everyones profile
             profileData,
             userInformation
-
-
         }}>
             {children}
         </DataContext.Provider>
