@@ -1,13 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import Darkmode from '../DarkMode/Darkmode'
 import bgimg from './login-hero.svg'
+import ContextProvider from '../context/ContextProvider'
 function Error() {
+  const {darkMode} = useContext(ContextProvider);
   return (
     <>
-    <div className="p-0 flex">
-       <img src={bgimg} className="w-1/4" alt="" />
-      <div>
-        <h1>404</h1>
-        <span>Page doesn't exist </span>
+    <div className={`p-0 h-fit ${darkMode ? 'bg-gradient-to-b from-slate-900 to-slate-700 text-white' : "bg-white"}`}>
+      <div className="md:grid h-screen grid-cols-2 gap-4 px-11 place-item-center">
+       <img src={bgimg} className="m-5 md:w-[60rem]" alt="" />
+      <div className='font-mono md:mx-12 md:flex items-center'>
+        <div className='md:mx-8'>
+        <h1 className=' block md:text-9xl text-7xl text-center min-w-full font-extra-bold'>404</h1>
+        <span className='text-center block w-full font-bold text-2xl'>THE PAGE YOU ARE LOOKING FOR</span>
+        <span className='text-center block w-full font-bold text-2xl sm:mb-52'>DOES NOT EXIST</span>
+        </div>
+      </div>
       </div>
     </div>
     </>
