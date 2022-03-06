@@ -14,14 +14,15 @@ function ConversationsText({ msg }) {
     return (
         <div className='' ref={scrollRef}>
             <div className="">
-                <div className='px-0 '>
-                    <p className={`m-1 ${msg.to===auth.currentUser.uid?'text-left text-slate-900':'text-right'}`}>{msg.msg}
+                <div className='px-0'>
+                    <p className={`${msg.to===auth.currentUser.uid?'text-left text-slate-900 bg-neutral-700 ':'text-right bg-blue-400'}`}>{msg.msg}
                       {msg.media ?(<img src={msg.media} />):null}
                         <br />
-                        <small className='text-xs'>
+                        <small className='text-xs opacity-50'>
                             {<Moment fromNow>
                                 {msg.createdAt.toDate()}</Moment>}
                         </small>
+                        <hr />
                     </p>
                 </div>
             </div>
