@@ -35,11 +35,9 @@ function EditProfile() {
    const onSubmit = async(e)=>{
        e.preventDefault();
        setLoading(true); 
-    //    console.warn(name, bio, headline,CurrentPostion ,socialMedia_urls, constactInfo ,skills )
-    // console.warn(home, phoneNo, instalink, linkedin)
        const snapshot = doc(db,'users', auth.currentUser.uid); 
        await updateDoc(snapshot, {
-        name, bio, headline,CurrentPosition , contactInfo, socialMedia_urls:[linkedin,instalink, gtihublink],
+         headline ,bio , name,socialMedia_urls:[linkedin,instalink, gtihublink], contactInfo,CurrentPosition
       }); 
       setLoading(false); 
    }
