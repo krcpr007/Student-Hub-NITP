@@ -15,7 +15,7 @@ import {
 import { db, auth, storage } from '../../Firebase';
 import ConversationsText from './ConversationsText';
 function Chat() {
-  const user1 = auth.currentUser.uid; // getting current user  
+  const user1 = auth.currentUser.uid; // getting current user 
   const params = useParams();
   const { uid } = params;
   const user2 = uid // uid we are getting from params
@@ -60,13 +60,18 @@ function Chat() {
       const MediaUrl = getDownloadURL(ref(storage, snap.ref.fullPath))
       url = MediaUrl;
     }
-    await addDoc(collection(db, 'messages', id, 'chat'), {
-      msg,
-      from: user1,
-      to: user2,
-      createdAt: Timestamp.fromDate(new Date()),
-      media: url || ''
-    });
+    if(msg.trim().length !== 0){
+
+      await addDoc(collection(db, 'messages', id, 'chat'), {
+        msg,
+        from: user1,
+        to: user2,
+        createdAt: Timestamp.fromDate(new Date()),
+        media: url || ''
+      });
+    }else{
+      alert("Enter msg first")
+    }
     setMsg('');
   }
   return (
@@ -80,12 +85,12 @@ function Chat() {
         </div>
 
         <div className='relative bottom-0 flex'>
-          <form className='flex'>
-            <label htmlFor="file">
-              <BsUpload className='text-2xl mx-3 my-2' />
+          <form className='flex bg-slate-500 rounded-r '>
+            <label htmlFor="file" className=' border-r border-gray-900'>
+              <BsUpload className='text-2xl mx-3 my-2 ' />
             </label>
             <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => setMedia(e.target.files[0])} name='file' id='file' />
-            <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className='bg-gray-500 px-2 py-2 ' />
+            <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className='bg-slate-500 px-2 py-2 ' />
             <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-r'>Send</button>
           </form>
         </div>
