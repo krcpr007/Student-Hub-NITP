@@ -1,10 +1,12 @@
-import React, {useRef , useEffect} from 'react'
+import React, {useRef , useEffect, useContext} from 'react'
 import { useParams } from 'react-router-dom';
 import { auth } from '../../Firebase';
+import ContextProvider from '../context/ContextProvider'
 import Moment from 'react-moment';
 function ConversationsText({ msg }) {
     const params = useParams(); 
     const {uid} = params;
+    const {darkMode} = useContext(ContextProvider);
     console.warn(uid)
     // when user enter the msg it scorll the screen to last msg
     const scrollRef =useRef();
@@ -12,10 +14,10 @@ function ConversationsText({ msg }) {
          scrollRef.current?.scrollIntoView({behavior:"smooth"});
     },[msg])
     return (
-        <div className='' ref={scrollRef}>
+        <div className={`p-0 h-fit ${darkMode ? 'bg-gradient-to-r from-slate-900 to-slate-700 text-white' : "bg-white"}`} ref={scrollRef}>
             <div className="">
-                <div className='px-0'>
-                    <p className={`${msg.to===auth.currentUser.uid?'text-left text-slate-900 bg-neutral-700 ':'text-right bg-blue-400'}`}>{msg.msg}
+                <div className={`${msg.to===auth.currentUser.uid?'flex':'flex flex-row-reverse'}`}>
+                    <p className={`${msg.to===auth.currentUser.uid?'text-left text-black bg-yellow-500 w-auto rounded-lg px-2':'text-right bg-blue-400 rounded-lg'}`}>{msg.msg}
                       {msg.media ?(<img src={msg.media} />):null}
                         <br />
                         <small className='text-xs opacity-50'>
