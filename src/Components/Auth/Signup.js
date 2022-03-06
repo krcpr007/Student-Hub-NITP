@@ -14,14 +14,13 @@ const Signup = () =>{
       setEmail("");
       setPassword('');
       onAuthStateChanged(auth, (user)=>{
-        console.log(user)
         if(user){
           navigate('/')
         }
       })
       // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]) 
-    const {googleSignUp , githubSignUp , email ,setEmail ,password ,setPassword ,darkMode, handleSignUp } = useContext(ContextProvider);
+    const {googleSignIn , githubSignIn , email ,setEmail ,password ,setPassword ,darkMode, handleSignUp } = useContext(ContextProvider);
     const [showPass, setShowPass] = useState(false);
     const showPassord = ()=>{
         showPass?setShowPass(false):setShowPass(true);
@@ -66,12 +65,12 @@ const Signup = () =>{
             </div>
             <hr />
             <div className="mt-2 flex">
-              <button onClick={googleSignUp} className="login-signup-btn mx-3">SignUp with
+              <button onClick={googleSignIn} className="login-signup-btn mx-3">SignUp with
                 <div className="icon">
                   <FcGoogle />
                 </div>
               </button>
-              <button onClick={githubSignUp} className="login-signup-btn">SignUp with
+              <button onClick={githubSignIn} className="login-signup-btn">SignUp with
                 <div className="icon">
                   <SiGithub />
                 </div>

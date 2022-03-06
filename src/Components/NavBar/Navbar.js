@@ -11,15 +11,14 @@ import {auth} from '../../Firebase'
 import ContextProvider from "../context/ContextProvider";
 import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
-  console.log(auth);
   const { darkMode , profileData , userInformation } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const handleLogout = () => {
     if (auth.currentUser) {
+      localStorage.removeItem('st-hub')
       signOut(auth)
         .then(() => {
-          alert("logout")
-          localStorage.removeItem('st-hub')
+          // alert("logout")
         })
         .catch((err) => { console.log(err) })
     } else {
@@ -28,7 +27,9 @@ function Navbar() {
     setShowDropDown(false)
   }
   useEffect(()=>{
-   userInformation(); 
+    if(localStorage.getItem('st-hub')){
+      userInformation(); 
+    }
    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const showAndHideDropDown =()=>{
@@ -50,11 +51,11 @@ function Navbar() {
           <span className="navicon bg-grey-darkest flex items-center relative"></span>
         </label>
         <ul className='menu'>
-          <input className="px-7 py-1 border-2 border-yellow-300 md:w-auto text-slate-700 shadow-sm  rounded-lg m-2 active:border-yellow-400 focus:ring-2 focus:ring-yellow-200 focus:border-yellow-400 " placeholder="Search..." type="text" />
+          <input className="px-7 py-1 border-2 border-yellow-300 md:w-auto text-slate-700 shadow-2xl  rounded-lg m-2 active:border-yellow-400 focus:ring-2 focus:ring-yellow-200 focus:border-yellow-400 " placeholder="Search..." type="text" />
         </ul>
         <ul className="menu border-b md:border-none flex justify-end list-reset m-0 w-full md:w-auto">
 
-          {auth.currentUser ? (<>
+          {localStorage.getItem('st-hub')? (<>
             <li className="border-t md:border-none">
               <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome size="30" color='gold' className='inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
             </li>
