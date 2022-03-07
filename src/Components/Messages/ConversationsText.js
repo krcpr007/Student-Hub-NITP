@@ -17,14 +17,13 @@ function ConversationsText({ msg }) {
         <div className={`p-0 h-fit ${darkMode ? 'bg-gradient-to-r from-slate-900 to-slate-700 text-white' : "bg-white"}`} ref={scrollRef}>
             <div className="">
                 <div className={`${msg.to===auth.currentUser.uid?'flex':'flex flex-row-reverse'}`}>
-                    <p className={`${msg.to===auth.currentUser.uid?'text-left text-black bg-yellow-500 w-auto rounded-lg px-2':'text-right bg-blue-400 rounded-lg'}`}>{msg.msg}
+                    <p className={`my-1 px-1 py-1 ${msg.to===auth.currentUser.uid?'text-left text-black bg-yellow-500 w-auto rounded-r px-2 rounded-bl-3xl':'text-right bg-blue-400 rounded-l-lg rounded-br-3xl'}`}>{msg.msg}
                       {msg.media ?(<img src={msg.media} />):null}
                         <br />
                         <small className='text-xs opacity-50'>
                             {<Moment fromNow>
                                 {msg.createdAt.toDate()}</Moment>}
                         </small>
-                        <hr />
                     </p>
                 </div>
             </div>

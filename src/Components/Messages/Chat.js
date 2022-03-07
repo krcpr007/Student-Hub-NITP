@@ -109,13 +109,13 @@ function Chat() {
         </div>
 
         <div className='relative bottom-0'>
-          <form className='flex bg-slate-500 rounded-r '>
+          <form className='flex bg-slate-500 rounded-r'>
             <label htmlFor="file" className=' border-r border-gray-900 cursor-pointer'>
               <BsUpload className='text-2xl mx-3 my-2 ' />
             </label>
             <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => setMedia(e.target.files[0])} name='file' id='file' />
             <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className='bg-slate-500 px-2 py-2 w-full' placeholder='Message...' />
-            <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-md w-48 hover:bg-yellow-500'>Send</button>
+            <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-r w-48 hover:bg-yellow-500'>Send</button>
           </form>
         </div>
       </div>
