@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import {FaImage} from 'react-icons/fa'
 import Img from '../assets/img_avatar.png'
 import { db } from '../../Firebase';
 import contextProvider from '../context/ContextProvider'
@@ -47,7 +48,7 @@ function SenderProfile({ sender, user1 }) {
                     {lastMsgData && (
                         <small>
                             <span>{lastMsgData.from === user1 ? 'Me: ' : null}</span>
-                            {lastMsgData.msg}
+                            {lastMsgData.msg.substring(0,15)+"..."} {lastMsgData.media?(<FaImage className='inline text-yellow-400'/>):null}
                         </small>
                     )}
                 </div>
