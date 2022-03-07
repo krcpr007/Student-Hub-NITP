@@ -2,7 +2,7 @@ import React, { useEffect, useState , useContext} from 'react';
 import Img from '../assets/img_avatar.png'
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-import { BsUpload } from 'react-icons/bs'
+import {FcGallery} from 'react-icons/fc'
 import {
   doc,
   getDoc, addDoc,
@@ -61,10 +61,13 @@ function Chat() {
     if (media) {
       const mediaRef = ref(storage, `ChatMedia/${new Date().getTime()} - ${media.name}`);
       const snap = await uploadBytes(mediaRef, media);
-      const MediaUrl = getDownloadURL(ref(storage, snap.ref.fullPath))
+      const MediaUrl = await getDownloadURL(ref(storage, snap.ref.fullPath)) // here i was doing the one silly miste promises was not resloved (await was missing )
       url = MediaUrl;
+      console.log("url:" , url ); 
+      console.log("Murl:" , MediaUrl ); 
+
     }
-    if (msg.trim().length !== 0) {
+    if (msg.trim().length !== 0 || media) {
 
       await addDoc(collection(db, 'messages', id, 'chat'), {
         msg,
@@ -87,7 +90,8 @@ function Chat() {
       alert("Enter msg first")
     }
     setMsg('');
-  }
+    setMedia('')
+  };
   return (
     <>
       <div className=''>
@@ -111,11 +115,11 @@ function Chat() {
         <div className='relative bottom-0'>
           <form className='flex bg-slate-500 rounded-r'>
             <label htmlFor="file" className=' border-r border-gray-900 cursor-pointer'>
-              <BsUpload className='text-2xl mx-3 my-2 ' />
+              <FcGallery className='text-2xl mx-3 my-2 ' />
             </label>
             <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => setMedia(e.target.files[0])} name='file' id='file' />
             <input type="text" value={msg} onChange={e => setMsg(e.target.value)} className='bg-slate-500 px-2 py-2 w-full' placeholder='Message...' />
-            <button type="submit" onClick={handleSubmit} className='bg-yellow-300 px-2 py-2 rounded-r w-48 hover:bg-yellow-500'>Send</button>
+            <button type="submit" onClick={handleSubmit} className={`bg-yellow-300 px-2 py-2 rounded-r w-48 hover:bg-yellow-500`}>{media?"Send File":'Send'}</button>
           </form>
         </div>
       </div>
