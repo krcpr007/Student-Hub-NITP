@@ -1,4 +1,4 @@
-import React,{useEffect, useState } from 'react'
+import {useEffect, useState } from 'react'
 import SenderProfile from './SenderProfile'
 import { db , auth} from "../../Firebase";
 import {
@@ -6,13 +6,6 @@ import {
   query,
   where,
   onSnapshot,
-  // addDoc,
-  // Timestamp,
-  // orderBy,
-  // setDoc,
-  // doc,
-  // getDoc,
-  // updateDoc,
 } from "firebase/firestore";
 
 function Messages() {
@@ -47,8 +40,8 @@ function Messages() {
         })}
         </div>
         <div className="bg-slate-500 w-full">
-          <h1 className='text-center'>Lorem ipsum</h1>
-
+          {/* <h1 className='text-center'>Nit Patna</h1> */}
+           <img src="Nit_patna.jpeg" className='h-full' alt="" />
         </div>
     </div>
   )

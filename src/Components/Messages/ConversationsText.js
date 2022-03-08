@@ -1,11 +1,8 @@
 import React, {useRef , useEffect, useContext} from 'react'
-import { useParams } from 'react-router-dom';
 import { auth } from '../../Firebase';
 import ContextProvider from '../context/ContextProvider'
 import Moment from 'react-moment';
 function ConversationsText({ msg }) {
-    const params = useParams(); 
-    const {uid} = params;
     const {darkMode} = useContext(ContextProvider);
     // when user enter the msg it scorll the screen to last msg
     const scrollRef =useRef();

@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore";
 import {
   ref, getDownloadURL, uploadBytes,
-  deleteObject
 } from 'firebase/storage'
 import { db, auth, storage } from '../../Firebase';
 import contextProvider from '../context/ContextProvider'
@@ -76,7 +75,7 @@ function Chat() {
         createdAt: Timestamp.fromDate(new Date()),
         media: url || ''
       });
-      await setDoc(doc(db, 'lastMsg', id), {
+      await setDoc(doc(db, 'lastMsg', id), { // seting last msg to users so that we can get one step above when profile will show we can show the last msg
         msg,
         from: user1,
         to: user2,
