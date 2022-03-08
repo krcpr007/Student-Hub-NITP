@@ -23,10 +23,11 @@ function PostCard() {
             Hii all ,
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa nemo odio asperiores sunt minus dignissimos dolor, reprehenderit iure et consequuntur vero sit repellat, rerum culpa deserunt quam nulla maxime? Natus?
             </p>
-            <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80" alt="post-pic" className=' p-2 rounded-lg' />
+            {/* <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80" alt="post-pic" className=' p-2 rounded-lg' /> */}
+            <img src="Nit_patna.jpeg" alt="post-pic" className=' p-2 rounded-lg w-full' />
             <div className='flex p-1 text-xs mb-2'>
                 <p> <BiLike className='inline' color='red'/> You, and 133 also like this</p>
-                <p className='text-left ml-12 mx-2 '>100 comments </p>
+                <p className='text-left ml-12 mx-2'>100 comments </p>
                 <p className=''>65 shares</p>
             </div>
         </div>

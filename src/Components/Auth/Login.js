@@ -27,9 +27,9 @@ function Login() {
 },[]) 
   return (
     <>
-      <div className={`flex h-screen bg-center bg-contai`} style={{ backgroundImage: `url(${bg1})` }}>
+      <div className={`flex h-screen bg-center `} style={{ backgroundImage: `url('cartoon_mainbuilding.jpg')` }}>
         <div className="m-auto">
-          <div className= {`shadow-2xl rounded px-6 pt-6 pb-8 mb-4 bg-white  ${darkMode?'bg-slate-900 text-white':null} `}>
+          <div className= {`shadow-2xl rounded px-6 pt-6 pb-8 mb-4 backdrop-blur backdrop-brightness-75 ${darkMode?'bg-slate-900 text-white':null} `}>
             <div className="mb-2 text-center">
               <h1 className="text-4xl font-medium">Sign in</h1>
               <span className="text-sm">Stay updated on your Nitp world</span>
