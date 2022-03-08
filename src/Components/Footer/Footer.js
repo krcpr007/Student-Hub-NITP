@@ -12,6 +12,7 @@ function Footer() {
         <div className="md:flex">
             <div className="md:w-1/4 p-6 m-2 ">
               <div className="flex flex-no-shrink items-center lg:ml-3 sm:ml-10 py-3 text-grey-darkest">
+            <img src="nitlogo.png" alt="" />
                 <h1 className="leading-none text-2xl font-medium text-grey-darkest">
                 <Link to='/' className="no-underline text-grey-darkest hover:text-black">
                   <span className='text-yellow-500 px-2 mx-0.5'>Students</span><span className='bg-yellow-400 rounded px-2 py-1.5'>Hub</span>
@@ -19,12 +20,12 @@ function Footer() {
             </h1>
             </div>
           <div className="m-2 px-2.5">
-            <p className="text-sm text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p className="text-xs font-medium text-justify"> Student hub for whole Nit Patna.Where students of Nit Patna can post their achievements,  status, Projects, coding skills, and many more things. Here students can connect to each other and they can chat with any student of nit Patna. They can also check academic details and classes and many more things.</p>
           </div>
         </div>
-        <div className="md:w-1/4 p-6 m-2 ">
-          <p>Useful links</p>
-          <ul className="text-xs">
+        <div className="md:w-1/4 p-6 m-2 mt-8 ">
+          <h1 className='leading-none text-3xl font-medium'>Useful links</h1>
+          <ul className="text-sm mt-3">
             <li>Link 1</li>
             <li>Link 2</li>
             <li>Link 3</li>
