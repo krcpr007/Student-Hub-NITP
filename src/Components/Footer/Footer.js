@@ -41,9 +41,9 @@ function Footer() {
           </div>
           <button type="button" className="btn-sub">Subscribe</button>
         </div>
-        <div className="md:w-1/4 p-6 m-2 ">
+        <div className="md:w-1/4 p-6 mx-2 mt-2 ">
         <div >
-          <span className="footer-title">Social Links</span> 
+          <span className="footer-title text-center">Social Links</span> 
           <div className="grid grid-flow-col gap-4 my-6 ">
            <a href='htpps://www.facebook.com' className='text-3xl text-yellow-500'>
             <FaFacebook />

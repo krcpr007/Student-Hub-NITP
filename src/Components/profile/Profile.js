@@ -110,7 +110,7 @@ function Profile() {
             <h1 className="text-3xl font-medium">{auth.currentUser.displayName?`${auth.currentUser.displayName}`:`${profileData.name}`}</h1>
 
             <span className="text-sm">{profileData && profileData.headline}</span> <br />
-            <span className="text-xs">Patna, Bihar,India</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e=>setShowContactModal(true)}  >Contact info</span>
+            <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e=>setShowContactModal(true)}  >Contact info</span>
           </div>
         </div>
       </div>

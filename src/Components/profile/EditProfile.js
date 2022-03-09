@@ -37,12 +37,12 @@ function EditProfile() {
         skills: [skill1, skill2, skill3, skill4, skill5]
     })
     const { headline, bio, name, CurrentPosition, skills } = formData;
-    console.log("skills", skills);
+
     //geting changes in property in eg headline,bio, name,
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
-    console.log("skiils", skill1, skill2, skill3, skill4, skill5);
+    
     //form submit function
     const onSubmit = async (e) => {
         e.preventDefault();

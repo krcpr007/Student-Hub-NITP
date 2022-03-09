@@ -23,7 +23,7 @@ function Messages() {
           users.push(doc.data());
         });
         setUsers(users);
-        console.table(users)
+        // console.table(users)
         setLoading(false)
       });
 
