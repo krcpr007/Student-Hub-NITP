@@ -1,42 +1,40 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , Link} from "react-router-dom";
 import { BiMessageSquareEdit } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { FaGithub } from 'react-icons/fa'
+import {MdPlace, MdEmail ,MdContactPhone ,MdHome} from 'react-icons/md'
 import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
-import { Link } from "react-router-dom";
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 // import { collection, doc, onSnapshot, query, updateDoc, where, getDoc } from "firebase/firestore";
-import { doc,  getDoc } from "firebase/firestore";
-import { db} from '../../Firebase';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../Firebase';
 import ContextProvider from '../context/ContextProvider'
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
-  const userid = uid.split(" ").join("") //removing spaces form uid it was most important for geting user profile info
-  const { darkMode, profileData, userInformation } = useContext(ContextProvider);
-  const [profileImg, setProfileImg] = useState();
+  const { darkMode } = useContext(ContextProvider);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = React.useState(false);
-  const [showContactModal, setShowContactModal] = useState(true);
+  const [showContactModal, setShowContactModal] = useState(false);
   const [loader, setLoader] = useState(false);
-  useEffect(() => {
+  useEffect(async() => {
     // userInformation();
-    const docRef = doc(db, "users", userid);
-      getDoc(docRef).then((docSnap)=>{
-        if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
+    
+    const docRef = doc(db, "users", uid);
+    
+    // loader(true); 
+    const docSnap = await getDoc(docRef); 
+    if(docSnap.exists()){
       setUser(docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
+      // setLoader(false);
     }
-      
-      }).catch((e)=>console.log(e))
-
   }, [])
+  if(loader){
+    return <h1>Loading...</h1>
+  }
   return (
     <>
       {/* https://www.w3schools.com/howto/img_avatar.png */}
@@ -58,26 +56,27 @@ function UserProfile() {
             </div>
             <div className="relative -top-10 md:-top-24 md:left-5">
               <div className='absolute -top-14 left-40 md:left-3/4 '>
-                
+               
                 {/* <div className='flex'>
-                  <a href={user.socialMedia_urls[1]} target='_blank' rel='noreferrer'>
+                  <a href={user?.socialMedia_urls[1]} target='_blank' rel='noreferrer'>
                     <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
                   </a>
-                  <a href={user.socialMedia_urls[2]} target='_blank' rel='noreferrer'>
+                  <a href={user?.socialMedia_urls[2]} target='_blank' rel='noreferrer'>
                     <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
                   </a>
-                  <a href={user.socialMedia_urls[0]} target='_blank' rel='noreferrer'>
+                  <a href={user?.socialMedia_urls[0]} target='_blank' rel='noreferrer'>
                     <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
                   </a>
                   <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
                 </div> */}
               </div>
 
-              {/* <h1 className="text-3xl font-medium">{auth.currentUser.displayName?`${auth.currentUser.displayName}`:`${profileData.name}`}</h1> */}
               <h1 className="text-3xl font-medium">{user.name}</h1>
 
               <span className="text-sm">{user && user.headline}</span> <br />
-              <span className="text-xs">Patna, Bihar,India</span> <Link className="text-sm text-blue-600" to="/contactInfo">Contact info</Link>
+              <MdPlace title="Live in" className="inline" />
+              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e=>setShowContactModal(true)}  >Contact info</span>
+              <Link to={`/chat/${user.uid}`} title="Message" className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</Link>
             </div>
           </div>
         </div>
@@ -113,21 +112,74 @@ function UserProfile() {
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className=" bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <AiFillCloseCircle className=""/>
-                  </button>
-                  
-                </div>
+                    <button
+                      className=" bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowModal(false)}
+                    >
+                      <AiFillCloseCircle className="" />
+                    </button>
+
+                  </div>
                 </div>
               </div>
             </div>
             {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
           </>
         ) : null}
+        {showContactModal?(<>
+        <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative md:w-1/4 my-6 mx-auto max-w-3xl ">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-200 outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-xl font-medium my-4">
+                    Contact Info
+                  </h3>
+                  <img src="nitlogo.png" className="mx-5" alt="" />
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="relative p-4 flex-auto">
+                <div className="flex my-2">
+                <MdEmail className="text-2xl text-yellow-500"/>
+                {/* <a href={`mailto:${auth.currentUser.email}`} className="mx-2">{auth.currentUser?.email}</a> */}
+                </div>
+                <div className="flex my-2">
+                  <MdContactPhone className="text-2xl text-yellow-500"/>
+                   <a title="Tap to call" href={`tel:${user.contactInfo?.phoneNo}`} className="mx-2">{user.contactInfo?.phoneNo}</a>
+                </div>
+                <div className="flex my-2">
+                  <MdHome className="text-2xl text-yellow-500" />
+                  <p className="mx-2">{user.contactInfo?.home}</p>
+                  </div>
+                
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className=" bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowContactModal(false)}
+                  >
+                    <AiFillCloseCircle className=""/>
+                  </button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+      </>):null}
       </div>
     </>
   );
