@@ -13,6 +13,7 @@ import EditProfile from "./Components/profile/EditProfile";
 import UsersProfile from "./Components/profile/UsersProfile";
 import Messages from "./Components/Messages/Messages";
 import Chat from "./Components/Messages/Chat";
+import About from "./Components/About/About";
 function App() {
   return (
     <>
@@ -24,6 +25,7 @@ function App() {
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/about" element={<About />} />
             <Route path="/*" element={<Error />} />
             <Route element={<PrivateComp/>}>
                 <Route path="/" element={<Feed />} />

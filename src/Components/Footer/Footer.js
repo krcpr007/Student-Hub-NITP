@@ -26,7 +26,7 @@ function Footer() {
         <div className="md:w-1/4 p-6 m-2 mt-8 ">
           <h1 className='leading-none text-3xl font-medium'>Useful links</h1>
           <ul className="text-sm mt-3">
-            <li>Link 1</li>
+            <li><Link className='font-medium text-blue-500 hover:underline' to="/about">About</Link></li>
             <li>Link 2</li>
             <li>Link 3</li>
             <li>Link 4</li>
