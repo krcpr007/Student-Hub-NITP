@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoMdLogIn } from 'react-icons/io'
@@ -11,8 +11,10 @@ import {auth} from '../../Firebase'
 import ContextProvider from "../context/ContextProvider";
 import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
+  const navigate = useNavigate(); 
   const { darkMode , profileData , userInformation } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
+  const [search, setSearch] =useState('');
   const handleLogout = () => {
     if (auth.currentUser) {
       localStorage.removeItem('st-hub')
@@ -26,7 +28,11 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
-
+  const OnSearch=(e)=>{
+    e.preventDefault()
+    navigate(`/search?name=${search}`); 
+    setSearch('');
+  }
   const showAndHideDropDown =()=>{
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }
@@ -46,7 +52,10 @@ function Navbar() {
           <span className="navicon bg-grey-darkest flex items-center relative"></span>
         </label>
         <ul className='menu'>
-          <input className="px-7 py-1 border-2 border-yellow-300 md:w-auto text-slate-700 shadow-2xl  rounded-lg m-2 active:border-yellow-400 focus:ring-2 focus:ring-yellow-200 focus:border-yellow-400 " placeholder="Search..." type="text" />
+         <form>
+          <input onChange={e=>setSearch(e.target.value)} className="px-7 py-1 border border-yellow-300 md:w-auto text-yellow-400 shadow-2xl rounded m-2 bg-transparent  active:border-yellow-400  focus:ring-yellow-500 focus:ring focus:border-yellow-400 placeholder:text-yellow-500 bg-slate-800 " placeholder="Search..." type="text" />
+          <button type='submit' onClick={OnSearch} className='hidden'>search</button>
+          </form>
         </ul>
         <ul className="menu border-b md:border-none flex justify-end list-reset m-0 w-full md:w-auto">
 

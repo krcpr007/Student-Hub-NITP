@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useParams , Link} from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { BiMessageSquareEdit } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { FaGithub } from 'react-icons/fa'
-import {MdPlace, MdEmail ,MdContactPhone ,MdHome} from 'react-icons/md'
+import { MdPlace, MdEmail, MdContactPhone, MdHome } from 'react-icons/md'
 import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
 import avatar from '../assets/img_avatar.png'
@@ -20,19 +20,19 @@ function UserProfile() {
   const [showModal, setShowModal] = React.useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [loader, setLoader] = useState(false);
-  useEffect(async() => {
+  useEffect(async () => {
     // userInformation();
-    
+
     const docRef = doc(db, "users", uid);
-    
+
     // loader(true); 
-    const docSnap = await getDoc(docRef); 
-    if(docSnap.exists()){
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
       setUser(docSnap.data());
       // setLoader(false);
     }
   }, [])
-  if(loader){
+  if (loader) {
     return <h1>Loading...</h1>
   }
   return (
@@ -56,7 +56,7 @@ function UserProfile() {
             </div>
             <div className="relative -top-10 md:-top-24 md:left-5">
               <div className='absolute -top-14 left-40 md:left-3/4 '>
-               
+
                 {/* <div className='flex'>
                   <a href={user?.socialMedia_urls[1]} target='_blank' rel='noreferrer'>
                     <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
@@ -75,7 +75,7 @@ function UserProfile() {
 
               <span className="text-sm">{user && user.headline}</span> <br />
               <MdPlace title="Live in" className="inline" />
-              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e=>setShowContactModal(true)}  >Contact info</span>
+              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
               <Link to={`/chat/${user.uid}`} title="Message" className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</Link>
             </div>
           </div>
@@ -127,8 +127,8 @@ function UserProfile() {
             {/* <div className="opacity-25 fixed inset-0 z-40 bg-black"></div> */}
           </>
         ) : null}
-        {showContactModal?(<>
-        <div
+        {showContactModal ? (<>
+          <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative md:w-1/4 my-6 mx-auto max-w-3xl ">
@@ -136,10 +136,10 @@ function UserProfile() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-200 outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-xl font-medium my-4">
+                  <h3 className="text-xl font-medium my-2">
                     Contact Info
                   </h3>
-                  <img src="nitlogo.png" className="mx-5" alt="" />
+                  <img src="nitlogo.png" className="mx-5" alt="logo" />
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -151,19 +151,20 @@ function UserProfile() {
                 </div>
                 {/*body*/}
                 <div className="relative p-4 flex-auto">
-                <div className="flex my-2">
-                <MdEmail className="text-2xl text-yellow-500"/>
-                {/* <a href={`mailto:${auth.currentUser.email}`} className="mx-2">{auth.currentUser?.email}</a> */}
-                </div>
-                <div className="flex my-2">
-                  <MdContactPhone className="text-2xl text-yellow-500"/>
-                   <a title="Tap to call" href={`tel:${user.contactInfo?.phoneNo}`} className="mx-2">{user.contactInfo?.phoneNo}</a>
-                </div>
-                <div className="flex my-2">
-                  <MdHome className="text-2xl text-yellow-500" />
-                  <p className="mx-2">{user.contactInfo?.home}</p>
+                  <div className="flex my-2">
+                    <MdEmail className="text-2xl text-yellow-500" />
+                    {/* <a href={`mailto:${auth.currentUser.email}`} className="mx-2">{auth.currentUser?.email}</a> */}
                   </div>
-                
+                  <div className="flex my-2">
+                    <MdContactPhone className="text-2xl text-yellow-500" />
+                    <a title="Tap to call" href={`tel:${user.contactInfo?.phoneNo}`} className="mx-2">{user.contactInfo?.phoneNo}</a>
+                  </div>
+                  <div className="flex my-2">
+                    <MdHome className="text-2xl text-yellow-500" />
+                    <p className="mx-2">{user.contactInfo?.home}</p>
+
+                  </div>
+
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -172,14 +173,14 @@ function UserProfile() {
                     type="button"
                     onClick={() => setShowContactModal(false)}
                   >
-                    <AiFillCloseCircle className=""/>
+                    <AiFillCloseCircle className="" />
                   </button>
-                  
+
                 </div>
               </div>
             </div>
           </div>
-      </>):null}
+        </>) : null}
       </div>
     </>
   );

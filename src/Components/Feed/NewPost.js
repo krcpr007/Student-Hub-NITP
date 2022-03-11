@@ -1,4 +1,5 @@
 import avatar from '../assets/img_avatar.png'
+import {Link} from 'react-router-dom'
 import React, { useContext, useEffect } from 'react'
 import { IoMdPhotos } from 'react-icons/io'
 import { MdVideoLibrary } from 'react-icons/md'
@@ -14,7 +15,9 @@ function NewPost() {
     return (
         <div className={`sm:w-3/4 lg:w-2/3 shadow rounded ${darkMode ? 'bg-slate-900 text-white' : null}`}>
             <div className='flex p-2 m-2'>
+                <Link to='/profile'>
                 <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-2 border-gray-400' />
+                </Link>
                 <input type="text" className='px-8 border-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' />
             </div>
             <div className=' p-2  '>

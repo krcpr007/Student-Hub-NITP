@@ -5,7 +5,7 @@ import {BsFillCameraFill} from 'react-icons/bs';
 import {FaGithub} from 'react-icons/fa'
 import  {ImLinkedin} from 'react-icons/im'
 import {RiInstagramFill} from 'react-icons/ri'
-import {MdDelete, MdEmail ,MdContactPhone ,MdHome} from 'react-icons/md'
+import {MdDelete, MdEmail ,MdContactPhone ,MdHome ,MdPlace} from 'react-icons/md'
 import { Link } from "react-router-dom";
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
@@ -110,6 +110,7 @@ function Profile() {
             <h1 className="text-3xl font-medium">{auth.currentUser.displayName?`${auth.currentUser.displayName}`:`${profileData.name}`}</h1>
 
             <span className="text-sm">{profileData && profileData.headline}</span> <br />
+            <MdPlace title="Live in" className="inline" />
             <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e=>setShowContactModal(true)}  >Contact info</span>
           </div>
         </div>

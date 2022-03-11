@@ -14,6 +14,7 @@ import UsersProfile from "./Components/profile/UsersProfile";
 import Messages from "./Components/Messages/Messages";
 import Chat from "./Components/Messages/Chat";
 import About from "./Components/About/About";
+import Search from "./Components/Search/Search";
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/*" element={<Error />} />
             <Route element={<PrivateComp/>}>
+            <Route path="/search" element={<Search />} />
                 <Route path="/" element={<Feed />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/messages" element={<Messages />} />
