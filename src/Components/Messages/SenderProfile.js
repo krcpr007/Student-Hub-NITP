@@ -34,8 +34,7 @@ function SenderProfile({ sender, user1 }) {
             <div className='flex'>
                 <div className='mt-2'>
                     <Link to={`/user/${sender.uid}`}>
-                        <img src={sender.profileImg || Img} alt="" className='w-16 rounded-full border border-slate-900' />
-
+                        <img src={sender.profileImg || Img} alt="" className='w-16 rounded-full border-2 border-yellow-400' />
                     </Link>
                 </div>
                 <div className='mx-2.5 my-2.5'>
