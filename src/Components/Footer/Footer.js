@@ -19,7 +19,7 @@ function Footer() {
                 </Link>
             </h1>
             </div>
-          <div className="m-2 px-2.5">
+          <div className="m-2 sm:px-2.5">
             <p className="text-xs font-medium text-justify"> Student hub for whole Nit Patna.Where students of Nit Patna can post their achievements,  status, Projects, coding skills, and many more things. Here students can connect to each other and they can chat with any student of nit Patna. They can also check academic details and classes and many more things.</p>
           </div>
         </div>
@@ -54,7 +54,7 @@ function Footer() {
            <a href='https://www.twitter.com' className='text-3xl text-yellow-500'>
             <AiOutlineTwitter />
            </a>
-           <a href='https://www.github.com' className='text-3xl text-yellow-500'>
+           <a target='_blank' rel='noreferrer' href='https://github.com/krcpr007/Student-Hub-NITP' className='text-3xl text-yellow-500'>
             <FaGithubAlt />
            </a>
          </div>
