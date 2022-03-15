@@ -12,7 +12,7 @@ import ContextProvider from "../context/ContextProvider";
 import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
   const navigate = useNavigate();
-  const { darkMode, profileData, userInformation } = useContext(ContextProvider);
+  const { darkMode, profileData } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const [search, setSearch] = useState('');
   const handleLogout = () => {
@@ -30,6 +30,9 @@ function Navbar() {
   }
   const OnSearch = (e) => {
     e.preventDefault()
+    if(search.length===0){
+      return 
+    }
     navigate(`/search?name=${search}`);
     setSearch('');
   }
