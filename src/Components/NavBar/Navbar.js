@@ -30,7 +30,7 @@ function Navbar() {
   }
   const OnSearch = (e) => {
     e.preventDefault()
-    if(search.length===0){
+    if(search.length===0 || search.trim().length === 0){
       return 
     }
     navigate(`/search?name=${search}`);
