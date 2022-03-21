@@ -19,7 +19,6 @@ function Search() {
   const auth = JSON.parse(localStorage.getItem('st-hub'));// getting auth from local-storge
   const { darkMode } = useContext(ContextProvider)
   let querySearch = new URLSearchParams(useLocation().search).get('name');
-  console.log(querySearch);
   const [users, setUsers] = useState([])
   useEffect(() => {
     setLoader(true)

@@ -22,18 +22,16 @@ function UserProfile() {
   const [loader, setLoader] = useState(false);
   useEffect(async () => {
     // userInformation();
-
+    setLoader(true); 
     const docRef = doc(db, "users", uid);
-
-    // loader(true); 
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setUser(docSnap.data());
-      // setLoader(false);
+      setLoader(false);
     }
   }, [])
   if (loader) {
-    return <h1>Loading...</h1>
+    return <Loader/>
   }
   return (
     <>

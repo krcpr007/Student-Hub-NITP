@@ -9,7 +9,7 @@ import {MdDelete, MdEmail ,MdContactPhone ,MdHome ,MdPlace} from 'react-icons/md
 import { Link } from "react-router-dom";
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
-import {collection, doc, onSnapshot, query, updateDoc, where} from "firebase/firestore";
+import { doc,  updateDoc,} from "firebase/firestore";
 import { db, storage , auth} from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import  ContextProvider  from '../context/ContextProvider'
@@ -21,12 +21,6 @@ function Profile() {
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     userInformation();
-    // const userRef = collection(db, "users");
-    // const q = query(userRef, where('uid', '==', profileData.uid));
-    // const unsub = onSnapshot(q,(querySnapshot)=>{
-    //   console.log( "query" ,querySnapshot);
-    // })
-    // unsub()
     if (profileImg) {
       const uploadImg = async () => {
         setLoader(true)
@@ -45,8 +39,6 @@ function Profile() {
           profileImgPath: snap.ref.fullPath,
         })
         setProfileImg('');
-        // console.log(snap.ref.fullPath);
-        // console.log(url);
       } catch (e) {
         console.log(e.message); 
       }
@@ -71,6 +63,9 @@ function Profile() {
      } catch (e) {
        console.log(e)
      }
+  }
+  if(loader){
+    return <Loader />
   }
   return (
     <>
