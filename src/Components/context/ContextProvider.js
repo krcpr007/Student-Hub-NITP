@@ -11,6 +11,7 @@ export function ContextProvider({ children }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [darkMode, setDarkMode] = useState(false);
+    const [search, setSearch] = useState('');
     const changeMode = () => {
         darkMode ? setDarkMode(false) : setDarkMode(true)
         // const darkMode = localStorage.setItem('mode', JSON.parse(1))
@@ -20,7 +21,7 @@ export function ContextProvider({ children }) {
         getDoc(doc(db, 'users', auth ? auth.currentUser.uid : null)).then((docSnap) => {
             if (docSnap.exists) {
                 SetProfileData(docSnap.data());
-                console.log(docSnap.data())
+                // console.log(docSnap.data())
             }
         });
     }
@@ -34,7 +35,7 @@ export function ContextProvider({ children }) {
                 .then(async (userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    console.log(user);
+                    // console.log(user);
                     localStorage.setItem('st-hub', JSON.stringify(user));
                     await setDoc(doc(db, "users", user.uid), {
                         uid: user.uid,
@@ -48,7 +49,7 @@ export function ContextProvider({ children }) {
                             home: '',
                         },
                         socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                        skills: ['React', '', '', '', ''],
+                        skills: ['', '', '', '', ''],
                         posts: [],
                         profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
                         profileImgPath: "",
@@ -76,7 +77,7 @@ export function ContextProvider({ children }) {
             const userCreadential = await signInWithEmailAndPassword(auth, email, password)
             if (userCreadential.user) {
                 alert("sign in succefully");
-                console.log(userCreadential.user);
+                // console.log(userCreadential.user);
                 localStorage.setItem("st-hub", JSON.stringify(userCreadential.user));
             }
         } catch (error) {
@@ -109,7 +110,7 @@ export function ContextProvider({ children }) {
                     home: '',
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                skills: ['React', 'tailwindcss'],
+                skills: ['', '','','',''],
                 posts: [],
                 profileImg: user.photoURL ,
                 timeStamp:serverTimestamp()
@@ -140,7 +141,7 @@ export function ContextProvider({ children }) {
                     home: '',
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                skills: ['React', 'tailwindcss'],
+                skills: ['', '','','',''],
                 posts: [],
                 profileImg: user.photoURL,
                 timeStamp:serverTimestamp()
@@ -149,6 +150,15 @@ export function ContextProvider({ children }) {
             // navigate('/editProfile')
         }
     }
+     // searching logic a user with thier data 
+     const OnSearch = (e) => {
+        e.preventDefault()
+        if(search.length===0 || search.trim().length === 0){
+          return 
+        }
+        navigate(`/search?name=${search}`);
+        setSearch('');
+      }
     return (
         < DataContext.Provider value={{
             darkMode,
@@ -161,7 +171,12 @@ export function ContextProvider({ children }) {
             handleSignUp,
             // everyones profile
             profileData,
-            userInformation
+            userInformation,
+            //searching 
+            search, 
+            setSearch,
+            OnSearch 
+
         }}>
             {children}
         </DataContext.Provider>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoMdLogIn } from 'react-icons/io'
@@ -11,10 +11,8 @@ import { auth } from '../../Firebase'
 import ContextProvider from "../context/ContextProvider";
 import Darkmode from '../DarkMode/Darkmode'
 function Navbar() {
-  const navigate = useNavigate();
-  const { darkMode, profileData } = useContext(ContextProvider);
+  const { darkMode, profileData , setSearch , OnSearch} = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
-  const [search, setSearch] = useState('');
   const handleLogout = () => {
     if (auth.currentUser) {
       localStorage.removeItem('st-hub')
@@ -28,14 +26,7 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
-  const OnSearch = (e) => {
-    e.preventDefault()
-    if(search.length===0 || search.trim().length === 0){
-      return 
-    }
-    navigate(`/search?name=${search}`);
-    setSearch('');
-  }
+  
   const showAndHideDropDown = () => {
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }

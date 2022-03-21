@@ -17,7 +17,7 @@ import ContextProvider from '../context/ContextProvider';
 function Search() {
   const [loader, setLoader] = useState(false); 
   const auth = JSON.parse(localStorage.getItem('st-hub'));// getting auth from local-storge
-  const { darkMode } = useContext(ContextProvider)
+  const { darkMode  , setSearch} = useContext(ContextProvider)
   let querySearch = new URLSearchParams(useLocation().search).get('name');
   const [users, setUsers] = useState([])
   useEffect(() => {
@@ -37,6 +37,7 @@ function Search() {
         return (value.name.toLowerCase().includes(querySearch.toLowerCase()) || value.headline.toLowerCase().includes(querySearch.toLowerCase()) || value.contactInfo.home.toLowerCase().includes(querySearch.toLowerCase()))
       })
       setLoader(false);
+      setSearch('')
       setUsers(filterData);
     });
     return () => unsub();
