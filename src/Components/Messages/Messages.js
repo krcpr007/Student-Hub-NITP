@@ -1,6 +1,7 @@
 import {useEffect, useState } from 'react'
 import SenderProfile from './SenderProfile'
 import { db , auth} from "../../Firebase";
+import Loader from '../Loader/Loader'
 import {
   collection,
   query,
@@ -30,7 +31,7 @@ function Messages() {
       return () => unsub();
     }, []);
   if(loading){
-    return<h1>Loading...</h1>
+    return <Loader/>    
   }
   return (
     <div className='md:flex'>
