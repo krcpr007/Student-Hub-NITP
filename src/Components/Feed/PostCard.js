@@ -8,7 +8,7 @@ function PostCard() {
     const {darkMode} =useContext(ContextProvider); 
     return (
         <>
-        <div className={` sm:w-3/4  mt-3 shadow lg:w-2/3 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
+        <div className={` sm:w-3/4  mt-3 shadow lg:w-3/4 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
             <div className='flex'>
           <div className='m-1'>
               <a href="/"><img src="https://avatars.githubusercontent.com/u/80947662?v=4" alt="" className='w-10 rounded-3xl border-2 border-gray-400' /></a>

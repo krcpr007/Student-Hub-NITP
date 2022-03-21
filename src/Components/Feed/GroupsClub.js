@@ -3,7 +3,7 @@ import ContextProvider from "../context/ContextProvider";
 function GroupsClub() {
     const { darkMode } = useContext(ContextProvider);
     return (
-        <div className={` mt-2 shadow w-3/4 ml-5 rounded-md ${darkMode ? 'bg-slate-900 text-white' : null}`}>
+        <div className={` mt-2 shadow ml-5 rounded-md ${darkMode ? 'bg-slate-900 text-white' : null}`}>
             <h1 className='px-5 font-bold text-sm'>Your groups and clubs</h1>
             <div className='px-5'>
                 <div className='text-sm flex mt-1'>
