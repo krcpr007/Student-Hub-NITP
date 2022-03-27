@@ -41,6 +41,7 @@ function Search() {
       setUsers(filterData);
     });
     return () => unsub();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [querySearch])
   return (
     <div>

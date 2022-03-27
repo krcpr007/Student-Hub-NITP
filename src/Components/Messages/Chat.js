@@ -49,6 +49,7 @@ function Chat() {
       })
       setConversation(convo)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // console.warn(conversation)
   const handleSubmit = async (e) => {
