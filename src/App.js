@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./Components/NavBar/Navbar";
 import Error from "./Components/Error/404";
 import Signup from './Components/Auth/Signup'
@@ -14,6 +15,7 @@ import UsersProfile from "./Components/profile/UsersProfile";
 import Messages from "./Components/Messages/Messages";
 import Chat from "./Components/Messages/Chat";
 import About from "./Components/About/About";
+import {ToastContainer} from 'react-toastify'
 import Search from "./Components/Search/Search";
 function App() {
   return (
@@ -38,7 +40,13 @@ function App() {
                 <Route path="/user/:uid" element={<UsersProfile/>} />
             </Route>
           </Routes>
-          {/* <ToastContainer theme="dark" /> */}
+           <ToastContainer
+           position="top-center"
+           closeOnClick pauseOnFocusLoss
+           draggable
+           pauseOnHover
+           newestOnTop={true}
+           theme='dark' />
           <Footer />
         </ContextProvider>
       </BrowserRouter>
