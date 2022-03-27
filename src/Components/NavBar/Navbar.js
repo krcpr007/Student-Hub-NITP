@@ -7,9 +7,10 @@ import { AiFillCaretDown, AiFillMessage } from 'react-icons/ai'
 import { BiNetworkChart } from 'react-icons/bi'
 import { signOut } from 'firebase/auth';
 import avatar from '../assets/img_avatar.png'
-import { auth } from '../../Firebase'
+import { auth } from '../../Firebase';
 import ContextProvider from "../context/ContextProvider";
-import Darkmode from '../DarkMode/Darkmode'
+import DarkMode from '../DarkMode/Darkmode'
+import {toast} from "react-toastify";
 function Navbar() {
   const { darkMode, profileData , setSearch , OnSearch} = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -18,7 +19,7 @@ function Navbar() {
       localStorage.removeItem('st-hub')
       signOut(auth)
         .then(() => {
-          // alert("logout")
+          toast.success("Log-out Successfully");
         })
         .catch((err) => { console.log(err) })
     } else {
@@ -40,7 +41,7 @@ function Navbar() {
             </Link>
           </h1>
         </div>
-        <Darkmode />
+        <DarkMode />
         <input className="menu-btn hidden" type="checkbox" id="menu-btn" />
         <label className="menu-icon block cursor-pointer md:hidden px-2 py-4 relative select-none" htmlFor="menu-btn">
           <span className="navicon bg-grey-darkest flex items-center relative"></span>

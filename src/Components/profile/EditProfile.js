@@ -8,6 +8,7 @@ function EditProfile() {
     };
     useEffect(() => {
         userInformation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const { darkMode, profileData, userInformation } = useContext(ContextProvider);
     const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ function EditProfile() {
         name: auth.currentUser.displayName ? auth.currentUser.displayName : profileData.name,
         CurrentPosition: profileData.CurrentPosition,
         socialMedia_urls: [instalink, gtihublink, linkedin],
-        skills: [skill1, skill2, skill3, skill4, skill5]
+        // skills: [skill1, skill2, skill3, skill4, skill5]
     })
     const { headline, bio, name, CurrentPosition, skills } = formData;
 
@@ -48,6 +49,7 @@ function EditProfile() {
         e.preventDefault();
         setLoading(true);
         const snapshot = doc(db, 'users', auth.currentUser.uid);
+        console.warn(headline, bio, name, contactInfo, CurrentPosition , skills)
         await updateDoc(snapshot, {
             headline, bio, name, socialMedia_urls: [linkedin, instalink, gtihublink], contactInfo, CurrentPosition ,
             skills: [skill1, skill2, skill3, skill4, skill5]
@@ -58,8 +60,7 @@ function EditProfile() {
         <>
             <div className={`bg-slate-600/80`}>
                 <div>
-                    <div className='p-10'>
-
+                    <div className='p-5 sm:p-10'>
                         <form>
                             <div className="relative z-0 mb-6 w-full group">
                                 <input type="text" name="name" className={`block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " value={name} onChange={handleChange} required="" />

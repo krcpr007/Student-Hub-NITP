@@ -1,8 +1,9 @@
 import React, { createContext, useState } from 'react';
 import { db, auth } from '../../Firebase'
-import { setDoc, doc, getDoc, serverTimestamp, Timestamp} from "firebase/firestore";
+import { setDoc, doc, getDoc, serverTimestamp,} from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
-import { useNavigate, } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {toast} from "react-toastify";
 const DataContext = createContext();
 
 export function ContextProvider({ children }) {
@@ -76,7 +77,7 @@ export function ContextProvider({ children }) {
 
             const userCreadential = await signInWithEmailAndPassword(auth, email, password)
             if (userCreadential.user) {
-                alert("sign in succefully");
+                alert("Sign in successfully");
                 // console.log(userCreadential.user);
                 localStorage.setItem("st-hub", JSON.stringify(userCreadential.user));
             }
@@ -93,9 +94,9 @@ export function ContextProvider({ children }) {
         localStorage.setItem('st-hub', JSON.stringify(user));
         // Check for user
         const docRef = doc(db, 'users', user.uid)
-        const docSnap = await getDoc(docRef)
+        const docSnap = await getDoc(docRef) 
         // If user, doesn't exist, create user
-        //  here i faced the bigest problem is that whenevry try to login its overide the user data again and again but now its solved
+        //  here i faced the bigest problem is that whenevery try to login its overide the user data again and again but now its solved
 
         if (!docSnap.exists()) {
             await setDoc(doc(db, 'users', user.uid), {
@@ -122,6 +123,9 @@ export function ContextProvider({ children }) {
         const result = await signInWithPopup(auth, googleProvider)
         const user = result.user;
         localStorage.setItem('st-hub', JSON.stringify(user));
+        toast.success("Loged-In Successfully",{
+            theme:`${darkMode?'dark':'light'}`
+        })
         // Check for user
         const docRef = doc(db, 'users', user.uid)
         const docSnap = await getDoc(docRef)
@@ -150,11 +154,16 @@ export function ContextProvider({ children }) {
             // navigate('/editProfile')
         }
     }
-     // searching logic a user with thier data 
+     // searching logic a user with their data
      const OnSearch = (e) => {
         e.preventDefault()
         if(search.length===0 || search.trim().length === 0){
           return 
+        }
+        if(search.length<=3){
+            toast.info('Enter Full Name Please')
+            setSearch('');
+            return
         }
         navigate(`/search?name=${search}`);
         setSearch('');
