@@ -16,6 +16,7 @@ function SenderProfile({ sender, user1 }) {
             setLastMsgData(doc.data());
         })
         return () => unsab();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     // function for when user read the msg so that badge will Disappear
     const msgRead = async () => {
