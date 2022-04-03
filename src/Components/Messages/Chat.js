@@ -1,7 +1,6 @@
 import React, { useEffect, useState , useContext} from 'react';
 import Img from '../assets/img_avatar.png'
-import { Link } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { Link , useParams} from 'react-router-dom';
 import {FcGallery} from 'react-icons/fc'
 import {
   doc,
@@ -16,17 +15,19 @@ import {
 import { db, auth, storage } from '../../Firebase';
 import contextProvider from '../context/ContextProvider'
 import ConversationsText from './ConversationsText';
+const CryptoJS = require("crypto-js");
+const key = process.env.REACT_APP_CRYPTO_KEY 
 function Chat() {
   const { darkMode } = useContext(contextProvider);
   const user1 = auth.currentUser.uid; // getting current user 
   const params = useParams();
   const { uid } = params;
   const user2 = uid // uid we are getting from params
-  // const userid = uid.split(" ").join("") //removing spaces form uid it was most important for geting user profile info
   const [user, setUser] = useState({});
   const [conversation, setConversation] = useState([])
   const [msg, setMsg] = useState('');
   const [media, setMedia] = useState('');
+  let encryptedText = CryptoJS.AES.encrypt(msg, key).toString();
   useEffect(() => {
     // userInformation();
     const docRef = doc(db, "users", uid);
@@ -41,7 +42,7 @@ function Chat() {
     }).catch((e) => console.log(e))
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}` // creating msg unique id
     const msgsRef = collection(db, 'messages', id, 'chat');
-    const q = query(msgsRef, orderBy('createdAt', 'asc')) // for geting msgs in descending order
+    const q = query(msgsRef, orderBy('createdAt', 'asc')) // for getting msgs in descending order
     onSnapshot(q, querySnapshot => {
       let convo = [];
       querySnapshot.forEach((doc) => {
@@ -61,24 +62,23 @@ function Chat() {
     if (media) {
       const mediaRef = ref(storage, `ChatMedia/${new Date().getTime()} - ${media.name}`);
       const snap = await uploadBytes(mediaRef, media);
-      const MediaUrl = await getDownloadURL(ref(storage, snap.ref.fullPath)) // here i was doing the one silly miste promises was not resloved (await was missing )
+      const MediaUrl = await getDownloadURL(ref(storage, snap.ref.fullPath)) // here i was doing the one silly mistake promises was not resolved (await was missing )
       url = MediaUrl;
-      console.log("url:" , url ); 
-      console.log("Murl:" , MediaUrl ); 
+      // console.log("url:" , url ); 
+      // console.log("Murl:" , MediaUrl ); 
 
     }
     if (msg.trim().length !== 0 || media) {
 
       await addDoc(collection(db, 'messages', id, 'chat'), {
-        msg,
+        msg:encryptedText,
         from: user1,
         to: user2,
         createdAt: Timestamp.fromDate(new Date()),
         media: url || ''
       });
-      await setDoc(doc(db, 'lastMsg', id), { // seting last msg to users so that we can get one step above when profile will show we can show the last msg
-        msg,
-        from: user1,
+      await setDoc(doc(db, 'lastMsg', id), { // set last msg to users so that we can get one step above when profile will show we can show the last msg
+        msg:encryptedText,        from: user1,
         to: user2,
         createdAt: Timestamp.fromDate(new Date()),
         media: url || '',

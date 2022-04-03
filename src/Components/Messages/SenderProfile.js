@@ -1,23 +1,38 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import {FaImage} from 'react-icons/fa'
-import Img from '../assets/img_avatar.png'
+import Img from '../assets/img_avatar.png';
 import { db } from '../../Firebase';
 import contextProvider from '../context/ContextProvider'
 import { onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore';
+import {toast} from "react-toastify";
+const CryptoJS = require("crypto-js");
+const key = process.env.REACT_APP_CRYPTO_KEY 
 function SenderProfile({ sender, user1 }) {
     const { darkMode } = useContext(contextProvider);
     const user2 = sender?.uid;
-    const [lastMsgData, setLastMsgData] = useState('');
+    const [lastMsgData, setLastMsgData] = useState({});
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}` // creating msg unique id
+    let bytes  = CryptoJS.AES.decrypt(lastMsgData?.msg?lastMsgData.msg:'', key);
+    let decryptedText = bytes.toString(CryptoJS.enc.Utf8);
     useEffect(() => {
         let unsab = onSnapshot(doc(db, 'lastMsg', id), (doc) => {
-            // onsnapshot listner refetch data autometicaly when data get changed
+            // onSnapshot re-fetch data automatically when data get changed
             setLastMsgData(doc.data());
         })
         return () => unsab();
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    useEffect(()=>{
+        if(lastMsgData?.unread){
+            toast(`📩 Message received`,{
+                theme:`${darkMode?'dark':'light'}`,
+                autoClose:1000,
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[lastMsgData?.msg])
     // function for when user read the msg so that badge will Disappear
     const msgRead = async () => {
         const docSnap = await getDoc(doc(db, 'lastMsg', id));
@@ -27,7 +42,7 @@ function SenderProfile({ sender, user1 }) {
                 unread: false
             })
         } else {
-            console.log('can not upadate');
+            console.log('can not update');
         }
     }
     return (
@@ -41,14 +56,14 @@ function SenderProfile({ sender, user1 }) {
                 <div className='mx-2.5 my-2.5'>
                     <Link to={`/chat/${sender.uid}`} className="flex" onClick={msgRead}>
                         <h1 className='font-medium'>{sender.name ? sender.name : "Lorem ipsum"} </h1>
-                        {lastMsgData?.from !== user1 && lastMsgData?.unread && (<span class="animate-pulse bg-gray-100 text-gray-800 text-xs font-extralight ml-2 px-1.5 rounded-full pt-1 dark:bg-gray-700 dark:text-gray-300">New</span>)}
+                        {lastMsgData?.from !== user1 && lastMsgData?.unread && (<span className="animate-pulse bg-gray-100 text-gray-800 text-xs font-extralight ml-2 px-1.5 rounded-full pt-1 dark:bg-gray-700 dark:text-gray-300">New</span>)}
                     </Link>
 
-                    <p className='text-xs'>{sender.headline ? sender.headline : null}</p>
+                    <p className='text-xs'>{sender.headline ? sender.headline.substring(0,30) : null}</p>
                     {lastMsgData && (
                         <small>
                             <span>{lastMsgData.from === user1 ? 'Me: ' : null}</span>
-                            {lastMsgData.msg.substring(0,15)+"..."} {lastMsgData.media?(<FaImage className='inline text-yellow-400'/>):null}
+                            {decryptedText?.substring(0,15)+"..."} {lastMsgData.media?(<FaImage className='inline text-yellow-400'/>):null}
                         </small>
                     )}
                 </div>
