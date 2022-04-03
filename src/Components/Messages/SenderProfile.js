@@ -25,7 +25,7 @@ function SenderProfile({ sender, user1 }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     useEffect(()=>{
-        if(lastMsgData?.unread){
+        if(lastMsgData?.unread && lastMsgData.from !== user1 ){
             toast(`📩 Message received`,{
                 theme:`${darkMode?'dark':'light'}`,
                 autoClose:1000,
