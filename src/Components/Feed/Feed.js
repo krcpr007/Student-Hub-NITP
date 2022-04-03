@@ -1,11 +1,63 @@
-import React from "react";
+import React, {useState , useEffect} from "react";
 import LeftAboutCard from './LeftAboutCard'
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+  startAfter,
+} from 'firebase/firestore'
+import { db } from '../../Firebase'
 import GroupsClub from './GroupsClub'
 import NewPost from './NewPost'
 import PostCard from './PostCard'
 import PeersNews from './PeersNews'
 import Opportunities from './Opportunities'
+import { toast } from "react-toastify";
 function Feed() {
+  const [posts , setPosts] = useState([])
+  useEffect(()=>{
+    
+    const fetchPosts = async () => {
+      try {
+        // Get reference
+        const listingsRef = collection(db, 'posts')
+
+        // Create a query
+        const q = query(
+          listingsRef,
+          
+          orderBy('postedAt', 'desc'),
+          limit(10)
+        )
+        // Execute query
+        const querySnap = await getDocs(q)
+
+        const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+        // setLastFetchedListing(lastVisible)
+        // console.log('fetchPost', lastVisible)
+        const posts = []
+
+        querySnap.forEach((doc) => {
+          return posts.push({
+            id: doc.id,
+            data: doc.data(),
+          })
+        })
+        console.log('posts are', posts);
+        setPosts(posts); 
+        // setListings(listings)
+        // setLoading(false)
+      } catch (error) {
+        toast.error('Could not fetch listings')
+      }
+    }
+
+    fetchPosts()
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   return (
     <div>
       <div className="">
@@ -16,9 +68,11 @@ function Feed() {
               <GroupsClub />
             </div>
           </div>
-          <div className="">
+          <div className="sm:ml-2">
             <NewPost />
-            <PostCard />
+            {posts.map((post)=>{
+              return <PostCard key={post.id} post={post.data} /> 
+            })}
           </div>
           <div className="hidden md:inline md:mr-10">
             <PeersNews />

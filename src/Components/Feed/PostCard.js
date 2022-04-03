@@ -1,30 +1,46 @@
-import React, { useContext } from 'react'
+import React, { useContext ,useEffect , useState} from 'react'; 
+import { Link } from 'react-router-dom';
 import {AiOutlineLike} from 'react-icons/ai'
 import {BiCommentDots, BiLike} from 'react-icons/bi';
 import {FaShare} from 'react-icons/fa';
-import {RiSendPlaneFill} from 'react-icons/ri'
+import {RiSendPlaneFill} from 'react-icons/ri';
 import  ContextProvider  from '../context/ContextProvider'
-function PostCard() {
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../Firebase';
+function PostCard({post}) {
+    const [user , setUser] = useState({})
+    useEffect(()=>{
+        const userData = async()=>{
+
+            const docRef = doc(db, "users", post.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                console.log(docSnap.data());
+              setUser(docSnap.data());
+            //   setLoader(false);
+            }
+          }
+          userData();
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
     const {darkMode} =useContext(ContextProvider); 
     return (
         <>
-        <div className={` sm:w-3/4  mt-3 shadow lg:w-3/4 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
+        <div className={`sm:w-3/4 mt-3 shadow lg:w-3/4 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
             <div className='flex'>
           <div className='m-1'>
-              <a href="/"><img src="https://avatars.githubusercontent.com/u/80947662?v=4" alt="" className='w-10 rounded-3xl border-2 border-gray-400' /></a>
+              <Link to={`/user/${user.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border-2 border-gray-400' /></Link>
           </div>
           <div className='m-1'>
-              <h1 className='font-medium'><a href="/">lorem ipsum</a></h1>
-              <p className='text-xs'>Full stack MERN Developer|| CSE Student at NITP || React Fronted Developer</p>
+              <h1 className='font-medium'><Link to={`/user/${user.uid}`}>{user.name}</Link></h1>
+              <p className='text-xs'>{user.headline}</p>
           </div>
             </div>
         <div>
             <p className='p-3 text-justify'>
-            Hii all ,
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa nemo odio asperiores sunt minus dignissimos dolor, reprehenderit iure et consequuntur vero sit repellat, rerum culpa deserunt quam nulla maxime? Natus?
+            {post.text}
             </p>
-            {/* <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80" alt="post-pic" className=' p-2 rounded-lg' /> */}
-            <img src="Nit_patna.jpeg" alt="post-pic" className=' p-2 rounded-lg w-full' />
+            <img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' />
             <div className='flex p-1 text-xs mb-2'>
                 <p> <BiLike className='inline' color='red'/> You, and 133 also like this</p>
                 <p className='text-left ml-12 mx-2'>100 comments </p>
