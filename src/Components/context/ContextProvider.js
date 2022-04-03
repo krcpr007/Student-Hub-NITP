@@ -77,7 +77,9 @@ export function ContextProvider({ children }) {
 
             const userCreadential = await signInWithEmailAndPassword(auth, email, password)
             if (userCreadential.user) {
-                alert("Sign in successfully");
+                toast.success('Sign in successfully',{
+                    theme:`${darkMode?'dark':'light'}`
+                })
                 // console.log(userCreadential.user);
                 localStorage.setItem("st-hub", JSON.stringify(userCreadential.user));
             }
