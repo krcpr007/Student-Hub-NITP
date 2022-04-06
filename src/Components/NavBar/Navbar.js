@@ -19,7 +19,9 @@ function Navbar() {
       localStorage.removeItem('st-hub')
       signOut(auth)
         .then(() => {
-          toast.success("Log-out Successfully");
+          toast.success("Log-out Successfully",{
+            theme:`${darkMode?'dark':'light'}`
+          });
         })
         .catch((err) => { console.log(err) })
     } else {
@@ -58,31 +60,31 @@ function Navbar() {
 
           {localStorage.getItem('st-hub') ? (<>
             <li className="border-t md:border-none">
-              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome size="30" color='gold' className='inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
+              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome  color='gold' className='text-4xl inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
             </li>
 
             <li className="border-t md:border-none">
-              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart size="30" color='gold' className='inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium'>Connections</span> </Link>
+              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart  color='gold' className='text-4xl inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium'>Connections</span> </Link>
             </li>
 
             <li className="border-t md:border-none">
-              <Link to="/messages" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><AiFillMessage size="30" color='gold' className='inline lg:block mx-2 lg:mx-5' /><span className='text-sm font-medium'>Messages</span></Link>
+              <Link to="/messages" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><AiFillMessage color='gold' className='text-4xl inline lg:block mx-2 lg:mx-5' /><span className='text-sm font-medium'>Messages</span></Link>
             </li>
             <li className="border-t md:border-none flex md:block">
               <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker">
-                <img src={profileData.profileImg || avatar} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
+                <img src={profileData.profileImg || avatar} alt="" className='w-9 rounded-full border-2 border-gray-400 inline lg:block' />
                 <span className='text-sm mx-2 lg:-mx-1.5 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
               </Link>
               <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
               {showDropDown ? (<>
-                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                <div className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${darkMode?'bg-slate-800 text-white':null}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                    <Link to="/editProfile" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</Link>
-                    <a href="/#" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Support</a>
-                    <Link to='/nitpatna' className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-2">License</Link>
-                    <Link to="/login" onClick={handleLogout} className="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</Link>
-                    <button onClick={showAndHideDropDown} className="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">close</button>
+                    <Link to="/editProfile" className=" block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</Link>
+                    <Link to="/support" className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Support</Link>
+                    <Link to='/nit-patna' className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-2">License</Link>
+                    <Link to="/login" onClick={handleLogout} className=" block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</Link>
+                    <button onClick={showAndHideDropDown} className=" block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">close</button>
                   </div>
                 </div>
 
