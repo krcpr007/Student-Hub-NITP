@@ -17,7 +17,9 @@ function NewPost() {
     userInformation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+ const CreatePost = ()=>{
+   
+ }
   return (
     <div className={`lg:w-3/4 sm:w-3/4 shadow rounded ${darkMode ? 'bg-slate-900 text-white' : null}`}>
       <div className='flex p-2 m-2'>
@@ -30,10 +32,10 @@ function NewPost() {
         <span className='mx-6 cursor-pointer hover:bg-gray-200 p-1.5' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
           <IoMdPhotos className='inline' color="gold" /> Photos
         </span>
-        <span className='mr-6 hover:bg-gray-200 p-1.5 cursor-pointer'>
+        <span className='mr-6 hover:bg-gray-200 p-1.5 cursor-pointer' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
           <MdVideoLibrary color="gold" className='inline' /> Videos
         </span>
-        <span className='mr-6 hover:bg-gray-200 p-1.5 cursor-pointer'>
+        <span className='mr-6 hover:bg-gray-200 p-1.5 cursor-pointer' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
 
           <MdEventAvailable color="gold" className='inline' /> Events
         </span>
@@ -61,10 +63,10 @@ function NewPost() {
             {/*body*/}
             <div className="relative p-4 flex-auto">
               <form action="">
-                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
-                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type..." value={text} onChange={e=>setText(e.target.value)} />
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="user_avatar">Upload file</label>
-                <input class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={e=>setFile(e.target.files[0])} />
+                <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
+                <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type..." value={text} onChange={e=>setText(e.target.value)} />
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" htmlFor="user_avatar">Upload file</label>
+                <input className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" onChange={e=>setFile(e.target.files[0])} />
               </form>
             </div>
             {/*footer*/}
