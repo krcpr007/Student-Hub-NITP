@@ -1,14 +1,14 @@
 import React, { createContext, useState } from 'react';
 import { db, auth } from '../../Firebase'
-import { setDoc, doc, getDoc, serverTimestamp,} from "firebase/firestore";
+import { setDoc, doc, getDoc, serverTimestamp, } from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 const DataContext = createContext();
 
 export function ContextProvider({ children }) {
     const navigate = useNavigate();
-    const [profileData, SetProfileData] = useState({});
+    const [profileData, setProfileData] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [darkMode, setDarkMode] = useState(false);
@@ -19,12 +19,20 @@ export function ContextProvider({ children }) {
     }
     //  user Information 
     const userInformation = async () => {
-        getDoc(doc(db, 'users', auth ? auth.currentUser.uid : null)).then((docSnap) => {
-            if (docSnap.exists) {
-                SetProfileData(docSnap.data());
-                // console.log(docSnap.data())
-            }
-        });
+        const localAuth = JSON.parse(localStorage.getItem('st-hub'));
+        try {
+            getDoc(doc(db, 'users', localAuth ? localAuth.uid : null)).then((docSnap) => {
+                if (docSnap.exists) {
+                    setProfileData(docSnap.data());
+                    // console.log(docSnap.data())
+                }else{
+                    console.log("went wrong to get user profile")
+                }
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // sign up work 
@@ -54,7 +62,7 @@ export function ContextProvider({ children }) {
                         posts: [],
                         profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
                         profileImgPath: "",
-                        timeStamp:serverTimestamp()
+                        timeStamp: serverTimestamp()
                     });
                     navigate("/");
 
@@ -75,13 +83,13 @@ export function ContextProvider({ children }) {
         e.preventDefault()
         try {
 
-            const userCreadential = await signInWithEmailAndPassword(auth, email, password)
-            if (userCreadential.user) {
-                toast.success('Sign in successfully',{
-                    theme:`${darkMode?'dark':'light'}`
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            if (userCredential.user) {
+                toast.success('Sign in successfully', {
+                    theme: `${darkMode ? 'dark' : 'light'}`
                 })
-                // console.log(userCreadential.user);
-                localStorage.setItem("st-hub", JSON.stringify(userCreadential.user));
+                // console.log(userCredential.user);
+                localStorage.setItem("st-hub", JSON.stringify(userCredential.user));
             }
         } catch (error) {
             console.log(error);
@@ -96,9 +104,9 @@ export function ContextProvider({ children }) {
         localStorage.setItem('st-hub', JSON.stringify(user));
         // Check for user
         const docRef = doc(db, 'users', user.uid)
-        const docSnap = await getDoc(docRef) 
+        const docSnap = await getDoc(docRef)
         // If user, doesn't exist, create user
-        //  here i faced the bigest problem is that whenevery try to login its overide the user data again and again but now its solved
+        //  here i faced the big problem is that whenever try to login its override the user data again and again but now its solved
 
         if (!docSnap.exists()) {
             await setDoc(doc(db, 'users', user.uid), {
@@ -113,10 +121,10 @@ export function ContextProvider({ children }) {
                     home: '',
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                skills: ['', '','','',''],
+                skills: ['', '', '', '', ''],
                 posts: [],
-                profileImg: user.photoURL ,
-                timeStamp:serverTimestamp()
+                profileImg: user.photoURL,
+                timeStamp: serverTimestamp()
             })
         }
     }
@@ -125,14 +133,14 @@ export function ContextProvider({ children }) {
         const result = await signInWithPopup(auth, googleProvider)
         const user = result.user;
         localStorage.setItem('st-hub', JSON.stringify(user));
-        toast.success("Loged-In Successfully",{
-            theme:`${darkMode?'dark':'light'}`
+        toast.success("Log-In Successfully", {
+            theme: `${darkMode ? 'dark' : 'light'}`
         })
         // Check for user
         const docRef = doc(db, 'users', user.uid)
         const docSnap = await getDoc(docRef)
         // If user, doesn't exist, create user
-        //  here i faced the bigest problem is that whenevry try to login its overide the user data again and again but now its solved
+        //  here i faced the big problem is that whenever try to login its override the user data again and again but now its solved
 
         if (!docSnap.exists()) {
             await setDoc(doc(db, 'users', user.uid), {
@@ -147,29 +155,29 @@ export function ContextProvider({ children }) {
                     home: '',
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                skills: ['', '','','',''],
+                skills: ['', '', '', '', ''],
                 posts: [],
                 profileImg: user.photoURL,
-                timeStamp:serverTimestamp()
+                timeStamp: serverTimestamp()
 
             })
             // navigate('/editProfile')
         }
     }
-     // searching logic a user with their data
-     const OnSearch = (e) => {
+    // searching logic a user with their data
+    const OnSearch = (e) => {
         e.preventDefault()
-        if(search.length===0 || search.trim().length === 0){
-          return 
+        if (search.length === 0 || search.trim().length === 0) {
+            return
         }
-        if(search.length<=3){
+        if (search.length <= 3) {
             toast.info('Enter Full Name Please')
             setSearch('');
             return
         }
         navigate(`/search?name=${search}`);
         setSearch('');
-      }
+    }
     return (
         < DataContext.Provider value={{
             darkMode,
@@ -180,13 +188,13 @@ export function ContextProvider({ children }) {
             email, setEmail, password, setPassword,
             handleLogin,
             handleSignUp,
-            // everyones profile
+            // everyOnes profile
             profileData,
             userInformation,
             //searching 
-            search, 
+            search,
             setSearch,
-            OnSearch 
+            OnSearch
 
         }}>
             {children}
