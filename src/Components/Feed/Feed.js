@@ -16,13 +16,16 @@ import PostCard from './PostCard'
 import PeersNews from './PeersNews'
 import Opportunities from './Opportunities'
 import { toast } from "react-toastify";
+import Loader from "../Loader/Loader";
 function Feed() {
-  const [posts , setPosts] = useState([])
+  const [posts , setPosts] = useState([]);
+  const [loading, setLoading]= useState(false);
   useEffect(()=>{
     
     const fetchPosts = async () => {
       try {
         // Get reference
+        setLoading(true)
         const listingsRef = collection(db, 'posts')
 
         // Create a query
@@ -36,8 +39,6 @@ function Feed() {
         const querySnap = await getDocs(q)
 
         const lastVisible = querySnap.docs[querySnap.docs.length - 1]
-        // setLastFetchedListing(lastVisible)
-        // console.log('fetchPost', lastVisible)
         const posts = []
 
         querySnap.forEach((doc) => {
@@ -46,10 +47,10 @@ function Feed() {
             data: doc.data(),
           })
         })
-        console.log('posts are', posts);
+        // console.log('posts are', posts);
         setPosts(posts); 
         // setListings(listings)
-        // setLoading(false)
+        setLoading(false)
       } catch (error) {
         toast.error('Could not fetch listings')
       }
@@ -58,6 +59,9 @@ function Feed() {
     fetchPosts()
 // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
+  if(loading){
+    return <Loader/>
+  }
   return (
     <div>
       <div className="">
