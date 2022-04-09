@@ -1,6 +1,5 @@
 import React, { useState , useContext ,useEffect} from "react";
 import { useNavigate, Link, } from "react-router-dom";
-import bg1 from './bgimg/bgLogin.png';
 import { FcGoogle } from 'react-icons/fc';
 import { SiGithub } from 'react-icons/si'
 import {AiFillEye} from 'react-icons/ai'
@@ -12,7 +11,7 @@ function Login() {
   const navigate = useNavigate();
   const {googleSignIn , githubSignIn , handleLogin, email ,setEmail ,password ,setPassword , darkMode } = useContext(ContextProvider);
   const [showPass, setShowPass] = useState(false);
-  const showPassord = ()=>{
+  const showPassword = ()=>{
       showPass?setShowPass(false):setShowPass(true);
   }
   useEffect(()=>{
@@ -32,7 +31,7 @@ function Login() {
           <div className= {`shadow-2xl rounded px-6 pt-6 pb-8 mb-4 backdrop-blur backdrop-brightness-75 ${darkMode?'bg-slate-900 text-white':null} `}>
             <div className="mb-2 text-center">
               <h1 className="text-4xl font-medium">Sign in</h1>
-              <span className="text-sm">Stay updated on your Nitp world</span>
+              <span className="text-sm">Stay updated on your Nit Patna world</span>
             </div>
             <div>
               <form action="" className="">
@@ -50,7 +49,7 @@ function Login() {
                     onChange={e=>setPassword(e.target.value)}
                     id="password"
                     autoComplete="on"
-                    required />{showPass?(<AiFillEye onClick={showPassord} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassord} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>)}
+                    required />{showPass?(<AiFillEye onClick={showPassword} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassword} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>)}
                     <label htmlFor="floating_password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                 </div>
                 <label className="block text-blue-500  text-sm">
