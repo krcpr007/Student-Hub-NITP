@@ -10,10 +10,11 @@ import { Link } from "react-router-dom";
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 import { doc,  updateDoc,} from "firebase/firestore";
-import { db, storage , auth} from '../../Firebase';
+import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import  ContextProvider  from '../context/ContextProvider'
 function Profile() {
+  const localAuth = JSON.parse(localStorage.getItem('st-hub'));
   const {darkMode ,profileData ,userInformation}= useContext(ContextProvider); 
   const [profileImg ,setProfileImg]=useState();
   const [showModal, setShowModal] = React.useState(false);
@@ -21,6 +22,10 @@ function Profile() {
   const [loader, setLoader] = useState(false);
   useEffect(() => {
     userInformation();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+  useEffect(() => {
     if (profileImg) {
       const uploadImg = async () => {
         setLoader(true)
@@ -34,7 +39,7 @@ function Profile() {
         
         const url = await getDownloadURL(ref(storage, snap.ref.fullPath))
         
-        await  updateDoc(doc(db, 'users', auth.currentUser.uid),{
+        await  updateDoc(doc(db, 'users', localAuth.uid),{
           profileImg:url,
           profileImgPath: snap.ref.fullPath,
         })
@@ -53,7 +58,7 @@ function Profile() {
        const yes = window.confirm("Delete Profile Picture ?")
        if(yes){
          await deleteObject(ref(storage, profileData.profileImg)); 
-         await updateDoc(doc(db ,'users', auth.currentUser.uid),{
+         await updateDoc(doc(db ,'users', localAuth.uid),{
           profileImg:'',
           profileImgPath: '',
          })
@@ -103,7 +108,7 @@ function Profile() {
                </div>
              </div>
 
-            <h1 className="text-3xl font-medium">{auth.currentUser.displayName?`${auth.currentUser.displayName}`:`${profileData.name}`}</h1>
+            <h1 className="text-3xl font-medium">{localAuth.displayName?`${localAuth.displayName}`:`${profileData.name}`}</h1>
 
             <span className="text-sm">{profileData && profileData.headline}</span> <br />
             <MdPlace title="Live in" className="inline" />
@@ -199,7 +204,7 @@ function Profile() {
                 <div className="relative p-4 flex-auto">
                 <div className="flex my-2">
                 <MdEmail className="text-2xl text-yellow-500"/>
-                <a href={`mailto:${auth.currentUser.email}`} className="mx-2">{auth.currentUser?.email}</a>
+                <a href={`mailto:${localAuth.email}`} className="mx-2">{localAuth?.email}</a>
                 </div>
                 <div className="flex my-2">
                   <MdContactPhone className="text-2xl text-yellow-500"/>
