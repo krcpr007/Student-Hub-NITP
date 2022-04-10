@@ -59,7 +59,7 @@ function Login() {
                   <Link className="relative left-24 md:left-36 hover:underline" to="/signup">New here</Link>
                 </label>
                 <div className="py-2 ">
-                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleLogin}>
+                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" type="submit" onClick={handleLogin}>
                     <span>Sign in</span>
                   </button>
                 </div>

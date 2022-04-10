@@ -22,7 +22,7 @@ const Signup = () =>{
   },[]) 
     const {googleSignIn , githubSignIn , email ,setEmail ,password ,setPassword ,darkMode, handleSignUp } = useContext(ContextProvider);
     const [showPass, setShowPass] = useState(false);
-    const showPassord = ()=>{
+    const showPassword = ()=>{
         showPass?setShowPass(false):setShowPass(true);
     }
     return (
@@ -52,12 +52,12 @@ const Signup = () =>{
                     onChange={e=>setPassword(e.target.value)}
                     id="password"
                     autoComplete="on"
-                    required />{showPass?(<AiFillEye onClick={showPassord} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassord} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>)}
+                    required />{showPass?(<AiFillEye onClick={showPassword} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>):(<AiFillEyeInvisible onClick={showPassword} className="text-lg relative -top-7 left-60 md:left-72 cursor-pointer"/>)}
                     <label htmlFor="floating_password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
                 </div>
                 <a href="!">Already have account?</a> <Link to="/login">Login</Link> <br />
                 <div className="py-2 ">
-                  <button  className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleSignUp}>
+                  <button type='submit' className="bg-yellow-300 shadow-2xl w-full rounded-lg font-medium hover:bg-yellow-400 p-2" onClick={handleSignUp}>
                     <span>Sign Up</span>
                   </button>
                 </div>
