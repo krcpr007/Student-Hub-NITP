@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { BiMessageSquareEdit } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
-import { FaGithub } from 'react-icons/fa'
 import { MdPlace, MdEmail, MdContactPhone, MdHome } from 'react-icons/md'
-import { ImLinkedin } from 'react-icons/im'
-import { RiInstagramFill } from 'react-icons/ri'
+// import { BiMessageSquareEdit } from 'react-icons/bi'
+// import { FaGithub } from 'react-icons/fa'
+// import { ImLinkedin } from 'react-icons/im'
+// import { RiInstagramFill } from 'react-icons/ri'
 import avatar from '../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 // import { collection, doc, onSnapshot, query, updateDoc, where, getDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
-import ContextProvider from '../context/ContextProvider'
+import ContextProvider from '../context/ContextProvider';
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
@@ -20,15 +20,19 @@ function UserProfile() {
   const [showModal, setShowModal] = React.useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [loader, setLoader] = useState(false);
-  useEffect(async () => {
+  useEffect(() => {
     // userInformation();
-    setLoader(true); 
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setUser(docSnap.data());
-      setLoader(false);
+    const userData = async()=>{
+      setLoader(true); 
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setUser(docSnap.data());
+        setLoader(false);
+      }
     }
+    userData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   if (loader) {
     return <Loader/>
