@@ -8,14 +8,17 @@ import  ContextProvider  from '../context/ContextProvider'
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 function PostCard({post}) {
+    // console.table(post.imgPath)
+    const {darkMode} =useContext(ContextProvider); 
     const [user , setUser] = useState({})
+    const [liked , setLiked] = useState(false); 
     useEffect(()=>{
         const userData = async()=>{
 
             const docRef = doc(db, "users", post.uid);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                console.log(docSnap.data());
+                // console.log(docSnap.data());
               setUser(docSnap.data());
             //   setLoader(false);
             }
@@ -23,7 +26,9 @@ function PostCard({post}) {
           userData();
           // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
-    const {darkMode} =useContext(ContextProvider); 
+    const likedPost = ()=>{
+       
+    }
     return (
         <>
         <div className={`sm:w-3/4 mt-3 shadow lg:w-3/4 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
@@ -40,19 +45,19 @@ function PostCard({post}) {
             <p className='p-3 text-justify'>
             {post.text}
             </p>
-            <img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' />
+            {post.imgPath?<img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' />:null}
             <div className='flex p-1 text-xs mb-2'>
-                <p> <BiLike className='inline' color='red'/> You, and 133 also like this</p>
-                <p className='text-left ml-12 mx-2'>100 comments </p>
-                <p className=''>65 shares</p>
+                <p> <BiLike className='inline' color='red'/> You, and {post.likes} liked</p>
+                {/* <p className='text-left ml-12 mx-2'>100 comments </p>
+                <p className=''>65 shares</p> */}
             </div>
         </div>
             <hr />
-            <div className='flex p-5'>
-            <AiOutlineLike color='red' size="28" className='text-3xl inline'/> like
-            <BiCommentDots color='red' size="28" className='text-3xl  inline'/> Comment 
+            <div className='flex px-5 py-2'>
+            <span className='hover:bg-gray-400 cursor-pointer p-1 rounded' onClick={likedPost} ><AiOutlineLike className='inline text-rose-500 text-3xl'/> like</span>
+            {/* <BiCommentDots color='red' size="28" className='text-3xl  inline'/> Comment 
             <FaShare color='red'className='text-3xl' size="28" /> Share 
-            <RiSendPlaneFill color='red'className='text-3xl' size="28" /> Send
+            <RiSendPlaneFill color='red'className='text-3xl' size="28" /> Send */}
             </div>
             <div className='flex p-2'>
                 <div className='mx-2'>
