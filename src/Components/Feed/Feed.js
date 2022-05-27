@@ -20,6 +20,8 @@ import Loader from "../Loader/Loader";
 function Feed() {
   const [posts , setPosts] = useState([]);
   const [loading, setLoading]= useState(false);
+  //creating state to automatically reloadData whenever publish an new post
+  const[getNewPosts, setGetNewPosts] = useState(false)
   useEffect(()=>{
     
     const fetchPosts = async () => {
@@ -38,7 +40,7 @@ function Feed() {
         // Execute query
         const querySnap = await getDocs(q)
 
-        const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+        // const lastVisible = querySnap.docs[querySnap.docs.length - 1]
         const posts = []
 
         querySnap.forEach((doc) => {
@@ -52,13 +54,13 @@ function Feed() {
         // setListings(listings)
         setLoading(false)
       } catch (error) {
-        toast.error('Could not fetch listings')
+        toast.error('Could not fetch Posts')
       }
     }
 
     fetchPosts()
 // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[getNewPosts])
   if(loading){
     return <Loader/>
   }
@@ -73,7 +75,7 @@ function Feed() {
             </div>
           </div>
           <div className="sm:ml-2">
-            <NewPost />
+            <NewPost setGetNewPosts={setGetNewPosts} />
             {posts.map((post)=>{
               return <PostCard key={post.id} post={post.data} /> 
             })}
