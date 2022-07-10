@@ -59,7 +59,7 @@ function EditProfile() {
     return (
         <>
             <div className={` ${darkMode ? 'bg-slate-800' : ""}`}>
-                <div className='grid grid-cols-4'>
+                <div className='md:grid grid-cols-4'>
                     <div>
                     </div>
                     <div className='p-5 sm:p-10 m-2 col-span-2'>
