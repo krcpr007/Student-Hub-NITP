@@ -35,7 +35,7 @@ function Navbar() {
   }
   return (
     <>
-      <nav className={`nav  border-b flex flex-wrap items-center justify-between px-4 shadow ${darkMode ? 'bg-slate-900 text-white' : "bg-white"}`}>
+      <nav className={`nav border-b flex flex-wrap items-center justify-between px-4 shadow ${darkMode ? 'bg-slate-900 text-white' : "bg-white"}`}>
         <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
           <h1 className="leading-none text-2xl font-medium text-grey-darkest">
             <Link className="no-underline text-grey-darkest hover:text-black" to="/">
@@ -59,20 +59,20 @@ function Navbar() {
         <ul className="menu border-b md:border-none flex justify-end list-reset m-0 w-full md:w-auto">
 
           {localStorage.getItem('st-hub') ? (<>
-            <li className="border-t md:border-none">
-              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome  color='gold' className='text-4xl inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
+            <li className="border-t md:border-none transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome  color='gold' className='text-2xl inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
             </li>
 
-            <li className="border-t md:border-none">
-              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart  color='gold' className='text-4xl inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium'>Connections</span> </Link>
+            <li className="border-t md:border-none transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300">
+              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart  color='gold' className='text-2xl inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium '>Connections</span> </Link>
             </li>
 
-            <li className="border-t md:border-none">
-              <Link to="/messages" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><AiFillMessage color='gold' className='text-4xl inline lg:block mx-2 lg:mx-5' /><span className='text-sm font-medium'>Messages</span></Link>
+            <li className="border-t md:border-none transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300">
+              <Link to="/messages" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><AiFillMessage color='gold' className='text-2xl inline lg:block mx-2 lg:mx-5 ' /><span className='text-sm font-medium'>Messages</span></Link>
             </li>
-            <li className="border-t md:border-none flex md:block">
-              <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker">
-                <img src={profileData.profileImg || avatar} alt="" className='w-9 rounded-full border-2 border-gray-400 inline lg:block' />
+            <li className="border-t md:border-none flex md:block ">
+              <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 hover:text-grey-darker">
+                <img src={profileData.profileImg || avatar} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
                 <span className='text-sm mx-2 lg:-mx-1.5 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
               </Link>
               <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
