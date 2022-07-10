@@ -69,14 +69,14 @@ function Feed() {
   return (
     <div>
       <div className="">
-        <div className={`md:grid md:grid-cols-4 ${darkMode?'bg-slate-800 text-white':null}`} >
+        <div className={`md:grid lg:grid grid-cols-5 ${darkMode?'bg-slate-800 text-white':null}`} >
           <div>
             <div className="hidden md:inline">
               <LeftAboutCard />
               <GroupsClub />
             </div>
           </div>
-          <div className="sm:ml-2 col-span-2">
+          <div className="sm:ml-2 col-span-3">
             <NewPost setGetNewPosts={setGetNewPosts} />
             {posts.map((post)=>{
               return <PostCard key={post.id} post={post.data} /> 
