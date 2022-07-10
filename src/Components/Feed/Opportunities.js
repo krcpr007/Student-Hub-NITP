@@ -3,7 +3,7 @@ import  ContextProvider  from '../context/ContextProvider'
 function Opportunities() {
     const {darkMode} = useContext(ContextProvider); 
     return (
-        <div className={`shadow mt-2 rounded-sm w-full ${darkMode?'bg-slate-900 text-white':null}`}>
+        <div className={`shadow mt-2 rounded-lg rounded-t-none  w-full ${darkMode?'bg-slate-900 text-white shadow-yellow-500':null}`}>
            <h1 className='px-3 font-medium text-sm'>Top opportunities for you</h1>
             <div className='px-2'>
                 <div className='text-sm flex mt-1'>

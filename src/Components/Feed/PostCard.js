@@ -31,7 +31,7 @@ function PostCard({post}) {
     }
     return (
         <>
-        <div className={`sm:w-3/4 mt-3 shadow lg:w-3/4 mb-5 ${darkMode?'bg-slate-900 text-white':null}`}>
+        <div className={`mt-3 shadow  mb-5 m-2 ${darkMode?'bg-slate-900 text-white':null}`}>
             <div className='flex'>
           <div className='m-1'>
               <Link to={`/user/${user.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border-2 border-gray-400' /></Link>
