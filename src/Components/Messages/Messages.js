@@ -1,6 +1,7 @@
-import {useEffect, useState } from 'react'
+import {useEffect, useState, useContext } from 'react'
 import SenderProfile from './SenderProfile'
 import { db } from "../../Firebase";
+import contextProvider from '../context/ContextProvider'
 import Loader from '../Loader/Loader'
 import {
   collection,
@@ -10,6 +11,7 @@ import {
 } from "firebase/firestore";
 
 function Messages() {
+  const { darkMode } = useContext(contextProvider);
   const localAuth = JSON.parse(localStorage.getItem('st-hub')); 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,16 +38,34 @@ function Messages() {
     return <Loader/>    
   }
   return (
-    <div className='md:flex'>
-      <div className='lg:w-1/4'>
+    <div className={` ${darkMode ? "bg-slate-700 text-white" : ""}`}>
+      <div className=' content-center md:grid md:grid-cols-6 lg:grid-cols-8 '>
+      <div></div>
+        <div className='col-span-2 m-2  shadow-lg'>
+        <p className={`p-2 font-bold ${darkMode ? "bg-slate-900 text-white" : ""}`}>Messages</p>
        {users.map((sender)=>{
          return <SenderProfile key={sender.uid} sender={sender} user1={localAuth.uid} />
         })}
         </div>
-        <div className="bg-slate-500 w-full">
-          {/* <h1 className='text-center'>Nit Patna</h1> */}
-           <img src="Nit_patna.jpeg" className='h-full' alt="" />
+        <div className={`m-2 ml-0 w-full  sm:invisible md:visible md:col-span-3 lg:col-span-4 shadow-lg  ${darkMode ? "bg-slate-900 text-white" : ""}`}>
+          <div className='grid grid-rows-6 place-items-center'>
+            <div className='row-span-3'></div>
+            <div className=''>
+
+              <svg aria-label="Direct" class="_ab6-" color="#fff" fill="#fff" height="96" role="img" viewBox="0 0 96 96" width="96">
+                <circle cx="48" cy="48" fill="none" r="47" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className={` ${darkMode ? " stroke-white" : "stroke-black"}`}></circle>
+                <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="69.286" x2="41.447" y1="33.21" y2="48.804" className={`stroke-width-2 ${darkMode ? " stroke-white" : "stroke-black"}`}></line>
+                <polygon fill="none" points="47.254 73.123 71.376 31.998 24.546 32.002 41.448 48.805 47.254 73.123" stroke="currentColor" stroke-linejoin="round" stroke-width="2" className={` ${darkMode ? " stroke-white" : "stroke-black"}`}></polygon>
+              </svg>
+            </div>
+            <div className='text-center'>
+              <h1 className=' font-extrabold'>Your Messages</h1>
+              <p className=' font-bold'>Send private photos and messeges to your connections</p>
+            </div>
+          </div>
+           {/* <img src="Nit_patna.jpeg" className='h-full' alt="" /> */}
         </div>
+      </div>
     </div>
   )
 }

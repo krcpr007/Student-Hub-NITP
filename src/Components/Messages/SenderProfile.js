@@ -46,8 +46,8 @@ function SenderProfile({ sender, user1 }) {
         }
     }
     return (
-        <div className={`${darkMode ? "bg-slate-900 text-white" : ""}`}>
-            <div className='flex'>
+        <div className={` ${darkMode ? "bg-slate-900 text-white" : ""}`}>
+            <div className='flex p-3'>
                 <div className='mt-2'>
                     <Link to={`/user/${sender.uid}`}>
                         <img src={sender.profileImg || Img} alt="" className='w-16 rounded-full border-2 border-yellow-400' />

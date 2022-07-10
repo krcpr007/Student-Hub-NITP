@@ -59,8 +59,10 @@ function EditProfile() {
     return (
         <>
             <div className={` ${darkMode ? 'bg-slate-800' : ""}`}>
-                <div>
-                    <div className='p-5 sm:p-10 m-2'>
+                <div className='grid grid-cols-4'>
+                    <div>
+                    </div>
+                    <div className='p-5 sm:p-10 m-2 col-span-2'>
                         <form>
                             <div className="relative z-0 mb-6 w-full group ">
                                 <input type="text" name="name" className={`block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " value={name} onChange={handleChange} required="" />
