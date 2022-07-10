@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from "react";
+import React, {useState , useEffect, useContext} from "react";
 import LeftAboutCard from './LeftAboutCard'
 import {
   collection,
@@ -11,6 +11,7 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../Firebase'
 import GroupsClub from './GroupsClub'
+import ContextProvider from "../context/ContextProvider";
 import NewPost from './NewPost'
 import PostCard from './PostCard'
 import PeersNews from './PeersNews'
@@ -19,6 +20,7 @@ import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
 function Feed() {
   const [posts , setPosts] = useState([]);
+  const {darkMode} = useContext(ContextProvider); 
   const [loading, setLoading]= useState(false);
   //creating state to automatically reloadData whenever publish an new post
   const[getNewPosts, setGetNewPosts] = useState(false)
@@ -67,14 +69,14 @@ function Feed() {
   return (
     <div>
       <div className="">
-        <div className="flex">
+        <div className={`grid grid-cols-4 ${darkMode?'bg-slate-800 text-white':null}`} >
           <div>
             <div className="hidden md:inline">
               <LeftAboutCard />
               <GroupsClub />
             </div>
           </div>
-          <div className="sm:ml-2">
+          <div className="sm:ml-2 col-span-2">
             <NewPost setGetNewPosts={setGetNewPosts} />
             {posts.map((post)=>{
               return <PostCard key={post.id} post={post.data} /> 

@@ -58,12 +58,12 @@ function NewPost({setGetNewPosts}) {
     }
   }
   return (
-    <div className={`lg:w-3/4 sm:w-3/4 shadow rounded ${darkMode ? 'bg-slate-900 text-white' : null}`}>
+    <div className={`shadow rounded m-2 ${darkMode ? 'bg-slate-900 text-white shadow-yellow-500' : null}`}>
       <div className='flex p-2 m-2'>
         <Link to='/profile'>
           <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-2 border-gray-400' />
         </Link>
-        <input type="text" className='px-8 border-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' onClick={showAndHideModal} />
+        <input type="text" className='px-8 border-2 mx-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' onClick={showAndHideModal} />
       </div>
       <div className=' p-2  '>
         <span className='mx-6 cursor-pointer hover:bg-gray-200 p-1.5' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
