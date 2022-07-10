@@ -69,7 +69,7 @@ function Feed() {
   return (
     <div>
       <div className="">
-        <div className={`grid grid-cols-4 ${darkMode?'bg-slate-800 text-white':null}`} >
+        <div className={`md:grid md:grid-cols-4 ${darkMode?'bg-slate-800 text-white':null}`} >
           <div>
             <div className="hidden md:inline">
               <LeftAboutCard />

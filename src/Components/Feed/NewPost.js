@@ -66,7 +66,7 @@ function NewPost({setGetNewPosts}) {
         <input type="text" className='px-8 border-2 mx-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' onClick={showAndHideModal} />
       </div>
       <div className=' p-2  '>
-        <span className='mx-6 cursor-pointer hover:bg-gray-200 p-1.5' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
+        <span className='mx-1 md:mx-6 cursor-pointer hover:bg-gray-200 p-1.5' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
           <IoMdPhotos className='inline' color="gold" /> Photos
         </span>
         <span className='mr-6 hover:bg-gray-200 p-1.5 cursor-pointer' data-modal-toggle="defaultModal" onClick={showAndHideModal}>
