@@ -58,11 +58,11 @@ function EditProfile() {
     }
     return (
         <>
-            <div className={`bg-slate-600/80`}>
+            <div className={` ${darkMode ? 'bg-slate-800' : ""}`}>
                 <div>
-                    <div className='p-5 sm:p-10'>
+                    <div className='p-5 sm:p-10 m-2'>
                         <form>
-                            <div className="relative z-0 mb-6 w-full group">
+                            <div className="relative z-0 mb-6 w-full group ">
                                 <input type="text" name="name" className={`block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " value={name} onChange={handleChange} required="" />
                                 <label htmlFor="floating_email" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
                             </div>
@@ -80,19 +80,19 @@ function EditProfile() {
                             </div>
                             <div className="grid xl:grid-cols-2 xl:gap-6">
                                 <div className="relative z-0 mb-6 w-full group">
-                                    <input type="text" name="skill1" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required="" value={skill1} onChange={e=>setSkill1(e.target.value)} />
+                                    <input type="text" name="skill1" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " required="" value={skill1} onChange={e=>setSkill1(e.target.value)} />
                                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No1. Skill</label>
                                 </div>
                                 <div className="relative z-0 mb-6 w-full group">
-                                    <input type="text" name="skill2" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required="" value={skill2} onChange={e=>setSkill2(e.target.value)} />
+                                    <input type="text" name="skill2" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " required="" value={skill2} onChange={e=>setSkill2(e.target.value)} />
                                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No2. skill</label>
                                 </div>
                                 <div className="relative z-0 mb-6 w-full group">
-                                    <input type="text" name="skill3" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required="" value={skill3} onChange={e=>setSkill3(e.target.value)} />
+                                    <input type="text" name="skill3" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " required="" value={skill3} onChange={e=>setSkill3(e.target.value)} />
                                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No3. Skill</label>
                                 </div>
                                 <div className="relative z-0 mb-6 w-full group">
-                                    <input type="text" name="skill4" id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required="" value={skill4} onChange={e=>setSkill4(e.target.value)}/>
+                                    <input type="text" name="skill4" id="floating_company" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"}`} placeholder=" " required="" value={skill4} onChange={e=>setSkill4(e.target.value)}/>
                                     <label htmlFor="floating_company" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No4. skill</label>
                                 </div>
                                 <div className="relative z-0 mb-6 w-full group">
@@ -100,7 +100,7 @@ function EditProfile() {
                                     <label htmlFor="address" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No5. skill</label>
                                 </div>
                                 <div className="relative z-0 mb-6 w-full group">
-                                    <input type="text" name="phoneNo" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value={home} onChange={e => setHome(e.target.value)} required="" />
+                                    <input type="text" name="phoneNo" id="floating_last_name" className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer ${darkMode ? 'input-dark' : "input-non-dark"} `} placeholder=" " value={home} onChange={e => setHome(e.target.value)} required="" />
                                     <label htmlFor="floating_last_name" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
                                 </div>
                             </div>
