@@ -30,6 +30,12 @@ function SenderProfile({ sender, user1 }) {
                 theme:`${darkMode?'dark':'light'}`,
                 autoClose:1000,
             })
+            Notification.requestPermission().then(prem=>{
+                if(prem==="granted"){
+                    new Notification("📩 Message received")
+                }
+            })
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[lastMsgData?.msg])

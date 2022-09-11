@@ -18,7 +18,7 @@ function ConversationsText({ msg }) {
             <div className="">
                 <div className={`${msg.to===auth.currentUser.uid?'flex':'flex flex-row-reverse'}`}>
                     <p className={`my-1 px-4 py-0.5 ${msg.to===auth.currentUser.uid?'text-left text-black bg-rose-400 w-auto rounded-r px-2 rounded-bl-3xl':'bg-blue-400 rounded-l-lg rounded-br-3xl'}`}>{decryptedText}
-                      {msg.media ?(<img src={msg.media} alt='' />):null}
+                      {msg.media ?(<img src={msg.media} alt='my-pic' className='md:w-1/2' />):null}
                         <br />
                         <small className='text-xs opacity-50'>
                             {<Moment fromNow>
