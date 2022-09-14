@@ -37,7 +37,7 @@ function Footer() {
           <h3>Contact Us</h3>
           <div className='p-2'>
             <label className="flex text-sm">E-Mail</label>
-            <input type="email" className={` border-yellow-500 h-1/2 my-2 rounded appearance-none bg-transparent bg-gray-100 w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none ${darkMode?'bg-slate-800 text-gray-100':null} `} placeholder="Your Email"></input>
+            <input type="email" className={` border-yellow-500 h-1/2 my-2 rounded appearance-none bg-transparent bg-black-100 w-full  mr-3 py-1 px-2 leading-tight focus:outline-none ${darkMode?' text-yellow-400':null} `} placeholder="Your Email"></input>
           </div>
           <button type="button" className="btn-sub">Subscribe</button>
         </div>
