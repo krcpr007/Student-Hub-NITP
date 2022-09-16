@@ -12,6 +12,7 @@ import Loader from "../Loader/Loader";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import ContextProvider from '../context/ContextProvider';
+import UserPosts from "./UserPosts";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
@@ -39,7 +40,6 @@ function UserProfile() {
   }
   return (
     <>
-      {/* https://www.w3schools.com/howto/img_avatar.png */}
       <div>
         <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
           <div className={`shadow-2xl md:rounded-t-lg ${darkMode ? 'bg-slate-900 text-white' : null}`}>
