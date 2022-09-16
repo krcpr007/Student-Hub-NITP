@@ -7,17 +7,16 @@ import {
     query,
     orderBy,
     limit,
-} from 'firebase/firestore'; 
+} from 'firebase/firestore';
 import PostCard from '../Feed/PostCard'
 import { db } from '../../Firebase'
-import {getAuth} from 'firebase/auth'
 function UserPosts() {
-    const auth = getAuth();     
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-
+        const localAuth = JSON.parse(localStorage.getItem("st-hub"));
+        console.log(localAuth);
         const fetchPosts = async () => {
             try {
                 // Get reference
@@ -30,7 +29,7 @@ function UserPosts() {
 
                     orderBy('postedAt', 'desc'),
                     limit(10),
-              
+
                 )
                 // Execute query
                 const querySnap = await getDocs(q)
@@ -39,11 +38,11 @@ function UserPosts() {
                 const posts = []
 
                 querySnap.forEach((doc) => {
-                    if(doc.data().uid === auth.currentUser.uid) // getting only particular user post
-                    return posts.push({
-                        id: doc.id,
-                        data: doc.data(),
-                    })
+                    if (doc.data().uid === localAuth.uid) // getting only particular user post
+                        return posts.push({
+                            id: doc.id,
+                            data: doc.data(),
+                        })
                 })
                 // console.log('posts are', posts);
                 setPosts(posts);
@@ -62,7 +61,7 @@ function UserPosts() {
     }
     return (
         <>
-            
+
             {posts.map((post) => {
                 return <PostCard key={post.id} post={post.data} />
             })}

@@ -12,7 +12,6 @@ import Loader from "../Loader/Loader";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import ContextProvider from '../context/ContextProvider';
-import UserPosts from "./UserPosts";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
