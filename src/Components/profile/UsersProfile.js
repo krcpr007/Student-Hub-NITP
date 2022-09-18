@@ -12,12 +12,13 @@ import Loader from "../Loader/Loader";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import ContextProvider from '../context/ContextProvider';
+import UserPosts from "./UserPosts";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
   const { darkMode } = useContext(ContextProvider);
   const [user, setUser] = useState({});
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [loader, setLoader] = useState(false);
   useEffect(() => {
@@ -80,6 +81,7 @@ function UserProfile() {
               <Link to={`/chat/${user.uid}`} title="Message" className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</Link>
             </div>
           </div>
+          <UserPosts uid={user.uid}/>
         </div>
         {showModal ? (
           <>

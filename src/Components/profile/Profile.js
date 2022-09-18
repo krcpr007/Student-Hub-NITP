@@ -78,7 +78,7 @@ function Profile() {
     <>
       <div>
         <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
-          <div className={`shadow-2xl md:rounded-t-lg ${darkMode ? 'bg-slate-900 text-white' : null}`}>
+          <div className={`shadow-lg md:rounded-t-lg ${darkMode ? 'bg-slate-900 text-white' : null}`}>
             <div>
               <img
                 src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
@@ -116,7 +116,7 @@ function Profile() {
               <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
             </div>
           </div>
-          <UserPosts />
+          <UserPosts uid={localAuth.uid}/>
         </div>
         {showModal ? (
           <>

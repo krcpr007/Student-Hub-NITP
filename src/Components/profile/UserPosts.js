@@ -10,13 +10,11 @@ import {
 } from 'firebase/firestore';
 import PostCard from '../Feed/PostCard'
 import { db } from '../../Firebase'
-function UserPosts() {
+function UserPosts({uid}) {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const localAuth = JSON.parse(localStorage.getItem("st-hub"));
-        console.log(localAuth);
         const fetchPosts = async () => {
             try {
                 // Get reference
@@ -38,7 +36,7 @@ function UserPosts() {
                 const posts = []
 
                 querySnap.forEach((doc) => {
-                    if (doc.data().uid === localAuth.uid) // getting only particular user post
+                    if (doc.data().uid === uid) // getting only particular user post
                         return posts.push({
                             id: doc.id,
                             data: doc.data(),
