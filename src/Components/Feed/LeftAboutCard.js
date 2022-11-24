@@ -13,8 +13,8 @@ function LeftAboutCard() {
     
     return (
         <div className={`shadow mt-2 rounded-lg rounded-b-none ml-5 ${darkMode?'bg-slate-900 text-white shadow-yellow-500':null}`}>
-            <div className='ml-0 mt-2 p-2 w-40 flex'>
-               <Link to="/profile"><img src={profileData.profileImg?profileData.profileImg:null || avatar} alt="profile-pic" className=' lg:mx-5 rounded-full border-2 border-yellow-400' /></Link>
+            <div className='w-1/2 pt-2 hero container max-w-screen-lg mx-auto flex justify-center'>
+               <Link to="/profile"><img src={profileData.profileImg?profileData.profileImg:null || avatar} alt="profile-pic" className='rounded-full border-2 border-yellow-400' /></Link>
             </div>
             <h1 className='mt-1 font-medium text-xl text-center px-5'>{localAuth.displayName?`${localAuth.displayName}`:`${profileData.name}`}</h1>
             <p className='text-sm text-gray-500 px-5 text-center'>
