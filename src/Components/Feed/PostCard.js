@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineLike } from 'react-icons/ai'
+import { RiDeleteBack2Fill } from 'react-icons/ri'
+import { FiLoader } from 'react-icons/fi'
 import { BiCommentDots, BiLike } from 'react-icons/bi';
 import avatar from '../assets/img_avatar.png'
 // import {FaShare} from 'react-icons/fa';
 // import {RiSendPlaneFill} from 'react-icons/ri';
 import ContextProvider from '../context/ContextProvider'
-import { doc, getDoc } from "firebase/firestore";
-import { db } from '../../Firebase';
-function PostCard({ post }) {
-    // console.table(post.imgPath)
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { db, storage } from '../../Firebase';
+import { deleteObject, ref } from 'firebase/storage';
+import { toast } from 'react-toastify';
+function PostCard({ post, id, fetchPosts }) {
     const { profileData, darkMode } = useContext(ContextProvider);
     const [user, setUser] = useState({})
+    const [loader, setLoader] = useState(false);
     // const [liked , setLiked] = useState(false); 
     useEffect(() => {
         const userData = async () => {
@@ -37,6 +41,25 @@ function PostCard({ post }) {
             return '<a style="color:#70B5F9;text-decoration:underline" className="hover:underline" href="' + url + '">' + url + '</a>';
         });
     }
+    //deleting the function
+    const handleDeletePost = async (id) => { //function for delete the post and details OP
+        try {
+            const yes = window.confirm("Confirm Do you want to delete?")
+            if (yes) {
+                setLoader(true);
+                if (post.forDeletePath) { await deleteObject(ref(storage, post.forDeletePath)); } //deleting the image of member // data.imgPath
+                await deleteDoc(doc(db, 'posts', id)); //deleting the data of post 
+                setLoader(false)
+                toast.success("Post Deleted")
+                fetchPosts() // calling fetch  function again
+
+            }
+        } catch (error) {
+            toast.error("Something went Wrong");
+            setLoader(false)
+            console.log(error)
+        }
+    }
     return (
         <>
             <div className={`mt-3 shadow rounded mb-5 m-2 ${darkMode ? 'bg-slate-900 text-white shadow-yellow-500' : null}`}>
@@ -48,6 +71,11 @@ function PostCard({ post }) {
                         <h1 className='font-medium'><Link to={`/user/${user.uid}`}>{user.name}</Link></h1>
                         <p className='text-xs'>{user.headline}</p>
                     </div>
+                    {user.uid === profileData.uid && (<>
+                        <div className='inset-x-0 '>
+                            {loader ? <><FiLoader className="text-xl" /></> : <><RiDeleteBack2Fill className='text-2xl cursor-pointer' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
+                        </div>
+                    </>)}
                 </div>
                 <div>
                     <div className='p-3 text-justify'>
