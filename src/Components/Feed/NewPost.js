@@ -38,11 +38,11 @@ function NewPost({setGetNewPosts}) {
 
         setFile('');
         await addDoc(collection(db, 'posts'), {
-          comments: ['', ''],
+          comments: [],
           text: text,
           uid: uid,
           postedAt: date,
-          likes: 0,
+          likes: [],
           imgPath: file?url:null,
           forDeletePath: file?snap.ref.fullPath:null,
         });
