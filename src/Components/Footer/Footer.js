@@ -24,7 +24,7 @@ function Footer() {
           </div>
         </div>
         <div className="md:w-1/4 p-6 m-2 mt-8 ">
-          <h1 className='leading-none text-3xl font-medium'>Useful links</h1>
+          <h1>Useful links</h1>
           <ul className="text-sm mt-3">
             <li><Link className='font-medium text-yellow-500 hover:underline' to="/about">About</Link></li>
             <li>Link 2</li>
@@ -45,7 +45,7 @@ function Footer() {
         <div >
           <span className="footer-title text-center">Social Links</span> 
           <div className="grid grid-flow-col gap-4 my-6 ">
-           <a href='htpps://www.facebook.com' className='text-3xl text-yellow-500'>
+           <a href='https://www.facebook.com' className='text-3xl text-yellow-500'>
             <FaFacebook />
            </a> 
            <a href='https://www.youtube.com' className='text-3xl text-yellow-500'>
