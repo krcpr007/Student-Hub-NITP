@@ -1,38 +1,77 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AiOutlineLike } from 'react-icons/ai'
+import { AiFillLike } from 'react-icons/ai'
 import { RiDeleteBack2Fill } from 'react-icons/ri'
 import { FiLoader } from 'react-icons/fi'
-import { BiCommentDots, BiLike } from 'react-icons/bi';
 import avatar from '../assets/img_avatar.png'
 // import {FaShare} from 'react-icons/fa';
 // import {RiSendPlaneFill} from 'react-icons/ri';
 import ContextProvider from '../context/ContextProvider'
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db, storage } from '../../Firebase';
 import { deleteObject, ref } from 'firebase/storage';
 import { toast } from 'react-toastify';
 function PostCard({ post, id, fetchPosts }) {
     const { profileData, darkMode } = useContext(ContextProvider);
+    const [comments, setComments] = useState([])
     const [user, setUser] = useState({})
     const [loader, setLoader] = useState(false);
-    // const [liked , setLiked] = useState(false); 
-    useEffect(() => {
-        const userData = async () => {
-
-            const docRef = doc(db, "users", post.uid);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                // console.log(docSnap.data());
-                setUser(docSnap.data());
-                //   setLoader(false);
-            }
+    const [like, setLike] = useState({
+        liked: post?.likes?.includes(profileData.uid),
+        likeCount: post?.likes?.length,
+    })
+    const likeRef = doc(db, 'posts', id)
+    //function to get posted content user data
+    const userData = async () => {
+        const docRef = doc(db, "users", post.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            // console.log(docSnap.data());
+            setUser(docSnap.data());
+            //   setLoader(false);
         }
+    }
+    useEffect(() => {
         userData();
+        getComments()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    // function to get all the comments of the post
+    const getComments = () => {
+        onSnapshot(likeRef, (snapShot) => {
+            setComments(snapShot.data()?.comments)
+        })
+    }
+    //function to like post or dislike post
     const likedPost = () => {
-
+        const { likeCount } = like;
+        if (post?.likes?.includes(profileData.uid)) {
+            updateDoc(likeRef, {
+                likes: arrayRemove(profileData.uid),
+            }).then(() => {
+                setLike({
+                    ...like,
+                    likeCount: likeCount - 1,
+                    liked: false
+                })
+                console.log("Disliked")
+            }).catch((e) => {
+                console.log(e);
+            })
+        } else {
+            updateDoc(likeRef, {
+                likes: arrayUnion(profileData.uid)
+            }).then(() => {
+                setLike({
+                    ...like,
+                    likeCount: likeCount + 1,
+                    liked: true
+                })
+                console.log("Liked")
+            }).catch((e) => {
+                console.log(e);
+            })
+        }
     }
     // function to detect is any hyperlink is there in string/text post
     function linkIfy(text) {
@@ -82,25 +121,27 @@ function PostCard({ post, id, fetchPosts }) {
                         {<p dangerouslySetInnerHTML={{ __html: linkIfy(post.text) }} />}
                     </div>
                     {post.imgPath ? <img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' /> : null}
-                    <div className='flex p-1 text-xs mb-2'>
-                        <p> <BiLike className='inline' color='red' /> You, and {post.likes} liked</p>
-                        {/* <p className='text-left ml-12 mx-2'>100 comments </p>
-                <p className=''>65 shares</p> */}
+                    <div className='flex p-1 text-xs mb-2 font-serif'>
+                        <p>{like.liked ? 'You, and ' : null}{like.likeCount} like</p>
+                        {/* <p className='text-left ml-12 mx-2'>100 comments </p> */}
                     </div>
                 </div>
                 <hr />
-                <div className='flex px-5 py-2'>
-                    <span className='hover:bg-gray-400 cursor-pointer p-1 rounded' onClick={likedPost} ><AiOutlineLike className='inline text-rose-500 text-3xl' /> like</span>
-                    {/* <BiCommentDots color='red' size="28" className='text-3xl  inline'/> Comment 
-            <FaShare color='red'className='text-3xl' size="28" /> Share 
-            <RiSendPlaneFill color='red'className='text-3xl' size="28" /> Send */}
+                <div className='flex px-4 py-1 font-serif'>
+                    <div className='cursor-pointer py-1' onClick={likedPost} >
+                        <button className='hover:bg-gray-200 rounded-md'>{like.liked ? <><AiFillLike className={`inline text-rose-500 text-3xl`} fill="red" /> liked</> : <>
+                            <AiFillLike className={`inline text-rose-500 text-2xl`} /><span className=''> like</span></>}</button>
+                    </div>
                 </div>
                 <div className='flex p-2'>
                     <div className='mx-2'>
                         <img src={profileData.profileImg ? profileData.profileImg : null || avatar} alt="" className='w-8 rounded-3xl border-2 border-gray-400' />
                     </div>
                     <div className='w-full'>
-                        <input type="text" className='px-8 border-2 w-full border-gray-300 rounded-3xl' placeholder='Start a conversation' />
+                        <div className="flex overflow-hidden border rounded-lg border-yellow-500 lg:flex-row  focus-within:ring focus-within:ring-opacity-40 focus-within:border-yellow-500 focus-within:ring-yellow-500">
+                            <input className="px-8 h-8 w-full" type="text" name="comment" placeholder={`Comment as ${profileData.name.toLowerCase()}`} />
+                            <button type='submit' className="border h-8 hover:shadow-amber-500 border-amber-500 px-3 font-medium rounded-lg  text-amber-500 hover:bg-amber-500 hover:text-slate-900  text-lg">Post</button>
+                        </div>
                     </div>
                 </div>
             </div>
