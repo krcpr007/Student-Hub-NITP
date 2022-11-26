@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { AiFillLike } from 'react-icons/ai'
 import { RiDeleteBack2Fill } from 'react-icons/ri'
 import { FiLoader } from 'react-icons/fi'
@@ -14,6 +15,7 @@ import { toast } from 'react-toastify';
 function PostCard({ post, id, fetchPosts }) {
     const { profileData, darkMode } = useContext(ContextProvider);
     const [comments, setComments] = useState([])
+    const [textComment, setTextComment] = useState("");
     const [user, setUser] = useState({})
     const [loader, setLoader] = useState(false);
     const [like, setLike] = useState({
@@ -44,15 +46,15 @@ function PostCard({ post, id, fetchPosts }) {
     }
     //function to like post or dislike post
     const likedPost = () => {
-        const { likeCount } = like;
-        if (post?.likes?.includes(profileData.uid)) {
+        const { likeCount, liked } = like;
+        if (liked) {
             updateDoc(likeRef, {
                 likes: arrayRemove(profileData.uid),
             }).then(() => {
                 setLike({
                     ...like,
                     likeCount: likeCount - 1,
-                    liked: false
+                    liked: !liked
                 })
                 console.log("Disliked")
             }).catch((e) => {
@@ -65,7 +67,7 @@ function PostCard({ post, id, fetchPosts }) {
                 setLike({
                     ...like,
                     likeCount: likeCount + 1,
-                    liked: true
+                    liked: !liked
                 })
                 console.log("Liked")
             }).catch((e) => {
@@ -99,6 +101,25 @@ function PostCard({ post, id, fetchPosts }) {
             console.log(error)
         }
     }
+    const commentRef = doc(db, 'posts', id)
+    const handleChangeComment = (e) => {
+        if (textComment.length !== "") {
+            updateDoc(commentRef, {
+                comments: arrayUnion({
+                    user: profileData.uid,
+                    userName: profileData.name,
+                    comment: textComment,
+                    createdAt: new Date(),
+                    commentId: uuidv4(),
+                }),
+            }).then(() => {
+                setTextComment("")
+            });
+        }else{
+            alert("please enter ")
+        }
+    };
+
     return (
         <>
             <div className={`mt-3 shadow rounded mb-5 m-2 ${darkMode ? 'bg-slate-900 text-white shadow-yellow-500' : null}`}>
@@ -122,8 +143,8 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                     {post.imgPath ? <img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' /> : null}
                     <div className='flex p-1 text-xs mb-2 font-serif'>
-                        <p>{like.liked ? 'You, and ' : null}{like.likeCount} like</p>
-                        {/* <p className='text-left ml-12 mx-2'>100 comments </p> */}
+                        <p>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
+                        <p className='text-left ml-12 mx-2'>{comments.length} comments </p>
                     </div>
                 </div>
                 <hr />
@@ -139,8 +160,8 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                     <div className='w-full'>
                         <div className="flex overflow-hidden border rounded-lg border-yellow-500 lg:flex-row  focus-within:ring focus-within:ring-opacity-40 focus-within:border-yellow-500 focus-within:ring-yellow-500">
-                            <input className="px-8 h-8 w-full" type="text" name="comment" placeholder={`Comment as ${profileData.name.toLowerCase()}`} />
-                            <button type='submit' className="border h-8 hover:shadow-amber-500 border-amber-500 px-3 font-medium rounded-lg  text-amber-500 hover:bg-amber-500 hover:text-slate-900  text-lg">Post</button>
+                            <input className="px-8 h-8 w-full" type="text" name="comment" placeholder={`Comment as ${profileData.name.toLowerCase()}`} value={textComment} onChange={e => setTextComment(e.target.value)} />
+                            <button type='submit' className="border h-8 hover:shadow-amber-500 border-amber-500 px-3 font-medium rounded-lg  text-amber-500 hover:bg-amber-500 hover:text-slate-900  text-lg" onClick={handleChangeComment}>Post</button>
                         </div>
                     </div>
                 </div>
