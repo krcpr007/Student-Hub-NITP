@@ -1,14 +1,12 @@
-import React ,{useContext} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import { FaFacebook } from 'react-icons/fa';
 import { FaGithubAlt } from 'react-icons/fa';
 import { IoLogoYoutube } from 'react-icons/io';
 import { AiOutlineTwitter } from 'react-icons/ai';
-import ContextProvider from "../context/ContextProvider";
 function Footer() {
-  const {darkMode } = useContext(ContextProvider);
   return (
-  <div className={`border-t-2 shadow-2xl  ${darkMode ?'bg-slate-900 border-black text-white':null}`}>
+  <div className={`border-t-2 shadow-2xl dark:bg-slate-900 dark:border-black dark:text-white`}>
         <div className="md:flex">
             <div className="md:w-1/4 p-6 m-2 ">
               <div className="flex flex-no-shrink items-center lg:ml-3 sm:ml-10 py-3 text-grey-darkest">
@@ -37,7 +35,7 @@ function Footer() {
           <h3>Contact Us</h3>
           <div className='p-2'>
             <label className="flex text-sm">E-Mail</label>
-            <input type="email" className={` border-yellow-500 h-1/2 my-2 rounded appearance-none bg-transparent bg-black-100 w-full  mr-3 py-1 px-2 leading-tight focus:outline-none ${darkMode?' text-yellow-400':null} `} placeholder="Your Email"></input>
+            <input type="email" className={` border-yellow-500 h-1/2 my-2 rounded appearance-none bg-transparent bg-black-100 w-full  mr-3 py-1 px-2 leading-tight focus:outline-none dark:text-yellow-400`} placeholder="Your Email"></input>
           </div>
           <button type="button" className="btn-sub">Subscribe</button>
         </div>
