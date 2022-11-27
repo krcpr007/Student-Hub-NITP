@@ -1,9 +1,7 @@
-import React, { useContext } from 'react'
-import  ContextProvider  from '../context/ContextProvider'
+import React from 'react'
 function Opportunities() {
-    const {darkMode} = useContext(ContextProvider); 
     return (
-        <div className={`shadow mt-2 rounded-lg rounded-t-none  w-full ${darkMode?'bg-slate-900 text-white shadow-yellow-500':null}`}>
+        <div className="shadow mt-2 rounded-lg rounded-t-none  w-full dark:bg-slate-900 dark:text-white dark:shadow-yellow-500'">
            <h1 className='px-3 font-medium text-sm'>Top opportunities for you</h1>
             <div className='px-2'>
                 <div className='text-sm flex mt-1'>

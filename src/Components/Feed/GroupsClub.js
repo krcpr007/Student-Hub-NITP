@@ -1,9 +1,7 @@
-import React, { useContext } from 'react'
-import ContextProvider from "../context/ContextProvider";
+import React from 'react'
 function GroupsClub() {
-    const { darkMode } = useContext(ContextProvider);
     return (
-        <div className={`m-2 mr-0 shadow ml-5  rounded-t-none rounded-md ${darkMode ? 'bg-slate-900 text-white shadow-yellow-500' : null}`}>
+        <div className={`m-2 mr-0 shadow ml-5  rounded-t-none rounded-md dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
             <h1 className='px-5 font-bold text-sm'>Your groups and clubs</h1>
             <div className='px-5'>
                 <div className='text-sm flex mt-1'>
