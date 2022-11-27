@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { db, storage } from '../../Firebase';
 import React, { useContext, useEffect, useState } from 'react'
 import { IoMdPhotos } from 'react-icons/io';
-import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
-import { setDoc, doc, getDoc, serverTimestamp, Timestamp, addDoc, collection, updateDoc } from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytes, } from 'firebase/storage';
+import {addDoc, collection, } from "firebase/firestore";
 import { MdVideoLibrary, MdEventAvailable } from 'react-icons/md';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import ContextProvider from '../context/ContextProvider';
