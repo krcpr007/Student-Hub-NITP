@@ -9,19 +9,16 @@ import { signOut } from 'firebase/auth';
 import avatar from '../assets/img_avatar.png'
 import { auth } from '../../Firebase';
 import ContextProvider from "../context/ContextProvider";
-import DarkMode from '../DarkMode/Darkmode'
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 function Navbar() {
-  const { darkMode, profileData , setSearch , OnSearch} = useContext(ContextProvider);
+  const {profileData, setSearch, OnSearch } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const handleLogout = () => {
     if (auth.currentUser) {
       localStorage.removeItem('st-hub')
       signOut(auth)
         .then(() => {
-          toast.success("Log-out Successfully",{
-            theme:`${darkMode?'dark':'light'}`
-          });
+          toast.success("Log-out Successfully");
         })
         .catch((err) => { console.log(err) })
     } else {
@@ -29,13 +26,13 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
-  
+
   const showAndHideDropDown = () => {
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }
   return (
     <>
-      <nav className={`nav border-b flex flex-wrap items-center justify-between px-4 shadow ${darkMode ? 'bg-slate-900 text-white' : "bg-white"}`}>
+      <nav className='nav border-b flex flex-wrap items-center justify-between px-4 shadow bg-white dark:bg-slate-900 dark:text-white'>
         <div className="flex flex-no-shrink items-center lg:ml-24 sm:ml-10 py-3 text-grey-darkest">
           <h1 className="leading-none text-2xl font-medium text-grey-darkest">
             <Link className="no-underline text-grey-darkest hover:text-black" to="/">
@@ -43,7 +40,6 @@ function Navbar() {
             </Link>
           </h1>
         </div>
-        <DarkMode />
         <input className="menu-btn hidden" type="checkbox" id="menu-btn" />
         <label className="menu-icon block cursor-pointer md:hidden px-2 py-4 relative select-none" htmlFor="menu-btn">
           <span className="navicon bg-grey-darkest flex items-center relative"></span>
@@ -60,11 +56,11 @@ function Navbar() {
 
           {localStorage.getItem('st-hub') ? (<>
             <li className="border-t md:border-none transition ease-in-out delay-150  duration-300">
-              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome  color='gold' className='text-2xl inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
+              <Link to="/" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"> <ImHome color='gold' className='text-2xl inline lg:block mx-2' /><span className='text-sm font-medium'>My Feed</span></Link>
             </li>
 
             <li className="border-t md:border-none transition ease-in-out delay-150   duration-300">
-              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart  color='gold' className='text-2xl inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium '>Connections</span> </Link>
+              <Link to="/connections" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest hover:text-grey-darker"><BiNetworkChart color='gold' className='text-2xl inline lg:block mx-2 lg:mx-6' /> <span className='text-sm font-medium '>Connections</span> </Link>
             </li>
 
             <li className="border-t md:border-none transition ease-in-out delay-150   duration-300">
@@ -77,7 +73,7 @@ function Navbar() {
               </Link>
               <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
               {showDropDown ? (<>
-                <div className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${darkMode?'bg-slate-800 text-white':null}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                <div className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 dark:text-white`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
                     <Link to="/editProfile" className=" block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</Link>
