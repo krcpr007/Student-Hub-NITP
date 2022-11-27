@@ -12,7 +12,7 @@ import Loader from '../Loader/Loader';
 function NewPost({setGetNewPosts}) {
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));
   const uid = localAuth.uid;
-  const { darkMode, userInformation, profileData } = useContext(ContextProvider);
+  const { userInformation, profileData } = useContext(ContextProvider);
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [text, setText] = useState('');
@@ -58,7 +58,7 @@ function NewPost({setGetNewPosts}) {
     }
   }
   return (
-    <div className={`shadow rounded m-2 ${darkMode ? 'bg-slate-900 text-white shadow-yellow-500' : null}`}>
+    <div className={`shadow rounded m-2 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
       <div className='flex p-2 m-2'>
         <Link to='/profile'>
           <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-2 border-gray-400' />
