@@ -15,8 +15,7 @@ import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage
 import ContextProvider from '../context/ContextProvider'
 import UserPosts from "./UserPosts";
 function Profile() {
-  const localAuth = JSON.parse(localStorage.getItem('st-hub'));
-  const { darkMode, profileData, userInformation } = useContext(ContextProvider);
+  const { profileData, userInformation } = useContext(ContextProvider);
   const [profileImg, setProfileImg] = useState();
   const [showModal, setShowModal] = React.useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
@@ -40,7 +39,7 @@ function Profile() {
 
           const url = await getDownloadURL(ref(storage, snap.ref.fullPath))
 
-          await updateDoc(doc(db, 'users', localAuth.uid), {
+          await updateDoc(doc(db, 'users', profileData?.uid), {
             profileImg: url,
             profileImgPath: snap.ref.fullPath,
           })
@@ -59,7 +58,7 @@ function Profile() {
       const yes = window.confirm("Delete Profile Picture ?")
       if (yes) {
         await deleteObject(ref(storage, profileData.profileImg));
-        await updateDoc(doc(db, 'users', localAuth.uid), {
+        await updateDoc(doc(db, 'users', profileData?.uid), {
           profileImg: '',
           profileImgPath: '',
         })
@@ -78,7 +77,7 @@ function Profile() {
     <>
       <div>
         <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
-          <div className={`shadow-lg md:rounded-t-lg ${darkMode ? 'bg-slate-900 text-white' : null}`}>
+          <div className={`shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white`}>
             <div>
               <img
                 src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
@@ -96,27 +95,27 @@ function Profile() {
               <div className='absolute -top-14 left-40 md:left-3/4 '>
 
                 <div className='flex'>
-                  <a href={profileData.socialMedia_urls[1]} target='_blank' rel='noreferrer'>
+                  <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
                     <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
                   </a>
-                  <a href={profileData.socialMedia_urls[2]} target='_blank' rel='noreferrer'>
+                  <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
                     <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
                   </a>
-                  <a href={profileData.socialMedia_urls[0]} target='_blank' rel='noreferrer'>
+                  <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
                     <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
                   </a>
                   <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
                 </div>
               </div>
 
-              <h1 className="text-3xl font-medium">{localAuth.displayName ? `${localAuth.displayName}` : `${profileData.name}`}</h1>
+              <h1 className="text-3xl font-medium">{profileData?.name}</h1>
 
               <span className="text-sm">{profileData && profileData.headline}</span> <br />
               <MdPlace title="Live in" className="inline" />
               <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
             </div>
           </div>
-          <UserPosts uid={localAuth.uid}/>
+          <UserPosts uid={profileData?.uid} />
         </div>
         {showModal ? (
           <>
@@ -206,11 +205,11 @@ function Profile() {
                 <div className="relative p-4 flex-auto">
                   <div className="flex my-2">
                     <MdEmail className="text-2xl text-yellow-500" />
-                    <a href={`mailto:${localAuth.email}`} className="mx-2">{localAuth?.email}</a>
+                    <a href={`mailto:${profileData?.contactInfo?.email}`} className="mx-2">{profileData?.contactInfo?.email}</a>
                   </div>
                   <div className="flex my-2">
                     <MdContactPhone className="text-2xl text-yellow-500" />
-                    <a title="Tap to call" href={`tel:${profileData.contactInfo?.phoneNo}`} className="mx-2">{profileData.contactInfo?.phoneNo}</a>
+                    <a title="Tap to call" href={`tel:${profileData?.contactInfo?.phoneNo}`} className="mx-2">{profileData?.contactInfo?.phoneNo}</a>
                   </div>
                   <div className="flex my-2">
                     <MdHome className="text-2xl text-yellow-500" />
