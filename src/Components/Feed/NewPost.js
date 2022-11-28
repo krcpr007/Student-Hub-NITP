@@ -4,12 +4,12 @@ import { db, storage } from '../../Firebase';
 import React, { useContext, useEffect, useState } from 'react'
 import { IoMdPhotos } from 'react-icons/io';
 import { ref, getDownloadURL, uploadBytes, } from 'firebase/storage';
-import {addDoc, collection, } from "firebase/firestore";
+import { addDoc, collection, } from "firebase/firestore";
 import { MdVideoLibrary, MdEventAvailable } from 'react-icons/md';
 import { AiFillCloseCircle } from 'react-icons/ai'
 import ContextProvider from '../context/ContextProvider';
 import Loader from '../Loader/Loader';
-function NewPost({setGetNewPosts}) {
+function NewPost({ setGetNewPosts }) {
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));
   const uid = localAuth.uid;
   const { userInformation, profileData } = useContext(ContextProvider);
@@ -31,7 +31,7 @@ function NewPost({setGetNewPosts}) {
     if (text.length !== 0 || file) {
       const imgRef = ref(storage, `posts/${new Date().getTime()} - ${file.name}`)
       try {
-        setLoader(true); 
+        setLoader(true);
         const snap = await uploadBytes(imgRef, file);
         // url of the picture after uploading
         const url = await getDownloadURL(ref(storage, snap.ref.fullPath))
@@ -43,12 +43,12 @@ function NewPost({setGetNewPosts}) {
           uid: uid,
           postedAt: date,
           likes: [],
-          imgPath: file?url:null,
-          forDeletePath: file?snap.ref.fullPath:null,
+          imgPath: file ? url : null,
+          forDeletePath: file ? snap.ref.fullPath : null,
         });
         setLoader(false);
         showAndHideModal();
-        setGetNewPosts(true); 
+        setGetNewPosts(true);
         // setGetNewPosts(false);
       } catch (e) {
         console.log(e)
@@ -59,9 +59,9 @@ function NewPost({setGetNewPosts}) {
   }
   return (
     <div className={`shadow rounded m-2 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
-      <div className='flex p-2 m-2'>
+      <div className='flex py-3 px-2'>
         <Link to='/profile'>
-          <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-2 border-gray-400' />
+          <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border border-gray-400' />
         </Link>
         <input type="text" className='px-8 border-2 mx-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' onClick={showAndHideModal} />
       </div>
