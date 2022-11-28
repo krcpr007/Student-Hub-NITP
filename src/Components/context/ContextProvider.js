@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { db, auth } from '../../Firebase'
-import { setDoc, doc, getDoc, serverTimestamp, } from "firebase/firestore";
+import { setDoc, doc, getDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, } from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
@@ -11,13 +11,8 @@ export function ContextProvider({ children }) {
     const [profileData, setProfileData] = useState({});
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [darkMode, setDarkMode] = useState(false);
     const [search, setSearch] = useState('');
-    const changeMode = () => {
-        darkMode ? setDarkMode(false) : setDarkMode(true)
-        // const darkMode = localStorage.setItem('mode', JSON.parse(1))
-    }
-    //  user Information 
+    //  user Information form localAuth
     const userInformation = async () => {
         const localAuth = JSON.parse(localStorage.getItem('st-hub'));
         try {
@@ -25,7 +20,7 @@ export function ContextProvider({ children }) {
                 if (docSnap.exists) {
                     setProfileData(docSnap.data());
                     // console.log(docSnap.data())
-                }else{
+                } else {
                     console.log("went wrong to get user profile")
                 }
             });
@@ -52,14 +47,16 @@ export function ContextProvider({ children }) {
                         headline: '',
                         bio: '',
                         currentPosition: '',
-                        connections: 0,
                         contactInfo: {
                             phoneNo: '',
                             home: '',
+                            email:user.email,
                         },
                         socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                         skills: ['', '', '', '', ''],
                         posts: [],
+                        connections: [],
+                        connectionRequests: [],
                         profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
                         profileImgPath: "",
                         timeStamp: serverTimestamp()
@@ -85,16 +82,14 @@ export function ContextProvider({ children }) {
 
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
             if (userCredential.user) {
-                toast.success('Sign in successfully', {
-                    theme: `${darkMode ? 'dark' : 'light'}`
-                })
+                toast.success('Sign in successfully')
                 // console.log(userCredential.user);
                 localStorage.setItem("st-hub", JSON.stringify(userCredential.user));
             }
         } catch (error) {
             console.log(error);
-            setEmail('');
-            setPassword('')
+            // setEmail('');
+            // setPassword('')
         }
     }
     const githubSignIn = async () => {
@@ -119,10 +114,10 @@ export function ContextProvider({ children }) {
                 contactInfo: {
                     phoneNo: '',
                     home: '',
+                    email:user.email
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['', '', '', '', ''],
-                posts: [],
                 profileImg: user.photoURL,
                 timeStamp: serverTimestamp()
             })
@@ -133,9 +128,7 @@ export function ContextProvider({ children }) {
         const result = await signInWithPopup(auth, googleProvider)
         const user = result.user;
         localStorage.setItem('st-hub', JSON.stringify(user));
-        toast.success("Log-In Successfully", {
-            theme: `${darkMode ? 'dark' : 'light'}`
-        })
+        toast.success("Log-In Successfully")
         // Check for user
         const docRef = doc(db, 'users', user.uid)
         const docSnap = await getDoc(docRef)
@@ -153,10 +146,10 @@ export function ContextProvider({ children }) {
                 contactInfo: {
                     phoneNo: '',
                     home: '',
+                    email:user.email,
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['', '', '', '', ''],
-                posts: [],
                 profileImg: user.photoURL,
                 timeStamp: serverTimestamp()
 
@@ -178,11 +171,51 @@ export function ContextProvider({ children }) {
         navigate(`/search?name=${search}`);
         setSearch('');
     }
+    //function to send request to the user
+    const sendConnectionRequest = (user) => {
+        //pages where we can send the requests 
+        //search , userProfile , userprofileCard , 
+        const reqRef = doc(db, 'users', user?.uid)
+        if (user?.connectionRequests?.includes(profileData?.uid)) {
+            console.log("already sended request")
+        } else {
+            updateDoc(reqRef, {
+                connectionRequests: arrayUnion(profileData.uid)
+
+            }).then(() => {
+                console.log("connectionRequests send")
+            }).catch((e) => console.log(e))
+        }
+
+    }
+    const removeConnectionRequest = (user) => {
+        const reqRef = doc(db, 'users', user?.uid)
+        updateDoc(reqRef, {
+            connectionRequests: arrayRemove(profileData.uid)
+        }).then(() => {
+            console.log("connectionRequests removed")
+        }).catch((e) => console.log(e))
+    }
+    const removeConnection = (user) => {
+        const reqRef = doc(db, 'users', user?.uid)
+        updateDoc(reqRef, {
+            connections: arrayRemove(profileData?.uid)
+        }).then(() => {
+            console.log("connections removed from user")
+        }).catch((e) => console.log(e))
+        const selfRef = doc(db, 'users', profileData?.uid)
+        updateDoc(selfRef, {
+            connections: arrayRemove(user?.uid)
+        }).then(() => {
+            console.log("connections removed from self ")
+        }).catch((e) => console.log(e))
+
+    }
+    // const acceptConnectionRequest = () => {
+
+    // }
     return (
         < DataContext.Provider value={{
-            darkMode,
-            setDarkMode,
-            changeMode,
             googleSignIn,
             githubSignIn,
             email, setEmail, password, setPassword,
@@ -194,7 +227,12 @@ export function ContextProvider({ children }) {
             //searching 
             search,
             setSearch,
-            OnSearch
+            OnSearch,
+            // connections
+            sendConnectionRequest,
+            removeConnectionRequest,
+            removeConnection,
+
 
         }}>
             {children}
