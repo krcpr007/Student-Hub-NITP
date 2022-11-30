@@ -36,12 +36,23 @@ function PostCard({ post, id, fetchPosts }) {
     useEffect(() => {
         userData();
         getComments()
+        getLikes()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     // function to get all the comments of the post
     const getComments = () => {
         onSnapshot(likeRef, (snapShot) => {
             setComments(snapShot.data()?.comments)
+        })
+    }
+    // function for get live count
+    const getLikes = () => {
+        onSnapshot(likeRef, (snapShot) => {
+            setLike({
+                ...like,
+                liked: snapShot.data()?.likes?.includes(profileData.uid),
+                likeCount: snapShot.data()?.likes?.length,
+            })
         })
     }
     //function to like post or dislike post
@@ -113,7 +124,7 @@ function PostCard({ post, id, fetchPosts }) {
     }
     const commentRef = doc(db, 'posts', id)
     const handleChangeComment = (e) => {
-        if (textComment.length !== "") {
+        if (textComment?.length !== "") {
             updateDoc(commentRef, {
                 comments: arrayUnion({
                     user: profileData.uid,
@@ -160,7 +171,7 @@ function PostCard({ post, id, fetchPosts }) {
                         </div>
                         <div className='flex m-1'>
                             <p>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
-                            <p className='text-left ml-12 mx-2'>{comments.length} comments </p>
+                            <p className='text-left ml-12 mx-2'>{comments?.length} comments </p>
                         </div>
                     </div>
                 </div>
