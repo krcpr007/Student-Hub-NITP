@@ -10,8 +10,6 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 import ContextProvider from '../context/ContextProvider';
 import Loader from '../Loader/Loader';
 function NewPost({ setGetNewPosts }) {
-  const localAuth = JSON.parse(localStorage.getItem('st-hub'));
-  const uid = localAuth.uid;
   const { userInformation, profileData } = useContext(ContextProvider);
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -40,7 +38,7 @@ function NewPost({ setGetNewPosts }) {
         await addDoc(collection(db, 'posts'), {
           comments: [],
           text: text,
-          uid: uid,
+          uid: profileData?.uid,
           postedAt: date,
           likes: [],
           imgPath: file ? url : null,
