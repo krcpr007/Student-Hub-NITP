@@ -50,7 +50,7 @@ export function ContextProvider({ children }) {
                         contactInfo: {
                             phoneNo: '',
                             home: '',
-                            email:user.email,
+                            email: user.email,
                         },
                         socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                         skills: ['', '', '', '', ''],
@@ -114,7 +114,7 @@ export function ContextProvider({ children }) {
                 contactInfo: {
                     phoneNo: '',
                     home: '',
-                    email:user.email
+                    email: user.email
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['', '', '', '', ''],
@@ -146,7 +146,7 @@ export function ContextProvider({ children }) {
                 contactInfo: {
                     phoneNo: '',
                     home: '',
-                    email:user.email,
+                    email: user.email,
                 },
                 socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                 skills: ['', '', '', '', ''],
@@ -211,9 +211,36 @@ export function ContextProvider({ children }) {
         }).catch((e) => console.log(e))
 
     }
-    // const acceptConnectionRequest = () => {
-
-    // }
+    const acceptConnectionRequest = (user) => {
+        const selfRef = doc(db, 'users', profileData?.uid)
+        if (profileData?.connectionRequests?.includes(user?.uid)) {
+            updateDoc(selfRef, {
+                connectionRequests: arrayRemove(user.uid) //removing the user.uid from request array
+            }).then(() => {
+                console.log("connectionRequest uid moving to connection")
+            }).catch((e) => {
+                console.log(e)
+                console.log("At time of moving from connectionRequest from to connection");
+            })
+            if (!(profileData?.connections?.includes(user.uid))) { //checking it is already in the connection array or not
+                const userRef = doc(db,'users',user.uid)
+                updateDoc(userRef, {
+                    connections: arrayUnion(profileData.uid)
+                }).then(() => {
+                    console.log("connections added to user")
+                }).catch((e) => console.log(e))
+                updateDoc(selfRef,{
+                    connections: arrayUnion(user.uid)
+                }).then(() => {
+                    console.log("connections added to self also")
+                }).catch((e) => console.log(e))
+                // connection accepted successfully 
+                console.log("Connected finally");
+            }
+        } else {
+            alert("Their is none connection request");
+        }
+    }
     return (
         < DataContext.Provider value={{
             googleSignIn,
@@ -232,6 +259,7 @@ export function ContextProvider({ children }) {
             sendConnectionRequest,
             removeConnectionRequest,
             removeConnection,
+            acceptConnectionRequest
 
 
         }}>
