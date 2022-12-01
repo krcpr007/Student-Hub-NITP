@@ -47,15 +47,15 @@ function Search() {
     <div>
       <div className={`${darkMode ? 'bg-slate-900 text-white' : null}`}>
         <div className="flex">
-          <div className='w-1/3'>
+          <div className='hidden md:inline w-1/3'>
             <div className="hidden md:inline">
               <LeftAboutCard />
               <GroupsClub />
             </div>
           </div>
-          <div className="mx-5 w-full">
-            <img src="homebg-2.jpg" className=' ml-1.5 sm:ml-0' alt="" />
-            <div className='grid sm:grid-cols-3 gap-12 mt-5 ml-2 sm:ml-0'>
+          <div className="w-full">
+            <img src="homebg-2.jpg" className='w-full mt-2 rounded-t' alt="" />
+            <div className='grid sm:grid-cols-3 gap-12 mt-5 sm:ml-0 mx-5'>
               {users.map((user, i) => {
                 return loader?<Loader/>: <ProfileCard key={i} user={user} />
               })}
