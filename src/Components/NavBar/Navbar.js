@@ -11,7 +11,7 @@ import { auth } from '../../Firebase';
 import ContextProvider from "../context/ContextProvider";
 import { toast } from "react-toastify";
 function Navbar() {
-  const {profileData, setSearch, OnSearch } = useContext(ContextProvider);
+  const { profileData, setSearch, OnSearch } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const handleLogout = () => {
     if (auth.currentUser) {
@@ -76,7 +76,7 @@ function Navbar() {
                 <div className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-slate-800 dark:text-white`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
                   <div className="py-1" role="none">
                     {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
-                    <Link to="/editProfile" className=" block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</Link>
+                    <Link to="/editProfile" className=" block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-0">Account details</Link>
                     <Link to="/support" className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-1">Support</Link>
                     <Link to='/nit-patna' className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-2">License</Link>
                     <Link to="/login" onClick={handleLogout} className=" block w-full text-left px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</Link>
