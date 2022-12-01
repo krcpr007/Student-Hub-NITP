@@ -33,7 +33,7 @@ function Chat() {
     const docRef = doc(db, "users", uid);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        // console.log("Document data:", docSnap.data());
         setUser(docSnap.data());
       } else {
         // doc.data() will be undefined in this case
