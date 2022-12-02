@@ -116,13 +116,7 @@ function NewPost({ setGetNewPosts }) {
                   className="bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="submit" onClick={CreatePost}
                 >
-                  Post
-                </button>
-                <button title='Uploading status'
-                  className="bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm pl-2 py-1 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  {loader ? (<Loader />) : null}
+                {loader ? (<Loader />) : "Post"}
                 </button>
               </div>
             </form>
