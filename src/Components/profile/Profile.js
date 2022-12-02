@@ -79,21 +79,11 @@ function Profile() {
         <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
           <div className={`shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white`}>
             <div>
-              <img
-                src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
-                alt="post-pic"
-                className="md:rounded-t-lg w-full md:h-72"
-              />
-              <img
-                src={profileData.profileImg || avatar}
-                alt=""
-                onClick={() => setShowModal(true)}
-                className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400"
-              />
+              <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80" alt="post-pic" className="md:rounded-t-lg w-full md:h-72" loading="lazy"/>
+              <img src={profileData.profileImg || avatar} alt="" onClick={() => setShowModal(true)} className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400"/>
             </div>
             <div className="relative -top-10 md:-top-24 md:left-5">
               <div className='absolute -top-14 left-40 md:left-3/4 '>
-
                 <div className='flex'>
                   <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
                     <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
@@ -107,9 +97,7 @@ function Profile() {
                   <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
                 </div>
               </div>
-
               <h1 className="text-3xl font-medium">{profileData?.name}</h1>
-
               <span className="text-sm">{profileData && profileData.headline}</span> <br />
               <MdPlace title="Live in" className="inline" />
               <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
@@ -119,9 +107,7 @@ function Profile() {
         </div>
         {showModal ? (
           <>
-            <div
-              className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            >
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative md:w-1/4 my-6 mx-auto max-w-3xl ">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-600 outline-none focus:outline-none">
@@ -130,10 +116,7 @@ function Profile() {
                     <h3 className="text-xl font-medium">
                       Profile picture
                     </h3>
-                    <button
-                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                      onClick={() => setShowModal(false)}
-                    >
+                    <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"onClick={() => setShowModal(false)}>
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                         ×
                       </span>
@@ -141,33 +124,17 @@ function Profile() {
                   </div>
                   {/*body*/}
                   <div className="relative p-4 flex-auto">
-                    <img
-                      src={profileData.profileImg || avatar}
-                      alt=""
-                      className="w-full rounded-full border-2 border-gray-400"
-                    />
+                    <img src={profileData.profileImg || avatar} alt="" className="w-full rounded-full border-2 border-gray-400" />
                   </div>
                   {/*footer*/}
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                    <button
-                      className=" bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
+                    <button className=" bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={() => setShowModal(false)}>
                       <AiFillCloseCircle className="" />
                     </button>
-                    <button
-                      className="bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={deleteProfileImg}
-                    >
+                    <button className="bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={deleteProfileImg}>
                       <MdDelete className="" />
                     </button>
-                    <button
-                      className="bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-
-                    >
+                    <button className="bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                       <label htmlFor="profileImg">
                         <BsFillCameraFill className="text-lg" />
                       </label>
@@ -180,22 +147,15 @@ function Profile() {
           </>
         ) : null}
         {showContactModal ? (<>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative md:w-1/4 my-6 mx-auto max-w-3xl ">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-gray-200 outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-xl font-medium my-4">
-                    Contact Info
-                  </h3>
+                  <h3 className="text-xl font-medium my-4">Contact Info</h3>
                   <img src="nitlogo.png" className="mx-5" alt="" />
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
+                  <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={() => setShowModal(false)}>
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                       ×
                     </span>
@@ -215,18 +175,12 @@ function Profile() {
                     <MdHome className="text-2xl text-yellow-500" />
                     <p className="mx-2">{profileData.contactInfo?.home}</p>
                   </div>
-
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className=" bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowContactModal(false)}
-                  >
+                  <button className=" bg-slate-800 text-white active:bg-slate-600 font-bold uppercase text-sm p-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={() => setShowContactModal(false)}>
                     <AiFillCloseCircle className="" />
                   </button>
-
                 </div>
               </div>
             </div>
