@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useContext} from 'react';
+import React, { useEffect, useState} from 'react';
 import Img from '../assets/img_avatar.png'
 import { Link , useParams} from 'react-router-dom';
 import {FcGallery} from 'react-icons/fc'
@@ -13,12 +13,10 @@ import {
   ref, getDownloadURL, uploadBytes,
 } from 'firebase/storage'
 import { db, auth, storage } from '../../Firebase';
-import contextProvider from '../context/ContextProvider'
 import ConversationsText from './ConversationsText';
 const CryptoJS = require("crypto-js");
 const key = process.env.REACT_APP_CRYPTO_KEY 
 function Chat() {
-  const { darkMode } = useContext(contextProvider);
   const user1 = auth.currentUser.uid; // getting current user 
   const params = useParams();
   const { uid } = params;
@@ -95,7 +93,7 @@ function Chat() {
   return (
     <>
       <div className=''>
-        <div className={`${darkMode?"bg-gradient-to-t from-slate-300 via-slate-700 to-slate-900 ":null}`}>
+        <div className="dark:bg-gradient-to-t dark:from-slate-300 dark:via-slate-700 dark:to-slate-900 ">
           <Link to={`/user/${user.uid}`} className='flex'>
             <div className='mt-2'>
               <img src={user.profileImg || Img} alt="" className='w-12 rounded-full border border-slate-900' />

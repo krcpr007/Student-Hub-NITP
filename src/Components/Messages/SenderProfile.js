@@ -1,15 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {FaImage} from 'react-icons/fa'
 import Img from '../assets/img_avatar.png';
 import { db } from '../../Firebase';
-import contextProvider from '../context/ContextProvider'
 import { onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore';
 import {toast} from "react-toastify";
 const CryptoJS = require("crypto-js");
 const key = process.env.REACT_APP_CRYPTO_KEY 
 function SenderProfile({ sender, user1 }) {
-    const { darkMode } = useContext(contextProvider);
     const user2 = sender?.uid;
     const [lastMsgData, setLastMsgData] = useState({});
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}` // creating msg unique id
@@ -27,7 +25,6 @@ function SenderProfile({ sender, user1 }) {
     useEffect(()=>{
         if(lastMsgData?.unread && lastMsgData.from !== user1 ){
             toast(`📩 Message received`,{
-                theme:`${darkMode?'dark':'light'}`,
                 autoClose:1000,
             })
             Notification.requestPermission().then(prem=>{
@@ -52,7 +49,7 @@ function SenderProfile({ sender, user1 }) {
         }
     }
     return (
-        <div className={` ${darkMode ? "bg-slate-900 text-white" : ""}`}>
+        <div className="dark:bg-slate-900 dark:text-white">
             <div className='flex p-3'>
                 <div className='mt-2'>
                     <Link to={`/user/${sender.uid}`}>
