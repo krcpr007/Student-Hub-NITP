@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { MdPlace, MdEmail, MdContactPhone, MdHome } from 'react-icons/md'
@@ -12,10 +12,12 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import UserPosts from "./UserPosts";
 import Connection from "./Connection";
+import ContextProvider from "../context/ContextProvider";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
-
+  const localAuth = JSON.parse(localStorage.getItem('st-hub'));
+  const { profileData, userInformation } = useContext(ContextProvider);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
@@ -30,7 +32,7 @@ function UserProfile() {
     }
   }
   useEffect(() => {
-    // userInformation();
+    userInformation();
     userData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -79,7 +81,9 @@ function UserProfile() {
               <Connection user={user} />
             </div>
           </div>
-          <UserPosts uid={user.uid} />
+          {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<>
+            <UserPosts uid={user.uid} />
+          </>) : null}
         </div>
         {showModal ? (
           <>
