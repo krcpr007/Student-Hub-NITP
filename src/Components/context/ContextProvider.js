@@ -188,12 +188,26 @@ export function ContextProvider({ children }) {
         }
 
     }
+    //function to remove connection request
     const removeConnectionRequest = (user) => {
+        const selfRef = doc(db, 'users', profileData?.uid)
+        if (profileData?.connectionRequests?.includes(user?.uid)) {
+            updateDoc(selfRef, {
+                connectionRequests: arrayRemove(user?.uid)
+            }).then(() => {
+                console.log("connectionRequests removed")
+            }).catch((e) => console.log(e))
+        } else {
+            console.log("No connection request")
+        }
+    }
+    // function to undo the sended connection request 
+    const undoConnectionRequest = (user) => {
         const reqRef = doc(db, 'users', user?.uid)
         updateDoc(reqRef, {
             connectionRequests: arrayRemove(profileData.uid)
         }).then(() => {
-            console.log("connectionRequests removed")
+            console.log("connectionRequests undo")
         }).catch((e) => console.log(e))
     }
     const removeConnection = (user) => {
@@ -223,13 +237,13 @@ export function ContextProvider({ children }) {
                 console.log("At time of moving from connectionRequest from to connection");
             })
             if (!(profileData?.connections?.includes(user.uid))) { //checking it is already in the connection array or not
-                const userRef = doc(db,'users',user.uid)
+                const userRef = doc(db, 'users', user.uid)
                 updateDoc(userRef, {
                     connections: arrayUnion(profileData.uid)
                 }).then(() => {
                     console.log("connections added to user")
                 }).catch((e) => console.log(e))
-                updateDoc(selfRef,{
+                updateDoc(selfRef, {
                     connections: arrayUnion(user.uid)
                 }).then(() => {
                     console.log("connections added to self also")
@@ -256,6 +270,7 @@ export function ContextProvider({ children }) {
             setSearch,
             OnSearch,
             // connections
+            undoConnectionRequest,
             sendConnectionRequest,
             removeConnectionRequest,
             removeConnection,
