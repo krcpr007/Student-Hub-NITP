@@ -12,12 +12,14 @@ import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc 
 import { db, storage } from '../../Firebase';
 import { deleteObject, ref } from 'firebase/storage';
 import { toast } from 'react-toastify';
+import Comments from './Comments';
 function PostCard({ post, id, fetchPosts }) {
     const { profileData } = useContext(ContextProvider);
     const [comments, setComments] = useState([])
     const [textComment, setTextComment] = useState("");
     const [user, setUser] = useState({})
     const [loader, setLoader] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const [like, setLike] = useState({
         liked: post?.likes?.includes(profileData.uid),
         likeCount: post?.likes?.length,
@@ -105,21 +107,26 @@ function PostCard({ post, id, fetchPosts }) {
     }
     //deleting the function
     const handleDeletePost = async (id) => { //function for delete the post and details OP
-        try {
-            const yes = window.confirm("Confirm Do you want to delete?")
-            if (yes) {
-                setLoader(true);
-                if (post.forDeletePath) { await deleteObject(ref(storage, post.forDeletePath)); } //deleting the image of member // data.imgPath
-                await deleteDoc(doc(db, 'posts', id)); //deleting the data of post 
-                setLoader(false)
-                toast.success("Post Deleted")
-                fetchPosts() // calling fetch  function again
+        const yes = window.confirm("Are sure you want to delete it?")
+        if (yes) {
+            try {
+                const yes = window.confirm("Confirm Do you want to delete?")
+                if (yes) {
+                    setLoader(true);
+                    if (post.forDeletePath) { await deleteObject(ref(storage, post.forDeletePath)); } //deleting the image of member // data.imgPath
+                    await deleteDoc(doc(db, 'posts', id)); //deleting the data of post 
+                    setLoader(false)
+                    toast.success("Post Deleted")
+                    fetchPosts() // calling fetch  function again
 
+                }
+            } catch (error) {
+                toast.error("Something went Wrong");
+                setLoader(false)
+                console.log(error)
             }
-        } catch (error) {
-            toast.error("Something went Wrong");
-            setLoader(false)
-            console.log(error)
+        } else {
+
         }
     }
     const commentRef = doc(db, 'posts', id)
@@ -152,11 +159,13 @@ function PostCard({ post, id, fetchPosts }) {
                         <h1 className='font-medium'><Link to={`/user/${user.uid}`}>{user.name}</Link></h1>
                         <p className='text-xs'>{user.headline}</p>
                     </div>
-                    {user.uid === profileData.uid && (<>
-                        <div className='inset-x-0 '>
-                            {loader ? <><FiLoader className="text-xl" /></> : <><RiDeleteBack2Fill className='text-2xl cursor-pointer' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
-                        </div>
-                    </>)}
+                    <div className=''>
+                        {user.uid === profileData.uid && (<>
+                            <div className='justify-between '>
+                                {loader ? <><FiLoader className="text-xl" /></> : <><RiDeleteBack2Fill className='text-2xl cursor-pointer' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
+                            </div>
+                        </>)}
+                    </div>
                 </div>
                 <div>
                     <div className='p-3 text-justify'>
@@ -171,14 +180,14 @@ function PostCard({ post, id, fetchPosts }) {
                         </div>
                         <div className='flex m-1'>
                             <p>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
-                            <p className='text-left ml-12 mx-2'>{comments?.length} comments </p>
+                            <button className='text-left ml-12 mx-2' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
                         </div>
                     </div>
                 </div>
                 <hr />
                 <div className='flex p-2'>
                     <div className='mx-2'>
-                        <img src={profileData.profileImg ? profileData.profileImg : null || avatar} alt="" className='w-10 rounded-3xl border-1 border-gray-400' loading='lazy' />
+                        <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-1 border-gray-400' loading='lazy' />
                     </div>
                     <div className='w-full'>
                         <div className="flex overflow-hidden border rounded-lg border-yellow-500 lg:flex-row  focus-within:ring focus-within:ring-opacity-40 focus-within:border-yellow-500 focus-within:ring-yellow-500">
@@ -187,6 +196,9 @@ function PostCard({ post, id, fetchPosts }) {
                         </div>
                     </div>
                 </div>
+                {showComments && comments?.map((c) => {
+                    return <Comments key={c.commentId} comment={c} post={post}/>
+                })}
             </div>
         </>
     )
