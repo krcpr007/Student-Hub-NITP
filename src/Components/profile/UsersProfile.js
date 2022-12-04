@@ -11,13 +11,14 @@ import Loader from "../Loader/Loader";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import UserPosts from "./UserPosts";
+import mainBuilding from '../assets/mainBuilding.jpeg'
 import Connection from "./Connection";
 import ContextProvider from "../context/ContextProvider";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));
-  const { profileData, userInformation } = useContext(ContextProvider);
+  const { profileData, userInformation} = useContext(ContextProvider);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
@@ -30,6 +31,7 @@ function UserProfile() {
       setUser(docSnap.data());
       setLoader(false);
     }
+    // setLoader(false);
   }
   useEffect(() => {
     userInformation();
@@ -45,11 +47,7 @@ function UserProfile() {
         <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
           <div className={`shadow-2xl md:rounded-t-lg dark:bg-slate-900 dark:text-white`}>
             <div>
-              <img
-                src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80"
-                alt="post-pic"
-                className="md:rounded-t-lg w-full md:h-72"
-              />
+              <img src={mainBuilding} alt="post-pic" className="md:rounded-t-lg w-full md:h-80" />
               <img
                 src={user.profileImg || avatar}
                 alt=""
@@ -95,13 +93,8 @@ function UserProfile() {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-600 outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                    <h3 className="text-xl font-medium">
-                      Profile picture
-                    </h3>
-                    <button
-                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                      onClick={() => setShowModal(false)}
-                    >
+                    <h3 className="text-xl font-medium">Profile picture</h3>
+                    <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={() => setShowModal(false)}>
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                         ×
                       </span>

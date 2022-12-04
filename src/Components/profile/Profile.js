@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import mainBuilding from '../assets/mainBuilding.jpeg'
 import { BiMessageSquareEdit } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillCameraFill } from 'react-icons/bs';
@@ -14,6 +15,7 @@ import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import ContextProvider from '../context/ContextProvider'
 import UserPosts from "./UserPosts";
+// import ConnectionRequests from "../connnections/ConnectionRequests";
 function Profile() {
   const { profileData, userInformation } = useContext(ContextProvider);
   const [profileImg, setProfileImg] = useState();
@@ -76,31 +78,36 @@ function Profile() {
   return (
     <>
       <div>
-        <div className="w-full md:w-3/4 md:px-24 md:p-2 ">
-          <div className={`shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white`}>
-            <div>
-              <img src="https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1178&q=80" alt="post-pic" className="md:rounded-t-lg w-full md:h-72" loading="lazy"/>
-              <img src={profileData.profileImg || avatar} alt="" onClick={() => setShowModal(true)} className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400"/>
-            </div>
-            <div className="relative -top-10 md:-top-24 md:left-5">
-              <div className='absolute -top-14 left-40 md:left-3/4 '>
-                <div className='flex'>
-                  <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
-                    <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
-                  </a>
-                  <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
-                    <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
-                  </a>
-                  <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
-                    <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
-                  </a>
-                  <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
-                </div>
+        <div className="md:w-3/4 md:px-24 md:p-2">
+          <div className="flex">
+            <div className="shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white w-full">
+              <div>
+                <img src={mainBuilding} alt="post-pic" className="md:rounded-t-lg w-full md:h-72" loading="lazy" />
+                <img src={profileData.profileImg || avatar} alt="" onClick={() => setShowModal(true)} className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400" />
               </div>
-              <h1 className="text-3xl font-medium">{profileData?.name}</h1>
-              <span className="text-sm">{profileData && profileData.headline}</span> <br />
-              <MdPlace title="Live in" className="inline" />
-              <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
+              <div className="relative -top-10 md:-top-24 md:left-5">
+                <div className='absolute -top-14 left-40 md:left-3/4 '>
+                  <div className='flex'>
+                    <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
+                      <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
+                    </a>
+                    <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
+                      <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
+                    </a>
+                    <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
+                      <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
+                    </a>
+                    <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
+                  </div>
+                </div>
+                <h1 className="text-3xl font-medium">{profileData?.name}</h1>
+                <span className="text-sm">{profileData && profileData.headline}</span> <br />
+                <MdPlace title="Live in" className="inline" />
+                <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
+              </div>
+            </div>
+            <div>
+              {/* <ConnectionRequests /> */}
             </div>
           </div>
           <UserPosts uid={profileData?.uid} />
@@ -116,7 +123,7 @@ function Profile() {
                     <h3 className="text-xl font-medium">
                       Profile picture
                     </h3>
-                    <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"onClick={() => setShowModal(false)}>
+                    <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={() => setShowModal(false)}>
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                         ×
                       </span>
