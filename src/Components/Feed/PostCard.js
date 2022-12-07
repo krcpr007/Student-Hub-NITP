@@ -129,8 +129,8 @@ function PostCard({ post, id, fetchPosts }) {
 
         }
     }
-    const commentRef = doc(db, 'posts', id)
     const handleChangeComment = (e) => {
+        const commentRef = doc(db, 'posts', id)
         if (textComment?.length !== "") {
             updateDoc(commentRef, {
                 comments: arrayUnion({
@@ -153,10 +153,10 @@ function PostCard({ post, id, fetchPosts }) {
             <div className={`mt-3 shadow rounded mb-5 m-2 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
                 <div className='flex relative'>
                     <div className='m-1'>
-                        <Link to={`/user/${user.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
+                        <Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
                     </div>
                     <div className='m-1'>
-                        <h1 className='font-medium'><Link to={`/user/${user.uid}`}>{user.name}</Link></h1>
+                        <h1 className='font-medium'><Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}>{user.name}</Link></h1>
                         <p className='text-xs'>{user.headline}</p>
                     </div>
                     <div className=''>
@@ -197,7 +197,7 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                 </div>
                 {showComments && comments?.map((c) => {
-                    return <Comments key={c.commentId} comment={c} post={post} />
+                    return <Comments key={c.commentId} comment={c} post={post} id={id}/>
                 })}
             </div>
         </>
