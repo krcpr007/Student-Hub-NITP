@@ -11,7 +11,7 @@ import { auth } from '../../Firebase';
 import ContextProvider from "../context/ContextProvider";
 import { toast } from "react-toastify";
 function Navbar() {
-  console.log("Hii i am navbar")
+  // console.log("Hii i am navbar")
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const { profileData, } = useContext(ContextProvider);
@@ -62,7 +62,7 @@ function Navbar() {
         <ul className='menu'>
           {localStorage.getItem('st-hub') ? (
             <form>
-              <input onChange={e => setSearch(e.target.value)} className="px-7 py-1 border border-yellow-300 md:w-auto text-yellow-400 shadow-2xl rounded m-2 bg-transparent  active:border-yellow-400  focus:ring-yellow-500 focus:ring focus:border-yellow-400 placeholder:text-yellow-500 bg-slate-800 " placeholder="Search..." type="text" />
+              <input onChange={e => setSearch(e.target.value)} className="px-7 py-1 border border-yellow-300 md:w-auto text-yellow-400 shadow-2xl rounded m-2 bg-transparent  active:border-yellow-400  focus:ring-yellow-500 focus:ring focus:border-yellow-400 placeholder:text-yellow-500 dark:bg-slate-800 " placeholder="Search" type="text" />
               <button type='submit' onClick={OnSearch} className='hidden'>search</button>
             </form>
           ) : null}

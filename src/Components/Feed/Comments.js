@@ -48,7 +48,7 @@ function Comments({ comment, post,id }) {
     }
     if (loader) return <Loader />
     return (
-        <div className='m-1 bg-gray-800 rounded-md'>
+        <div className='m-1 dark:bg-gray-800 rounded-md'>
             <div className='flex p-2 relative' key={comment.commentId}>
                 <div className='m-1'>
                     <Link to={comment.user === localAuth.uid ? "/profile" : `/user/${comment?.user}`}><img src={user?.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
@@ -61,7 +61,7 @@ function Comments({ comment, post,id }) {
                 </div>
                 {(comment.user === localAuth?.uid || localAuth?.uid === post.uid) ?
                     <div>
-                        <button className='bg-amber-600 float-right absolute right-3 top-5' onClick={handleDeleteComment}><AiFillDelete /></button>
+                        <button className='dark:bg-amber-600 float-right absolute right-3 top-5' onClick={handleDeleteComment}><AiFillDelete /></button>
                     </div>
                     : null}
             </div>

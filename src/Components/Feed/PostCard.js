@@ -178,7 +178,7 @@ function PostCard({ post, id, fetchPosts }) {
                             </div>
                         </div>
                         <div className='flex'>
-                            <button className='rounded-md' onClick={likedPost}>{<AiFillHeart className="text-2xl" fill={`${like.liked ? 'red' : 'white'}`} />}</button>
+                            <button className='rounded-md' onClick={likedPost}>{<AiFillHeart className="text-2xl" fill={`${like.liked ? 'red' : 'gray'}`} />}</button>
                             <p className='m-1'>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
                             <button className='mx-2 py-2 px-1 hover:bg-slate-800 hover:rounded absolute right-3 top-1' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
                         </div>
