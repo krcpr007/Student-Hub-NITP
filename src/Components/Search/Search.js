@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { db, } from '../../Firebase';
 import ProfileCard from './ProfileCard';
@@ -13,18 +13,16 @@ import LeftAboutCard from '../Feed/LeftAboutCard';
 import PeersNews from '../Feed/PeersNews';
 import GroupsClub from '../Feed/GroupsClub';
 import Opportunities from '../Feed/Opportunities';
-import ContextProvider from '../context/ContextProvider';
 function Search() {
   const [loader, setLoader] = useState(false); 
-  const auth = JSON.parse(localStorage.getItem('st-hub'));// getting auth from local-storge
-  const { darkMode  , setSearch} = useContext(ContextProvider)
+  const localAuth = JSON.parse(localStorage.getItem('st-hub'));// getting auth from local-storage
   let querySearch = new URLSearchParams(useLocation().search).get('name');
   const [users, setUsers] = useState([])
   useEffect(() => {
     setLoader(true)
     const usersRef = collection(db, "users");
     // create query object
-    const q = query(usersRef, where("uid", 'not-in', [auth.uid]));
+    const q = query(usersRef, where("uid", 'not-in', [localAuth?.uid]));
     // execute query
     const unsub = onSnapshot(q, (querySnapshot) => {
       let users = [];
@@ -37,15 +35,14 @@ function Search() {
         return (value.name.toLowerCase().includes(querySearch.toLowerCase()) || value.headline.toLowerCase().includes(querySearch.toLowerCase()) || value.contactInfo.home.toLowerCase().includes(querySearch.toLowerCase()))
       })
       setLoader(false);
-      setSearch('')
       setUsers(filterData);
     });
     return () => unsub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [querySearch])
+  }, [])
   return (
     <div>
-      <div className={`${darkMode ? 'bg-slate-900 text-white' : null}`}>
+      <div className="dark:bg-slate-900 dark:text-white">
         <div className="flex">
           <div className='hidden md:inline w-1/3'>
             <div className="hidden md:inline">
@@ -55,7 +52,7 @@ function Search() {
           </div>
           <div className="w-full">
             <img src="homebg-2.jpg" className='w-full mt-2 rounded-t' alt="" />
-            <div className='grid sm:grid-cols-3 gap-12 mt-5 sm:ml-0 mx-5'>
+            <div className='grid grid-cols-1 sm:grid-cols-3 gap-20 mt-5'>
               {users.map((user, i) => {
                 return loader?<Loader/>: <ProfileCard key={i} user={user} />
               })}

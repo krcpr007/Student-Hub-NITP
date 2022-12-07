@@ -10,8 +10,8 @@ function ProfileCard({ user }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sendConnectionRequest,undoConnectionRequest])
     return (
-        <div>
-            <div className='card rounded-lg border border-gray-200 hover:shadow-2xl w-72 sm:w-52'>
+        <div className='mx-5'>
+            <div className='card rounded-lg hover:shadow-2xl w-full'>
                 <div>
                     <img src={mainBuilding} alt="" className='rounded-t' />
                     <Link to={`/user/${user.uid}`}>
@@ -24,7 +24,7 @@ function ProfileCard({ user }) {
                     <h1>{user.name}</h1>
                     <p className='opacity-75'>{user.headline ? `${user.headline?.substring(0, 20)}...` : null}</p>
                     {(user?.connections?.includes(profileData?.uid) && profileData?.connections?.includes(user?.uid)) ? <>
-                        <Link to={`/chat/${user.uid}`} title="Message" className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</Link>
+                        <Link to={`/chat/${user.uid}`} title="Message"><button className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</button></Link>
                     </> : user?.connectionRequests?.includes(profileData?.uid) ? (<>
                         <button className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md" onClick={e => undoConnectionRequest(user)}>Requested</button>
                     </>) : (<>
