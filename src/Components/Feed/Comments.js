@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { db } from '../../Firebase';
@@ -23,19 +24,33 @@ function Comments({ comment, post }) {
         userData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
+    const handleDeleteComment = (commentId) => {
+        // const yes = window.confirm("Are you sure mf?")
+        // if (yes) {
+        //     try {
+        //         console.log(commentId)
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // }
+        // console.log("Deleted")
+    }
     if (loader) return <Loader />
     return (
-        <div className='m-1 bg-gray-800'>
-            <div className='flex p-2' key={comment.commentId}>
-                <img src={user?.profileImg} className="w-10 rounded-3xl" alt="" loading='lazy' />
+        <div className='m-1 bg-gray-800 rounded-md'>
+            <div className='flex p-2 relative' key={comment.commentId}>
+                <div className='m-1'>
+                    <Link to={`/user/${comment?.user}`}><img src={user?.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
+                </div>
                 <div className='mx-2'>
-                    <h3>{comment.userName}</h3>
+                    <Link to={`/user/${comment?.user}`}>
+                        <h3>{user?.name}</h3>
+                    </Link>
                     <p className='text-sm'>{comment.comment}</p>
                 </div>
-                {(comment.user === localAuth?.uid || comment.user === post.uid) ?
+                {(comment.user === localAuth?.uid || localAuth?.uid === post.uid) ?
                     <div>
-                        <button className='bg-amber-600 float-right'><AiFillDelete /></button>
+                        <button className='bg-amber-600 float-right absolute right-3 top-5' onClick={() => handleDeleteComment(comment.commentId)}><AiFillDelete /></button>
                     </div>
                     : null}
             </div>

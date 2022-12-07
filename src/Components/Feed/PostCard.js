@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { AiFillHeart } from 'react-icons/ai'
-import { RiDeleteBack2Fill } from 'react-icons/ri'
+import { RiDeleteBin2Fill } from 'react-icons/ri'
 import { FiLoader } from 'react-icons/fi'
 import avatar from '../assets/img_avatar.png'
 // import {FaShare} from 'react-icons/fa';
@@ -151,7 +151,7 @@ function PostCard({ post, id, fetchPosts }) {
     return (
         <>
             <div className={`mt-3 shadow rounded mb-5 m-2 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
-                <div className='flex'>
+                <div className='flex relative'>
                     <div className='m-1'>
                         <Link to={`/user/${user.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
                     </div>
@@ -161,8 +161,8 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                     <div className=''>
                         {user.uid === profileData.uid && (<>
-                            <div className='justify-between '>
-                                {loader ? <><FiLoader className="text-xl" /></> : <><RiDeleteBack2Fill className='text-2xl cursor-pointer' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
+                            <div className=''>
+                                {loader ? <><FiLoader className="text-xl absolute" /></> : <><RiDeleteBin2Fill className='text-2xl cursor-pointer absolute right-3 top-1 hover:text-red-600' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
                             </div>
                         </>)}
                     </div>
@@ -172,15 +172,15 @@ function PostCard({ post, id, fetchPosts }) {
                         {<p dangerouslySetInnerHTML={{ __html: linkIfy(post.text) }} />}
                     </div>
                     {post.imgPath ? <img src={post.imgPath} alt="post-pic" className=' p-2 rounded-lg w-full' loading='lazy' /> : null}
-                    <div className='flex p-1 text-xs mb-2 font-serif'>
+                    <div className='flex p-1 text-xs mb-2 font-serif relative'>
                         <div className='flex'>
                             <div className='cursor-pointer' onClick={likedPost} >
-                                <button className='rounded-md'>{<AiFillHeart className="text-2xl" fill={`${like.liked ? 'red' : 'white'}`} />}</button>
                             </div>
                         </div>
-                        <div className='flex m-1'>
-                            <p>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
-                            <button className='text-left ml-12 mx-2' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
+                        <div className='flex'>
+                            <button className='rounded-md' onClick={likedPost}>{<AiFillHeart className="text-2xl" fill={`${like.liked ? 'red' : 'white'}`} />}</button>
+                            <p className='m-1'>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
+                            <button className='mx-2 py-2 px-1 hover:bg-slate-800 hover:rounded absolute right-3 top-1' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
                         </div>
                     </div>
                 </div>
@@ -197,7 +197,7 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                 </div>
                 {showComments && comments?.map((c) => {
-                    return <Comments key={c.commentId} comment={c} post={post}/>
+                    return <Comments key={c.commentId} comment={c} post={post} />
                 })}
             </div>
         </>
