@@ -5,31 +5,26 @@ import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmai
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 const DataContext = createContext();
-
 export function ContextProvider({ children }) {
     const navigate = useNavigate();
-    const [profileData, setProfileData] = useState({});
+    const [profileData, setProfileData] = useState([]);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [search, setSearch] = useState('');
-    //  user Information form localAuth
+    // fetching loggedIn user Information 
     const userInformation = async () => {
         const localAuth = JSON.parse(localStorage.getItem('st-hub'));
         try {
-            getDoc(doc(db, 'users', localAuth ? localAuth.uid : null)).then((docSnap) => {
-                if (docSnap.exists) {
-                    setProfileData(docSnap.data());
-                    // console.log(docSnap.data())
-                } else {
-                    console.log("went wrong to get user profile")
-                }
-            });
-
+            const querySnap = await getDoc(doc(db, 'users', localAuth ? localAuth.uid : null));
+            if (querySnap.exists) {
+                setProfileData(querySnap.data());
+            }
+            else {
+                console.log("went wrong to get user profile")
+            }
         } catch (error) {
             console.log(error);
         }
     }
-
     // sign up work 
     //Register user with email and password only
     const handleSignUp = (e) => {
@@ -158,19 +153,7 @@ export function ContextProvider({ children }) {
         }
     }
     // searching logic a user with their data
-    const OnSearch = (e) => {
-        e.preventDefault()
-        if (search.length === 0 || search.trim().length === 0) {
-            return
-        }
-        if (search.length <= 3) {
-            toast.info('Enter Full Name Please')
-            setSearch('');
-            return
-        }
-        navigate(`/search?name=${search}`);
-        setSearch('');
-    }
+   
     //function to send request to the user
     const sendConnectionRequest = (user) => {
         //pages where we can send the requests 
@@ -265,10 +248,6 @@ export function ContextProvider({ children }) {
             // everyOnes profile
             profileData,
             userInformation,
-            //searching 
-            search,
-            setSearch,
-            OnSearch,
             // connections
             undoConnectionRequest,
             sendConnectionRequest,
