@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ImHome } from 'react-icons/im'
 import { FaUserPlus } from 'react-icons/fa'
 import { IoMdLogIn } from 'react-icons/io'
@@ -11,7 +11,10 @@ import { auth } from '../../Firebase';
 import ContextProvider from "../context/ContextProvider";
 import { toast } from "react-toastify";
 function Navbar() {
-  const { profileData, setSearch, OnSearch } = useContext(ContextProvider);
+  console.log("Hii i am navbar")
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+  const { profileData, } = useContext(ContextProvider);
   const [showDropDown, setShowDropDown] = useState(false);
   const handleLogout = () => {
     if (auth.currentUser) {
@@ -26,7 +29,19 @@ function Navbar() {
     }
     setShowDropDown(false)
   }
-
+  const OnSearch = (e) => {
+    e.preventDefault()
+    if (search.length === 0 || search.trim().length === 0) {
+      return
+    }
+    if (search.length <= 3) {
+      toast.info('Enter Full Name Please')
+      setSearch('');
+      return
+    }
+    navigate(`/search?name=${search}`);
+    setSearch('');
+  }
   const showAndHideDropDown = () => {
     showDropDown ? setShowDropDown(false) : setShowDropDown(true)
   }
