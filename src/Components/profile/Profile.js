@@ -88,13 +88,13 @@ function Profile() {
               <div className="relative -top-10 md:-top-24 md:left-5">
                 <div className='absolute -top-14 left-40 md:left-3/4 '>
                   <div className='flex'>
-                    <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
+                    <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
                       <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
                     </a>
-                    <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
+                    <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
                       <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
                     </a>
-                    <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
+                    <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
                       <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
                     </a>
                     <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
