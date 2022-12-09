@@ -9,6 +9,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import { toast } from 'react-toastify';
 
 function Messages() {
   const { profileData, userInformation } = useContext(contextProvider);
@@ -17,19 +18,24 @@ function Messages() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const connectedUsers = async () => {
-    setLoading(true)
-    const usersRef = collection(db, "users");
-    // create query object
-    const q = query(usersRef, where("uid", "not-in", [localAuth?.uid]));
-    const querySnap = await getDocs(q);
-    const user = []
-    querySnap.forEach((doc) => {
-      if ((doc.data().connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(doc.data()?.uid))) {
-        user.push(doc.data()); //only connected people can text each other
-      }
-    })
-    setUsers(user)
-    setLoading(false)
+    try {
+      setLoading(true)
+      const usersRef = collection(db, "users");
+      // create query object
+      const q = query(usersRef, where("uid", "not-in", [localAuth?.uid]));
+      const querySnap = await getDocs(q);
+      const user = []
+      querySnap.forEach((doc) => {
+        if ((doc.data().connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(doc.data()?.uid))) {
+          user.push(doc.data()); //only connected people can text each other
+        }
+      })
+      setUsers(user)
+      setLoading(false)
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong")
+    }
   }
   useEffect(() => {
     userInformation()
@@ -41,7 +47,7 @@ function Messages() {
   }
   return (
     <div className="dark:bg-slate-700 dark:text-white">
-      <div className=' content-center md:grid md:grid-cols-6 lg:grid-cols-8 '>
+      <div className='content-center md:grid md:grid-cols-6 lg:grid-cols-8'>
         <div></div>
         <div className='col-span-2 m-2  shadow-lg'>
           <p className={`p-2 font-bold dark:bg-slate-900 dark:text-white`}>Messages</p>
@@ -53,7 +59,6 @@ function Messages() {
           <div className='grid grid-rows-6 place-items-center'>
             <div className='row-span-3'></div>
             <div className=''>
-
               <svg aria-label="Direct" className="_ab6-" color="#fff" fill="#fff" height="96" role="img" viewBox="0 0 96 96" width="96">
                 <circle cx="48" cy="48" fill="none" r="47" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className={` dark:stroke-white stroke-black`}></circle>
                 <line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="69.286" x2="41.447" y1="33.21" y2="48.804" className={`strokeWidth-2  dark:stroke-white stroke-black`}></line>
