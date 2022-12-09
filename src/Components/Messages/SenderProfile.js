@@ -29,7 +29,10 @@ function SenderProfile({ sender, user1 }) {
             })
             Notification.requestPermission().then(prem=>{
                 if(prem==="granted"){
-                    new Notification("📩 Message received")
+                    new Notification(`${sender?.name}`,{
+                        icon:"favicon.ico",
+                        body:decryptedText?.substring(0,25)+"..."
+                    })
                 }
             })
 
@@ -58,7 +61,7 @@ function SenderProfile({ sender, user1 }) {
                 </div>
                 <div className='mx-2.5 my-2.5'>
                     <Link to={`/chat/${sender.uid}`} className="flex" onClick={msgRead}>
-                        <h1 className='font-medium'>{sender.name ? sender.name : "null"} </h1>
+                        <h1 className='font-medium'>{sender?.name} </h1>
                         {lastMsgData?.from !== user1 && lastMsgData?.unread && (<span className="animate-pulse bg-gray-100 text-gray-800 text-xs font-extralight ml-2 px-1.5 rounded-full pt-1 dark:bg-gray-700 dark:text-gray-300">New</span>)}
                     </Link>
 
