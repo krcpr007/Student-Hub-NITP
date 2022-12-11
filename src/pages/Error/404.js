@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import bgimg from './login-hero.svg'
-import ContextProvider from '../context/ContextProvider'
+import ContextProvider from '../../Components/context/ContextProvider'
 function Error() {
   const {darkMode} = useContext(ContextProvider);
   return (
