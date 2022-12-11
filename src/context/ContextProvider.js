@@ -1,11 +1,12 @@
-import React, { createContext, useState } from 'react';
-import { db, auth } from '../../Firebase'
+import React, { createContext, useEffect, useState } from 'react';
+import { db, auth } from '../Firebase'
 import { setDoc, doc, getDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, } from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 const DataContext = createContext();
 export function ContextProvider({ children }) {
+    // console.log("i am context")
     const navigate = useNavigate();
     const [profileData, setProfileData] = useState([]);
     const [email, setEmail] = useState('');
@@ -25,6 +26,9 @@ export function ContextProvider({ children }) {
             console.log(error);
         }
     }
+    useEffect(() => {
+        userInformation()
+    }, [navigate])
     // sign up work 
     //Register user with email and password only
     const handleSignUp = (e) => {
@@ -34,8 +38,10 @@ export function ContextProvider({ children }) {
                 .then(async (userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
+
                     // console.log(user);
                     localStorage.setItem('st-hub', JSON.stringify(user));
+
                     await setDoc(doc(db, "users", user.uid), {
                         uid: user.uid,
                         name: '',
@@ -153,7 +159,7 @@ export function ContextProvider({ children }) {
         }
     }
     // searching logic a user with their data
-   
+
     //function to send request to the user
     const sendConnectionRequest = (user) => {
         //pages where we can send the requests 

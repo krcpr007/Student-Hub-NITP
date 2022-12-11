@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
 import SenderProfile from './SenderProfile';
 import { db } from "../../Firebase";
-import contextProvider from '../context/ContextProvider'
+import contextProvider from '../../context/ContextProvider'
 import Loader from '../Loader/Loader'
 import {
   collection,

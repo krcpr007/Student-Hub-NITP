@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import ContextProvider from '../context/ContextProvider'
+import ContextProvider from '../../context/ContextProvider'
 import { doc, updateDoc } from "firebase/firestore";
 import { db, auth } from '../../Firebase'
 import { toast } from 'react-toastify';
@@ -25,16 +25,16 @@ function EditProfile() {
     }
 
     // skills state 
-    const [skillDetails , setSkillDetails] =useState({
-        skill1:profileData?.skills?.[0], 
-        skill2:profileData?.skills?.[1],
-        skill3:profileData?.skills?.[2], 
-        skill4:profileData?.skills?.[3],
-        skill5:profileData?.skills?.[4],
+    const [skillDetails, setSkillDetails] = useState({
+        skill1: profileData?.skills?.[0],
+        skill2: profileData?.skills?.[1],
+        skill3: profileData?.skills?.[2],
+        skill4: profileData?.skills?.[3],
+        skill5: profileData?.skills?.[4],
     })
     //function to handle change in skills inputs
-    const handleSkillsDetails = (e)=>{
-        setSkillDetails({...skillDetails, [e.target.name]:e.target.value})
+    const handleSkillsDetails = (e) => {
+        setSkillDetails({ ...skillDetails, [e.target.name]: e.target.value })
     }
     const [home, setHome] = useState(profileData?.contactInfo?.home);
     const [phoneNo, setPhoneNo] = useState(profileData?.contactInfo?.phoneNo);

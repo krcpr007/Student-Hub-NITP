@@ -1,4 +1,4 @@
-import avatar from '../assets/img_avatar.png';
+import avatar from '../../assets/img_avatar.png'
 import { Link } from 'react-router-dom';
 import { db, storage } from '../../Firebase';
 import React, { useContext, useEffect, useState } from 'react'
@@ -7,7 +7,7 @@ import { ref, getDownloadURL, uploadBytes, } from 'firebase/storage';
 import { addDoc, collection, } from "firebase/firestore";
 import { MdVideoLibrary, MdEventAvailable } from 'react-icons/md';
 import { AiFillCloseCircle } from 'react-icons/ai'
-import ContextProvider from '../context/ContextProvider';
+import ContextProvider from '../../context/ContextProvider';
 import Loader from '../Loader/Loader';
 function NewPost({ setGetNewPosts }) {
   const { userInformation, profileData } = useContext(ContextProvider);
@@ -116,7 +116,7 @@ function NewPost({ setGetNewPosts }) {
                   className="bg-rose-800 text-white active:bg-slate-600 font-bold uppercase text-sm px-3 py-3 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="submit" onClick={CreatePost}
                 >
-                {loader ? (<Loader />) : "Post"}
+                  {loader ? (<Loader />) : "Post"}
                 </button>
               </div>
             </form>

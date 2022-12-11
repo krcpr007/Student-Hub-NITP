@@ -5,20 +5,20 @@ import { MdPlace, MdEmail, MdContactPhone, MdHome } from 'react-icons/md'
 import { FaGithub } from 'react-icons/fa'
 import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
-import avatar from '../assets/img_avatar.png'
+import avatar from '../../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 // import { collection, doc, onSnapshot, query, updateDoc, where, getDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
 import UserPosts from "./UserPosts";
-import mainBuilding from '../assets/mainBuilding.jpeg'
+import mainBuilding from '../../assets/mainBuilding.jpeg'
 import Connection from "./Connection";
-import ContextProvider from "../context/ContextProvider";
+import ContextProvider from "../../context/ContextProvider";
 function UserProfile() {
   const params = useParams();
   const { uid } = params;
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));
-  const { profileData, userInformation} = useContext(ContextProvider);
+  const { profileData, userInformation } = useContext(ContextProvider);
   const [user, setUser] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);

@@ -4,10 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiFillHeart } from 'react-icons/ai'
 import { RiDeleteBin2Fill } from 'react-icons/ri'
 import { FiLoader } from 'react-icons/fi'
-import avatar from '../assets/img_avatar.png'
-// import {FaShare} from 'react-icons/fa';
-// import {RiSendPlaneFill} from 'react-icons/ri';
-import ContextProvider from '../context/ContextProvider'
+import avatar from '../../assets/img_avatar.png'
+import ContextProvider from '../../context/ContextProvider'
 import { arrayRemove, arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db, storage } from '../../Firebase';
 import { deleteObject, ref } from 'firebase/storage';
@@ -197,7 +195,7 @@ function PostCard({ post, id, fetchPosts }) {
                     </div>
                 </div>
                 {showComments && comments?.map((c) => {
-                    return <Comments key={c.commentId} comment={c} post={post} id={id}/>
+                    return <Comments key={c.commentId} comment={c} post={post} id={id} />
                 })}
             </div>
         </>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../../Firebase';
 import Loader from '../Loader/Loader';
 import { MdOutlineCancel, MdOutlineDoneAll } from 'react-icons/md'
-import ContextProvider from '../context/ContextProvider';
+import ContextProvider from '../../context/ContextProvider';
 function RequestedProfile(uid) {
     const { removeConnectionRequest, acceptConnectionRequest } = useContext(ContextProvider);
 

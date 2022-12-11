@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import ContextProvider from '../context/ContextProvider';
+import ContextProvider from '../../context/ContextProvider';
 
 function Connection({ user }) {
     const { sendConnectionRequest, profileData, undoConnectionRequest, userInformation, removeConnection, removeConnectionRequest } = useContext(ContextProvider);

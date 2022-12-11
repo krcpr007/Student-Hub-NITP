@@ -6,9 +6,9 @@ import { IoMdLogIn } from 'react-icons/io'
 import { AiFillCaretDown, AiFillMessage } from 'react-icons/ai'
 import { BiNetworkChart } from 'react-icons/bi'
 import { signOut } from 'firebase/auth';
-import avatar from '../assets/img_avatar.png'
+import avatar from '../../assets/img_avatar.png'
 import { auth } from '../../Firebase';
-import ContextProvider from "../context/ContextProvider";
+import ContextProvider from "../../context/ContextProvider";
 import { toast } from "react-toastify";
 function Navbar() {
   // console.log("Hii i am navbar")

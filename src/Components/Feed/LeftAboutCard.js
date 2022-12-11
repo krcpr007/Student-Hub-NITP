@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from 'react'
-import avatar from '../assets/img_avatar.png'
+import avatar from '../../assets/img_avatar.png'
 import { Link } from 'react-router-dom';
-// import {auth} from '../../Firebase'
-import mainBuilding from '../assets/mainBuilding.jpeg'
-import ContextProvider from '../context/ContextProvider';
+import mainBuilding from '../../assets/mainBuilding.jpeg'
+import ContextProvider from '../../context/ContextProvider';
 function LeftAboutCard() {
     const { profileData, userInformation } = useContext(ContextProvider);
     useEffect(() => {

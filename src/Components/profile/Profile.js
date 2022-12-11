@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import mainBuilding from '../assets/mainBuilding.jpeg'
+import mainBuilding from '../../assets/mainBuilding.jpeg'
 import { BiMessageSquareEdit } from 'react-icons/bi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillCameraFill } from 'react-icons/bs';
@@ -8,12 +8,12 @@ import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
 import { MdDelete, MdEmail, MdContactPhone, MdHome, MdPlace } from 'react-icons/md'
 import { Link } from "react-router-dom";
-import avatar from '../assets/img_avatar.png'
+import avatar from '../../assets/img_avatar.png'
 import Loader from "../Loader/Loader";
 import { doc, updateDoc, } from "firebase/firestore";
 import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
-import ContextProvider from '../context/ContextProvider'
+import ContextProvider from '../../context/ContextProvider'
 import UserPosts from "./UserPosts";
 // import ConnectionRequests from "../connnections/ConnectionRequests";
 function Profile() {
