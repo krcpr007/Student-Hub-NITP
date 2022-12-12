@@ -6,7 +6,7 @@ import { FaGithub } from 'react-icons/fa'
 import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
 import avatar from '../../assets/img_avatar.png'
-import Loader from "../Loader/Loader";
+import Loader from "../../Components/Loader/Loader";
 // import { collection, doc, onSnapshot, query, updateDoc, where, getDoc } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';

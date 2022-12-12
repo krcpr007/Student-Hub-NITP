@@ -9,7 +9,7 @@ import { RiInstagramFill } from 'react-icons/ri'
 import { MdDelete, MdEmail, MdContactPhone, MdHome, MdPlace } from 'react-icons/md'
 import { Link } from "react-router-dom";
 import avatar from '../../assets/img_avatar.png'
-import Loader from "../Loader/Loader";
+import Loader from "../../Components/Loader/Loader";
 import { doc, updateDoc, } from "firebase/firestore";
 import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';

@@ -8,10 +8,10 @@ import Login from './Components/Auth/Login';
 import PrivateComp from "./Components/Auth/PrivateComp";
 import Footer from './Components/Footer/Footer'
 import Feed from "./Components/Feed/Feed";
-import Profile from "./Components/profile/Profile";
+import Profile from "./pages/profile/Profile";
 import { ContextProvider } from './context/ContextProvider'
-import EditProfile from "./Components/profile/EditProfile";
-import UsersProfile from "./Components/profile/UsersProfile";
+import EditProfile from "./pages/profile/EditProfile";
+import UsersProfile from "./pages/profile/UsersProfile";
 import Messages from "./Components/Messages/Messages";
 import Chat from "./Components/Messages/Chat";
 import About from "./pages/About/About";

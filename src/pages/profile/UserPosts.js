@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { toast } from "react-toastify";
-import Loader from "../Loader/Loader";
+import Loader from "../../Components/Loader/Loader";
 import {
     collection,
     getDocs,
@@ -8,7 +8,7 @@ import {
     orderBy,
     limit,
 } from 'firebase/firestore';
-import PostCard from '../Feed/PostCard'
+import PostCard from '../../Components/Feed/PostCard'
 import { db } from '../../Firebase'
 function UserPosts({ uid }) {
     const [posts, setPosts] = useState([]);
