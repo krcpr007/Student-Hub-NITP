@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../Firebase';
 import Loader from '../Loader/Loader';
 import { AiFillDelete } from 'react-icons/ai'
-function Comments({ comment, post,id }) {
+import Moment from 'react-moment';
+function Comments({ comment, post, id }) {
     // console.log(comment);
     // console.log(post)
     const localAuth = JSON.parse(localStorage.getItem('st-hub'));
@@ -27,7 +28,7 @@ function Comments({ comment, post,id }) {
     //function to delete the comment
     const handleDeleteComment = () => {
         const commentRef = doc(db, 'posts', id)
-        const yes = window.confirm("Are you sure mf?")
+        const yes = window.confirm("Are you sure?")
         if (yes) {
             try {
                 updateDoc(commentRef, {
@@ -64,6 +65,7 @@ function Comments({ comment, post,id }) {
                         <button className='dark:bg-amber-600 float-right absolute right-3 top-5' onClick={handleDeleteComment}><AiFillDelete /></button>
                     </div>
                     : null}
+                <small className='text-xs opacity-50'>{<Moment fromNow>{comment?.createdAt.toDate()}</Moment>}</small>
             </div>
             <hr />
         </div>
