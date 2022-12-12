@@ -8,11 +8,11 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import Loader from '../Loader/Loader';
-import LeftAboutCard from '../Feed/LeftAboutCard';
-import PeersNews from '../Feed/PeersNews';
-import GroupsClub from '../Feed/GroupsClub';
-import Opportunities from '../Feed/Opportunities';
+import Loader from '../../Components/Loader/Loader';
+import LeftAboutCard from '../../Components/Feed/LeftAboutCard';
+import PeersNews from '../../Components/Feed/PeersNews';
+import GroupsClub from '../../Components/Feed/GroupsClub';
+import Opportunities from '../../Components/Feed/Opportunities';
 function Search() {
   const [loader, setLoader] = useState(false); 
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));// getting auth from local-storage

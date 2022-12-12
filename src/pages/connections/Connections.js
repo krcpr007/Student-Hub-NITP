@@ -1,6 +1,6 @@
 import React from 'react'
-import GroupsClub from '../Feed/GroupsClub'
-import LeftAboutCard from '../Feed/LeftAboutCard'
+import GroupsClub from '../../Components/Feed/GroupsClub'
+import LeftAboutCard from '../../Components/Feed/LeftAboutCard'
 // import ProfileCard from '../Search/ProfileCard'
 import ConnectionRequests from './ConnectionRequests'
 import RandomUser from './RandomUser'

@@ -2,7 +2,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { db } from '../../Firebase';
-import Loader from '../Loader/Loader';
+import Loader from '../../Components/Loader/Loader';
 import { MdOutlineCancel, MdOutlineDoneAll } from 'react-icons/md'
 import ContextProvider from '../../context/ContextProvider';
 function RequestedProfile(uid) {

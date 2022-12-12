@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ContextProvider from '../../context/ContextProvider';
-import Loader from '../Loader/Loader';
+import Loader from '../../Components/Loader/Loader';
 import RequestedProfile from './RequestedProfile';
 
 function ConnectionRequests() {
