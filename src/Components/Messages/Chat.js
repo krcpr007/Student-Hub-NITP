@@ -1,12 +1,11 @@
 import React, { useEffect, useState} from 'react';
-import Img from '../assets/img_avatar.png'
+import Img from '../../assets/img_avatar.png'
 import { Link , useParams} from 'react-router-dom';
 import {FcGallery} from 'react-icons/fc'
 import {
   doc,
   getDoc, addDoc,
-  collection, Timestamp, orderBy, query
-  , onSnapshot,
+  collection, Timestamp, orderBy, query, onSnapshot,
   setDoc,
 } from "firebase/firestore";
 import {
@@ -17,7 +16,7 @@ import ConversationsText from './ConversationsText';
 const CryptoJS = require("crypto-js");
 const key = process.env.REACT_APP_CRYPTO_KEY 
 function Chat() {
-  const user1 = auth.currentUser.uid; // getting current user 
+  const user1 = auth?.currentUser?.uid; // getting current user 
   const params = useParams();
   const { uid } = params;
   const user2 = uid // uid we are getting from params

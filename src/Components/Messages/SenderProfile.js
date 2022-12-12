@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {FaImage} from 'react-icons/fa'
-import Img from '../assets/img_avatar.png';
+import Img from '../../assets/img_avatar.png';
 import { db } from '../../Firebase';
 import { onSnapshot, doc, getDoc, updateDoc } from 'firebase/firestore';
 import {toast} from "react-toastify";

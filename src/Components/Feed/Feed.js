@@ -4,14 +4,14 @@ import {
   collection,
   getDocs,
   query,
-  where,
+  // where,
   orderBy,
-  limit,
-  startAfter,
+  // limit,
+  // startAfter,
 } from 'firebase/firestore'
 import { db } from '../../Firebase'
 import GroupsClub from './GroupsClub'
-import ContextProvider from "../context/ContextProvider";
+import ContextProvider from "../../context/ContextProvider";
 import NewPost from './NewPost'
 import PostCard from './PostCard'
 import PeersNews from './PeersNews'
@@ -20,7 +20,8 @@ import { toast } from "react-toastify";
 import Loader from "../Loader/Loader";
 function Feed() {
   const [posts, setPosts] = useState([]);
-  const { darkMode } = useContext(ContextProvider);
+  const { profileData } = useContext(ContextProvider);
+  console.log(profileData)
   const [loading, setLoading] = useState(false);
   //creating state to automatically reloadData whenever publish an new post
   const [getNewPosts, setGetNewPosts] = useState(false)
@@ -30,31 +31,26 @@ function Feed() {
       // Get reference
       setLoading(true)
       const listingsRef = collection(db, 'posts')
-
       // Create a query
       const q = query(
         listingsRef,
-
         orderBy('postedAt', 'desc'),
         // limit(10)
       )
       // Execute query
       const querySnap = await getDocs(q)
-
       // const lastVisible = querySnap.docs[querySnap.docs.length - 1]
-      const posts = []
-
+      const post = []
       querySnap.forEach((doc) => {
-        return posts.push({
-          id: doc.id,
-          data: doc.data(),
-        })
+        // if (profileData?.connections?.includes(doc?.data()?.uid)) {
+        post.push({ id: doc?.id, data: doc?.data() })
+        // }
       })
-      // console.log('posts are', posts);
-      setPosts(posts);
-      // setListings(listings)
+      setPosts(post);
+      // console.log(typeof (posts))
       setLoading(false)
     } catch (error) {
+      console.log(error);
       toast.error('Could not fetch Posts')
     }
   }
@@ -66,28 +62,30 @@ function Feed() {
     return <Loader />
   }
   return (
-    <div>
-      <div className="">
-        <div className={`md:grid lg:grid grid-cols-5 ${darkMode ? 'bg-slate-800 text-white' : null}`} >
+    <>
+      <div className="dark:bg-slate-800">
+        <div className={`md:grid lg:grid grid-cols-5 dark:bg-slate-800 dark:text-white`} >
           <div>
-            <div className="hidden md:inline">
+            <div className="hidden lg:inline">
               <LeftAboutCard />
               <GroupsClub />
             </div>
           </div>
           <div className="sm:ml-2 col-span-3">
             <NewPost setGetNewPosts={setGetNewPosts} />
-            {posts.map((post) => {
+            {posts.length === 0 ? <>
+              <Loader />
+            </> : posts.map((post) => {
               return <PostCard key={post.id} post={post.data} id={post.id} fetchPosts={fetchPosts} />
             })}
           </div>
-          <div className="hidden md:inline md:mr-10">
+          <div className="hidden lg:inline md:mr-10">
             <PeersNews />
             <Opportunities />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
