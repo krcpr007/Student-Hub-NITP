@@ -10,12 +10,9 @@ function Footer() {
       className={`border-t-2 shadow-2xl dark:bg-slate-900 dark:border-black dark:text-white`}
     >
       <div className="flex px-7 m-3">
-        <img src="nitlogo.png" alt="" className=""/>
+        <img src="nitlogo.png" alt="" className="" />
         <h1 className="text-3xl font-medium m-2">
-          <Link
-            to="/"
-            className="text-grey-darkest my-6"
-          >
+          <Link to="/" className="text-grey-darkest my-6">
             <span className="text-yellow-500 px-2 mx-0.5">Students</span>
             <span className="bg-yellow-400 rounded px-2 py-1.5">Hub</span>
           </Link>
@@ -33,7 +30,7 @@ function Footer() {
             </p>
           </div>
         </div>
-        <div className="md:w-1/4 py-4">
+        <div className="md:w-1/4 p-4">
           <h1>Useful links</h1>
           <ul className="text-sm mt-3">
             <li>
