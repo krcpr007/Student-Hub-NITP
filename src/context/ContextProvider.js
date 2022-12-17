@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { db, auth } from '../Firebase'
 import { setDoc, doc, getDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, } from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 const DataContext = createContext();
 export function ContextProvider({ children }) {
-    // console.log("i am context")
     const navigate = useNavigate();
     const [profileData, setProfileData] = useState([]);
     const [email, setEmail] = useState('');
@@ -26,9 +25,7 @@ export function ContextProvider({ children }) {
             console.log(error);
         }
     }
-    useEffect(() => {
-        userInformation()
-    }, [navigate])
+
     // sign up work 
     //Register user with email and password only
     const handleSignUp = (e) => {
@@ -47,7 +44,7 @@ export function ContextProvider({ children }) {
                         name: '',
                         headline: '',
                         bio: '',
-                        currentPosition: '',
+                        CurrentPosition: '',
                         contactInfo: {
                             phoneNo: '',
                             home: '',
@@ -111,7 +108,8 @@ export function ContextProvider({ children }) {
                 headline: '',
                 bio: '',
                 CurrentPosition: '',
-                connections: 0,
+                connections: [],
+                connectionRequests: [],
                 contactInfo: {
                     phoneNo: '',
                     home: '',
@@ -143,7 +141,8 @@ export function ContextProvider({ children }) {
                 headline: '',
                 bio: '',
                 CurrentPosition: '',
-                connections: 0,
+                connections: [],
+                connectionRequests: [],
                 contactInfo: {
                     phoneNo: '',
                     home: '',
@@ -170,7 +169,6 @@ export function ContextProvider({ children }) {
         } else {
             updateDoc(reqRef, {
                 connectionRequests: arrayUnion(profileData.uid)
-
             }).then(() => {
                 console.log("connectionRequests send")
             }).catch((e) => console.log(e))
@@ -199,6 +197,7 @@ export function ContextProvider({ children }) {
             console.log("connectionRequests undo")
         }).catch((e) => console.log(e))
     }
+    // function to remove connection between both user 
     const removeConnection = (user) => {
         const reqRef = doc(db, 'users', user?.uid)
         updateDoc(reqRef, {
@@ -214,6 +213,7 @@ export function ContextProvider({ children }) {
         }).catch((e) => console.log(e))
 
     }
+    //function to accept connection request 
     const acceptConnectionRequest = (user) => {
         const selfRef = doc(db, 'users', profileData?.uid)
         if (profileData?.connectionRequests?.includes(user?.uid)) {
@@ -253,6 +253,7 @@ export function ContextProvider({ children }) {
             handleSignUp,
             // everyOnes profile
             profileData,
+            setProfileData,
             userInformation,
             // connections
             undoConnectionRequest,
