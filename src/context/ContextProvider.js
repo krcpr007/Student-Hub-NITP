@@ -52,7 +52,6 @@ export function ContextProvider({ children }) {
                         },
                         socialMedia_urls: [`${''}`, `${''}`, `${''}`],
                         skills: ['', '', '', '', ''],
-                        posts: [],
                         connections: [],
                         connectionRequests: [],
                         profileImg: "https://www.w3schools.com/howto/img_avatar.png ",

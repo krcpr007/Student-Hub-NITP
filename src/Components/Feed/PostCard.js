@@ -11,6 +11,7 @@ import { db, storage } from '../../Firebase';
 import { deleteObject, ref } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import Comments from './Comments';
+import Moment from 'react-moment';
 function PostCard({ post, id, fetchPosts }) {
     const { profileData } = useContext(ContextProvider);
     const [comments, setComments] = useState([])
@@ -108,16 +109,12 @@ function PostCard({ post, id, fetchPosts }) {
         const yes = window.confirm("Are sure you want to delete it?")
         if (yes) {
             try {
-                const yes = window.confirm("Confirm Do you want to delete?")
-                if (yes) {
-                    setLoader(true);
-                    if (post.forDeletePath) { await deleteObject(ref(storage, post.forDeletePath)); } //deleting the image of member // data.imgPath
-                    await deleteDoc(doc(db, 'posts', id)); //deleting the data of post 
-                    setLoader(false)
-                    toast.success("Post Deleted")
-                    fetchPosts() // calling fetch  function again
-
-                }
+                setLoader(true);
+                if (post.forDeletePath) { await deleteObject(ref(storage, post.forDeletePath)); } //deleting the image of member // data.imgPath
+                await deleteDoc(doc(db, 'posts', id)); //deleting the data of post 
+                setLoader(false)
+                toast.success("Post Deleted")
+                fetchPosts() // calling fetch  function again
             } catch (error) {
                 toast.error("Something went Wrong");
                 setLoader(false)
@@ -128,21 +125,27 @@ function PostCard({ post, id, fetchPosts }) {
         }
     }
     const handleChangeComment = (e) => {
-        const commentRef = doc(db, 'posts', id)
-        if (textComment?.length !== "") {
-            updateDoc(commentRef, {
-                comments: arrayUnion({
-                    user: profileData.uid,
-                    userName: profileData.name,
-                    comment: textComment,
-                    createdAt: new Date(),
-                    commentId: uuidv4(),
-                }),
-            }).then(() => {
-                setTextComment("")
-            });
-        } else {
-            alert("please enter ")
+        // @TODO-> what if post is deleted and someone wants to connect 
+        try {
+            const commentRef = doc(db, 'posts', id)
+            if (textComment?.length !== "") {
+                updateDoc(commentRef, {
+                    comments: arrayUnion({
+                        user: profileData.uid,
+                        userName: profileData.name,
+                        comment: textComment,
+                        createdAt: new Date(),
+                        commentId: uuidv4(),
+                    }),
+                }).then(() => {
+                    setTextComment("")
+                });
+            } else {
+                alert("please enter ")
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Something went wrong...")
         }
     };
 
@@ -154,7 +157,7 @@ function PostCard({ post, id, fetchPosts }) {
                         <Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
                     </div>
                     <div className='m-1'>
-                        <h1 className='font-medium'><Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}>{user.name}</Link></h1>
+                        <div className='flex'>  <h1 className='font-medium'><Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}>{user.name}</Link></h1><small className='text-xs opacity-50 m-1'>{<Moment fromNow>{post?.postedAt.toDate()}</Moment>}</small></div>
                         <p className='text-xs'>{user.headline}</p>
                     </div>
                     <div className=''>
