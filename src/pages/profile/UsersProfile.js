@@ -75,7 +75,7 @@ function UserProfile() {
 
               <span className="text-sm">{user && user.headline}</span> <br />
               <MdPlace title="Live in" className="inline" />
-              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
+              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}>Contact info</span>
               <Connection user={user} />
             </div>
           </div>
@@ -148,7 +148,7 @@ function UserProfile() {
                 <div className="relative p-4 flex-auto">
                   <div className="flex my-2">
                     <MdEmail className="text-2xl text-yellow-500" />
-                    {/* <a href={`mailto:${auth.currentUser.email}`} className="mx-2">{auth.currentUser?.email}</a> */}
+                    <a href={`mailto:${user.contactInfo?.email}`} className="mx-2">{user.contactInfo?.email}</a>
                   </div>
                   <div className="flex my-2">
                     <MdContactPhone className="text-2xl text-yellow-500" />
