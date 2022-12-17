@@ -154,7 +154,7 @@
  /* Scroll bar css */
  /* width */
 ::-webkit-scrollbar {
-  width: 14px;
+  width: 10px;
 }
 
 /* Track */
