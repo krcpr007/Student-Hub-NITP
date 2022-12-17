@@ -56,21 +56,6 @@ function UserProfile() {
               />
             </div>
             <div className="relative -top-10 md:-top-24 px-5">
-              <div className='absolute -top-14 left-40 md:left-3/4 '>
-
-                <div className='flex'>
-                  <a href={user?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
-                    <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
-                  </a>
-                  <a href={user?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
-                    <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
-                  </a>
-                  <a href={user?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
-                    <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
-                  </a>
-                </div>
-              </div>
-
               <h1 className="text-3xl font-medium">{user.name}</h1>
 
               <span className="text-sm">{user && user.headline}</span> <br />
@@ -157,9 +142,20 @@ function UserProfile() {
                   <div className="flex my-2">
                     <MdHome className="text-2xl text-yellow-500" />
                     <p className="mx-2">{user.contactInfo?.home}</p>
-
                   </div>
-
+                  <div className='relative right-0 top-0'>
+                    <div className='flex justify-center'>
+                      <a href={user?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
+                        <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
+                      </a>
+                      <a href={user?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
+                        <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
+                      </a>
+                      <a href={user?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
+                        <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
