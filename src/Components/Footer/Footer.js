@@ -6,9 +6,7 @@ import { IoLogoYoutube } from "react-icons/io";
 import { AiOutlineTwitter } from "react-icons/ai";
 function Footer() {
   return (
-    <div
-      className={`border-t-2 shadow-2xl dark:bg-slate-900 dark:border-black dark:text-white`}
-    >
+    <div className={`border-t-2 shadow-2xl dark:bg-slate-900 dark:border-black dark:text-white dark:bg-gradient-to-r from-gray-700 via-gray-900 to-black`}>
       <div className="flex px-7 m-3">
         <img src="nitlogo.png" alt="" className="" />
         <h1 className="text-2xl md:text-3xl font-medium m-2">

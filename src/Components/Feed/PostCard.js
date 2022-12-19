@@ -181,7 +181,7 @@ function PostCard({ post, id, fetchPosts }) {
                         <div className='flex'>
                             <button className='rounded-md' onClick={likedPost}>{<AiFillHeart className="text-2xl" fill={`${like.liked ? 'red' : 'gray'}`} />}</button>
                             <p className='m-1'>{like.liked ? `You, and ${parseInt(like.likeCount) - 1}` : parseInt(like.likeCount)} like</p>
-                            <button className='mx-2 py-2 px-1 hover:bg-slate-800 hover:rounded absolute right-3 top-1' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
+                            <button className='mx-2 py-2 px-1 hover:dark:bg-slate-800 hover:rounded absolute right-3 top-1' onClick={() => setShowComments(!showComments)}>{comments?.length} comments </button>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ function PostCard({ post, id, fetchPosts }) {
                     <div className='w-full'>
                         <div className="flex overflow-hidden border rounded-lg border-yellow-500 lg:flex-row  focus-within:ring focus-within:ring-opacity-40 focus-within:border-yellow-500 focus-within:ring-yellow-500">
                             <input className="px-8 h-8 w-full dark:text-black" type="text" name="comment" placeholder={`Comment as ${profileData?.name?.toLowerCase()}`} value={textComment} onChange={e => setTextComment(e.target.value)} />
-                            <button type='submit' className="border h-8 hover:shadow-amber-500 border-amber-500 px-3 font-medium  text-amber-500 hover:bg-amber-500 hover:text-slate-900  text-lg" onClick={handleChangeComment}>Post</button>
+                            <button type='submit' className="border h-8 hover:shadow-amber-500 border-amber-500 px-3 font-medium  text-amber-500 hover:bg-amber-500 hover:text-slate-900  text-base" onClick={handleChangeComment}>Comment</button>
                         </div>
                     </div>
                 </div>

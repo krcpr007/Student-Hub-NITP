@@ -30,9 +30,7 @@ class Feed extends Component {
     }
   }
   async componentDidMount() {
-    // console.log("component did mount");
     const { setProfileData } = this.context;
-    // userInformation();
     const localAuth = JSON.parse(localStorage.getItem('st-hub'));
     try {
       const querySnap = await getDoc(doc(db, 'users', localAuth ? localAuth.uid : null));
@@ -45,7 +43,6 @@ class Feed extends Component {
     } catch (error) {
       console.log(error);
     }
-    // console.log(this.context.profileData)
     this.fetchPosts();
   }
   fetchPosts = async () => {
@@ -72,6 +69,7 @@ class Feed extends Component {
       this.setState({ posts: post, loading: false })
     } catch (error) {
       console.log(error);
+      this.setState({ loading: false })
       toast.error('Could not fetch Posts')
     }
   }
@@ -81,8 +79,8 @@ class Feed extends Component {
     }
     return (
       <>
-        <div className="dark:bg-slate-800">
-          <div className={`md:grid lg:grid grid-cols-5 dark:bg-slate-800 dark:text-white`} >
+        <div>
+          <div className={`md:grid lg:grid grid-cols-5 dark:bg-gradient-to-r from-gray-200 via-gray-400 to-gray-600 dark:text-white`} >
             <div>
               <div className="hidden lg:inline">
                 <LeftAboutCard />
