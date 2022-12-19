@@ -39,12 +39,12 @@ function Search() {
     });
     return () => unsub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [querySearch])
   return (
     <div>
       <div className="dark:bg-slate-900 dark:text-white">
         <div className="flex">
-          <div className='hidden md:inline w-1/3'>
+          <div className='hidden md:inline w-1/4'>
             <div className="hidden md:inline">
               <LeftAboutCard />
               <GroupsClub />

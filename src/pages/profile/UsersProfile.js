@@ -7,8 +7,7 @@ import { ImLinkedin } from 'react-icons/im'
 import { RiInstagramFill } from 'react-icons/ri'
 import avatar from '../../assets/img_avatar.png'
 import Loader from "../../Components/Loader/Loader";
-// import { collection, doc, onSnapshot, query, updateDoc, where, getDoc } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from '../../Firebase';
 import UserPosts from "./UserPosts";
 import mainBuilding from '../../assets/mainBuilding.jpeg'
@@ -19,23 +18,24 @@ function UserProfile() {
   const { uid } = params;
   const localAuth = JSON.parse(localStorage.getItem('st-hub'));
   const { profileData, userInformation } = useContext(ContextProvider);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [loader, setLoader] = useState(false);
-  const userData = async () => {
-    setLoader(true);
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setUser(docSnap.data());
-      setLoader(false);
-    }
-    // setLoader(false);
-  }
   useEffect(() => {
     userInformation();
-    userData();
+    setLoader(true)
+    const usersRef = collection(db, "users");
+    // create query object
+    const q = query(usersRef, where("uid", '==', uid));
+    // execute query
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => { 
+        setUser(doc.data()); //only one doc we will get
+      })
+      setLoader(false);
+    });
+    return () => unsub();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   if (loader) {
@@ -60,7 +60,8 @@ function UserProfile() {
 
               <span className="text-sm">{user && user.headline}</span> <br />
               <MdPlace title="Live in" className="inline" />
-              <span className="text-xs">{user.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}>Contact info</span>
+              <span className="text-xs">{user.contactInfo?.home}</span>
+              {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<><span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}>Contact info</span></>) : null}
               <Connection user={user} />
             </div>
           </div>

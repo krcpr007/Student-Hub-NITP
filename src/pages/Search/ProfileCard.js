@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Img from '../../assets/img_avatar.png'
 import { Link } from 'react-router-dom'
 import mainBuilding from '../../assets/mainBuilding.jpeg'
 import ContextProvider from '../../context/ContextProvider';
 function ProfileCard({ user }) {
-    const { sendConnectionRequest, profileData, userInformation, undoConnectionRequest } = useContext(ContextProvider);
-    useEffect(() => {
-        userInformation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sendConnectionRequest, undoConnectionRequest])
+    const { sendConnectionRequest, profileData, undoConnectionRequest } = useContext(ContextProvider);
     return (
         <div className='mx-5'>
             <div className='card rounded-lg hover:shadow-2xl w-full'>

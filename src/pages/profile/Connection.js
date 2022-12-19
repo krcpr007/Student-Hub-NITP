@@ -1,13 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import ContextProvider from '../../context/ContextProvider';
 
 function Connection({ user }) {
-    const { sendConnectionRequest, profileData, undoConnectionRequest, userInformation, removeConnection, removeConnectionRequest } = useContext(ContextProvider);
-    useEffect(() => {
-        userInformation()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const { sendConnectionRequest, profileData, undoConnectionRequest, removeConnection, removeConnectionRequest } = useContext(ContextProvider);
     return (
         <>
             {(user?.connections?.includes(profileData?.uid) && profileData?.connections?.includes(user?.uid)) ? <>
