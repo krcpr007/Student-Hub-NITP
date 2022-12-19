@@ -37,7 +37,7 @@ function RequestedProfile(uid) {
                     <Link to={`/user/${user?.uid}`} className="flex" >
                         <h1 className='font-medium'>{user?.name ? user?.name : "null"} </h1>
                     </Link>
-                    <p className='text-xs'>{user?.headline ? user?.headline.substring(0, 30) : null}</p>
+                    <p className='text-xs'>{user?.headline ? user?.headline.substring(0, 30)+"..." : null}</p>
                 </div>
                 <div className='m-2'>
                     <button className='text-xl hover:'><MdOutlineDoneAll className='text-yellow-600' onClick={() => acceptConnectionRequest(user)} /></button>
