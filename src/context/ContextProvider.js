@@ -156,7 +156,6 @@ export function ContextProvider({ children }) {
             // navigate('/editProfile')
         }
     }
-    // searching logic a user with their data
 
     //function to send request to the user
     const sendConnectionRequest = (user) => {
@@ -238,6 +237,8 @@ export function ContextProvider({ children }) {
                 }).catch((e) => console.log(e))
                 // connection accepted successfully 
                 console.log("Connected finally");
+            }else{
+                console.log("Already present in connection array ")
             }
         } else {
             alert("Their is none connection request");
