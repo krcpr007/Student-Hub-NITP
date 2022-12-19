@@ -11,7 +11,7 @@ function Footer() {
     >
       <div className="flex px-7 m-3">
         <img src="nitlogo.png" alt="" className="" />
-        <h1 className="text-3xl font-medium m-2">
+        <h1 className="text-2xl md:text-3xl font-medium m-2">
           <Link to="/" className="text-grey-darkest my-6">
             <span className="text-yellow-500 px-2 mx-0.5">Students</span>
             <span className="bg-yellow-400 rounded px-2 py-1.5">Hub</span>

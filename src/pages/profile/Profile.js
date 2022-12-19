@@ -15,7 +15,7 @@ import { db, storage } from '../../Firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage';
 import ContextProvider from '../../context/ContextProvider'
 import UserPosts from "./UserPosts";
-// import ConnectionRequests from "../connnections/ConnectionRequests";
+// import ConnectionRequests from "../connections/ConnectionRequests";
 function Profile() {
   const { profileData, userInformation } = useContext(ContextProvider);
   const [profileImg, setProfileImg] = useState();
@@ -78,7 +78,7 @@ function Profile() {
   return (
     <>
       <div>
-        <div className="md:w-3/4 md:px-24 md:p-2">
+        <div className="md:w-3/4 md:px-0 lg:px-24 md:py-2">
           <div className="flex">
             <div className="shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white w-full">
               <div>
