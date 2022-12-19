@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useContext } from "react";
 import LeftAboutCard from './LeftAboutCard'
 import {
   collection,
@@ -6,6 +5,8 @@ import {
   query,
   // where,
   orderBy,
+  doc,
+  getDoc,
   // limit,
   // startAfter,
 } from 'firebase/firestore'
@@ -17,19 +18,40 @@ import PostCard from './PostCard'
 import PeersNews from './PeersNews'
 import Opportunities from './Opportunities'
 import { toast } from "react-toastify";
-import Loader from "../Loader/Loader";
-function Feed() {
-  const [posts, setPosts] = useState([]);
-  const { profileData } = useContext(ContextProvider);
-  console.log(profileData)
-  const [loading, setLoading] = useState(false);
-  //creating state to automatically reloadData whenever publish an new post
-  const [getNewPosts, setGetNewPosts] = useState(false)
-  //function for fetchPost
-  const fetchPosts = async () => {
+import React, { Component } from "react";
+import Loader from '../Loader/Loader';
+class Feed extends Component {
+  static contextType = ContextProvider;
+  constructor() {
+    super();
+    this.state = {
+      posts: [],
+      loading: true,
+    }
+  }
+  async componentDidMount() {
+    // console.log("component did mount");
+    const { setProfileData } = this.context;
+    // userInformation();
+    const localAuth = JSON.parse(localStorage.getItem('st-hub'));
+    try {
+      const querySnap = await getDoc(doc(db, 'users', localAuth ? localAuth.uid : null));
+      if (querySnap.exists) {
+        setProfileData(querySnap.data());
+      }
+      else {
+        console.log("went wrong to get user profile")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(this.context.profileData)
+    this.fetchPosts();
+  }
+  fetchPosts = async () => {
     try {
       // Get reference
-      setLoading(true)
+      this.setState({ loading: true })
       const listingsRef = collection(db, 'posts')
       // Create a query
       const q = query(
@@ -39,54 +61,49 @@ function Feed() {
       )
       // Execute query
       const querySnap = await getDocs(q)
-      // const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+
       const post = []
       querySnap.forEach((doc) => {
-        // if (profileData?.connections?.includes(doc?.data()?.uid)) {
-        post.push({ id: doc?.id, data: doc?.data() })
-        // }
+        if (this.context.profileData?.connections?.includes(doc?.data()?.uid)) { //only connected people can see each others posts
+          post.push({ id: doc?.id, data: doc?.data() })
+        }
+        // post.push({ id: doc?.id, data: doc?.data() })
       })
-      setPosts(post);
-      // console.log(typeof (posts))
-      setLoading(false)
+      this.setState({ posts: post, loading: false })
     } catch (error) {
       console.log(error);
       toast.error('Could not fetch Posts')
     }
   }
-  useEffect(() => {
-    fetchPosts()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getNewPosts])
-  if (loading) {
-    return <Loader />
-  }
-  return (
-    <>
-      <div className="dark:bg-slate-800">
-        <div className={`md:grid lg:grid grid-cols-5 dark:bg-slate-800 dark:text-white`} >
-          <div>
-            <div className="hidden lg:inline">
-              <LeftAboutCard />
-              <GroupsClub />
+  render() {
+    if (this.state.loading) {
+      return <Loader />
+    }
+    return (
+      <>
+        <div className="dark:bg-slate-800">
+          <div className={`md:grid lg:grid grid-cols-5 dark:bg-slate-800 dark:text-white`} >
+            <div>
+              <div className="hidden lg:inline">
+                <LeftAboutCard />
+                <GroupsClub />
+              </div>
+            </div>
+            <div className="col-span-3">
+              <NewPost fetchPosts={this.fetchPosts} />
+              {this.state.posts?.map((post) => {
+                return <PostCard key={post.id} post={post.data} id={post.id} fetchPosts={this.fetchPosts} />
+              })}
+
+            </div>
+            <div className="hidden lg:inline md:mr-5">
+              <PeersNews />
+              <Opportunities />
             </div>
           </div>
-          <div className="sm:ml-2 col-span-3">
-            <NewPost setGetNewPosts={setGetNewPosts} />
-            {posts.length === 0 ? <>
-              <Loader />
-            </> : posts.map((post) => {
-              return <PostCard key={post.id} post={post.data} id={post.id} fetchPosts={fetchPosts} />
-            })}
-          </div>
-          <div className="hidden lg:inline md:mr-10">
-            <PeersNews />
-            <Opportunities />
-          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    )
+  }
 }
-
 export default Feed;
