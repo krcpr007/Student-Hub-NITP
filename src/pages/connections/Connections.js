@@ -9,14 +9,16 @@ function Connections() {
         <>
             <div>
                 <div className='sm:flex'>
-                    <div className='hidden md:block sm:w-1/4'>
+                    <div className='hidden md:block'>
                         <LeftAboutCard />
                         <GroupsClub />
                     </div>
                     <div className='mx-2'>
                         <ConnectionRequests />
                         {/* Random users will display here */}
-                        <RandomUser />
+                        <div className='w-full'>
+                            <RandomUser />
+                        </div>
                     </div>
                 </div>
             </div>
