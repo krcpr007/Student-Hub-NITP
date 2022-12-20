@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { collection, doc, getDoc, limit, onSnapshot, orderBy, query } from 'firebase/firestore';
 import React, { Component } from 'react'
 import { toast } from 'react-toastify';
 import { db } from '../../Firebase';
@@ -39,19 +39,20 @@ class RandomUser extends Component {
       const usersRef = collection(db, "users");
       // create query object
       const q = query(usersRef, orderBy('timeStamp', 'desc'),
-      limit(10)
+        limit(10)
       );
-      const querySnap = await getDocs(q);
-      const user = []
-      querySnap.forEach((doc) => {
-        if ((doc.data().connections?.includes(this.localAuth?.uid)) && (this.context.profileData.connections?.includes(doc.data()?.uid))) {
-          //only connected people can text each other
-        } else {
-          user.push(doc.data());
-        }
-        // user.push(doc.data());
-      })
-      this.setState({ users: user, loading: false })
+      onSnapshot(q, (snap) => {
+        const user = [];
+        snap.forEach((doc) => { // here finding all the users 
+          // user.push(doc.data());
+            if ((doc.data().connections?.includes(this.localAuth?.uid)) && (this.context.profileData.connections?.includes(doc.data()?.uid))) {
+              //only connected people can text each other
+            } else {
+              user.push(doc.data());
+            }
+        })
+        this.setState({ users: user, loading: false })
+      });
     } catch (error) {
       console.log(error);
       this.setState({ loading: false })
@@ -60,14 +61,14 @@ class RandomUser extends Component {
   }
   render() {
     return (
-    <>
-      <h1 className='text-center font-medium font-serif'>People may you know</h1>
-      <div className='grid grid-cols-1 sm:grid-cols-4 mt-5'>
-        {this.state.users?.map((user, i) => {
-          return this.state.loader ? <Loader /> : <ProfileCard key={i} user={user} />
-        })}
-      </div>
-    </>)
+      <>
+        <h1 className='text-center font-medium font-serif'>People may you know</h1>
+        <div className='grid grid-cols-1 sm:grid-cols-4 mt-5'>
+          {this.state.users?.map((user, i) => {
+            return this.state.loader ? <Loader /> : <ProfileCard key={i} user={user} />
+          })}
+        </div>
+      </>)
   }
 }
 export default RandomUser;
