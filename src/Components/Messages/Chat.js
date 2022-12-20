@@ -26,11 +26,9 @@ function Chat() {
   const [media, setMedia] = useState('');
   let encryptedText = CryptoJS.AES.encrypt(msg, key).toString();
   useEffect(() => {
-    // userInformation();
     const docRef = doc(db, "users", uid);
     getDoc(docRef).then((docSnap) => {
       if (docSnap.exists()) {
-        // console.log("Document data:", docSnap.data());
         setUser(docSnap.data());
       } else {
         // doc.data() will be undefined in this case
@@ -49,7 +47,6 @@ function Chat() {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  // console.warn(conversation)
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -61,9 +58,6 @@ function Chat() {
       const snap = await uploadBytes(mediaRef, media);
       const MediaUrl = await getDownloadURL(ref(storage, snap.ref.fullPath)) // here i was doing the one silly mistake promises was not resolved (await was missing )
       url = MediaUrl;
-      // console.log("url:" , url ); 
-      // console.log("Murl:" , MediaUrl ); 
-
     }
     if (msg.trim().length !== 0 || media) {
 
@@ -92,10 +86,10 @@ function Chat() {
   return (
     <>
       <div className=''>
-        <div className="dark:bg-gradient-to-t dark:from-slate-300 dark:via-slate-700 dark:to-slate-900 ">
+        <div className="dark:bg-gradient-to-r dark:from-slate-300 dark:via-slate-700 dark:to-slate-900 ">
           <Link to={`/user/${user.uid}`} className='flex'>
             <div className='mt-2'>
-              <img src={user.profileImg || Img} alt="" className='w-12 rounded-full border border-slate-900' />
+              <img src={user.profileImg || Img} alt="" className='w-12 rounded-full border border-yellow-600' />
             </div>
             <div className='mx-2.5 my-2.5'>
               <h1 className='font-medium'>{user.name ? user.name : "Lorem ipsum"} </h1>
