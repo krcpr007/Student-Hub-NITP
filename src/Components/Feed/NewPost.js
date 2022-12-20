@@ -1,7 +1,7 @@
 import avatar from '../../assets/img_avatar.png'
 import { Link } from 'react-router-dom';
 import { db, storage } from '../../Firebase';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { IoMdPhotos } from 'react-icons/io';
 import { ref, getDownloadURL, uploadBytes, } from 'firebase/storage';
 import { addDoc, collection, } from "firebase/firestore";
@@ -10,7 +10,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 import ContextProvider from '../../context/ContextProvider';
 import Loader from '../Loader/Loader';
 function NewPost({ fetchPosts }) { // sending the function so that it will automatically fetch the post 
-  const { userInformation, profileData } = useContext(ContextProvider);
+  const { profileData } = useContext(ContextProvider);
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const [text, setText] = useState('');
@@ -20,10 +20,7 @@ function NewPost({ fetchPosts }) { // sending the function so that it will autom
     setText('');
   }
   const date = new Date();
-  useEffect(() => {
-    userInformation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+
   const CreatePost = async (e) => {
     e.preventDefault();
     if (text.length !== 0 || file) {

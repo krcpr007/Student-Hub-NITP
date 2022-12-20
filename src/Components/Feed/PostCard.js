@@ -151,7 +151,7 @@ function PostCard({ post, id, fetchPosts }) {
 
     return (
         <>
-            <div className={`mt-3 shadow rounded mb-5 m-2 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
+            <div className={`mt-3 shadow rounded mb-5 m-2 dark:bg-slate-900  dark:bg-gradient-to-r from-gray-700 via-gray-900 to-black dark:text-white dark:shadow-yellow-500`}>
                 <div className='flex relative'>
                     <div className='m-1'>
                         <Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>

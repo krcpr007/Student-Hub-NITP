@@ -1,17 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import avatar from '../../assets/img_avatar.png'
 import { Link } from 'react-router-dom';
 import mainBuilding from '../../assets/mainBuilding.jpeg'
 import ContextProvider from '../../context/ContextProvider';
 function LeftAboutCard() {
-    const { profileData, userInformation } = useContext(ContextProvider);
-    useEffect(() => {
-        userInformation();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const { profileData } = useContext(ContextProvider);
 
     return (
-        <div className={`shadow mt-2 rounded-lg rounded-b-none ml-5 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500`}>
+        <div className={`shadow mt-2 rounded-lg rounded-b-none ml-5 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500 w-60`}>
             <img src={mainBuilding} alt="" />
             <div className='w-1/2 pt-2 hero container max-w-screen-lg mx-auto flex justify-center relative bottom-20'>
                 <Link to="/profile"><img src={profileData.profileImg ? profileData.profileImg : null || avatar} alt="profile-pic" className='rounded-full border-2 border-yellow-400 ' /></Link>
