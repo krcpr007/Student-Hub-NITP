@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { db, auth } from '../Firebase'
-import { setDoc, doc, getDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, } from "firebase/firestore";
+import { setDoc, doc, getDoc, serverTimestamp, updateDoc, arrayUnion, arrayRemove, collection, query, where, onSnapshot, } from "firebase/firestore";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
@@ -14,13 +14,15 @@ export function ContextProvider({ children }) {
     const userInformation = async () => {
         const localAuth = JSON.parse(localStorage.getItem('st-hub'));
         try {
-            const querySnap = await getDoc(doc(db, 'users', localAuth ? localAuth.uid : null));
-            if (querySnap.exists) {
-                setProfileData(querySnap.data());
-            }
-            else {
-                console.log("went wrong to get user profile")
-            }
+            const usersRef = collection(db, "users");
+            // create query object
+            const q = query(usersRef, where("uid", '==', localAuth?.uid));
+            // execute query
+            onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    setProfileData(doc.data()); //only one doc we will get
+                })
+            });
         } catch (error) {
             console.log(error);
         }
@@ -237,7 +239,7 @@ export function ContextProvider({ children }) {
                 }).catch((e) => console.log(e))
                 // connection accepted successfully 
                 console.log("Connected finally");
-            }else{
+            } else {
                 console.log("Already present in connection array ")
             }
         } else {
