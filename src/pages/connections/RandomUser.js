@@ -13,6 +13,7 @@ class RandomUser extends Component {
     this.state = {
       users: [],
       loading: true,
+      noOfUsers: 4,
     }
   }
   async componentDidMount() {
@@ -36,22 +37,54 @@ class RandomUser extends Component {
     userInformation();
     try {
       this.setState({ loading: true })
+      // reference to the db collection
       const usersRef = collection(db, "users");
       // create query object
-      const q = query(usersRef, orderBy('timeStamp', 'desc'),
-        limit(10)
+      const q = query(usersRef,
+        orderBy('timeStamp', 'desc'),
+        limit(this.state.noOfUsers)
       );
       onSnapshot(q, (snap) => {
         const user = [];
         snap.forEach((doc) => { // here finding all the users 
-          // user.push(doc.data());
-            if ((doc.data().connections?.includes(this.localAuth?.uid)) && (this.context.profileData.connections?.includes(doc.data()?.uid))) {
-              //only connected people can text each other
-            } else {
+          if (!((doc.data().connections?.includes(this.localAuth?.uid)) && (this.context.profileData?.connections?.includes(doc.data()?.uid)))) { //conditions if they are already connected then it should not be show here 
+            if (doc.data()?.uid !== this.context.profileData?.uid) { //removing ourself 
               user.push(doc.data());
             }
+          }
+          // user.push(doc.data());
         })
-        this.setState({ users: user, loading: false })
+        this.setState({
+          users: user, loading: false,
+        })
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({ loading: false })
+      toast.error("Something went wrong")
+    }
+  }
+  findMoreUsers() {
+    try {
+      // this.setState({ loading: true })
+      const usersRef = collection(db, "users");
+      // create query object
+      const q = query(usersRef, orderBy('timeStamp', 'desc'),
+        limit(parseInt(this.state.noOfUsers) + 5)
+      );
+      onSnapshot(q, (snap) => {
+        const user = [];
+        snap.forEach((doc) => { // here finding all the users 
+          if (!((doc.data().connections?.includes(this.localAuth?.uid)) && (this.context.profileData?.connections?.includes(doc.data()?.uid)))) { //conditions if they are already connected then it should not be show here 
+            if (doc.data()?.uid !== this.context.profileData?.uid) { //removing ourself 
+              user.push(doc.data());
+            }
+          }
+        })
+        this.setState({
+          users: user, loading: false,
+          noOfUsers: parseInt(this.state.noOfUsers) + 5,
+        })
       });
     } catch (error) {
       console.log(error);
@@ -62,11 +95,16 @@ class RandomUser extends Component {
   render() {
     return (
       <>
-        <h1 className='text-center font-medium font-serif'>People may you know</h1>
-        <div className='grid grid-cols-1 sm:grid-cols-4 mt-5'>
-          {this.state.users?.map((user, i) => {
-            return this.state.loader ? <Loader /> : <ProfileCard key={i} user={user} />
-          })}
+        <div>
+          <h1 className='text-center font-medium font-serif'>People may you know</h1>
+          <div className='grid grid-cols-1 sm:grid-cols-4 mt-5'>
+            {this.state.users?.map((user, i) => {
+              return this.state.loader ? <Loader /> : <ProfileCard key={i} user={user} />
+            })}
+          </div>
+          <div className='p-1'>
+            <button onClick={() => this.findMoreUsers()} className="font-medium font-serif p-1 dark:bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 text-white border border-yellow-500">Load More</button>
+          </div>
         </div>
       </>)
   }
