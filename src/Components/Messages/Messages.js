@@ -12,6 +12,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 class Messages extends Component {
   static contextType = contextProvider;
   localAuth = JSON.parse(localStorage.getItem('st-hub'));
@@ -75,6 +76,7 @@ class Messages extends Component {
           </div>
           <div className={`m-2 ml-0 w-full  sm:invisible md:visible md:col-span-3 lg:col-span-4 shadow-lg  dark:bg-slate-900 dark:text-white bg-gradient-to-r from-yellow-200 to-yellow-500`}>
             <div className='grid grid-rows-6 place-items-center'>
+              {this.state.users.length === 0 ? <><h1 className='m-1 text-gray-500 text-xl text-center font-serif'><Link to="/connections" className='text--600 underline'>Connect</Link> with people to send messages</h1></> : null}
               <div className='row-span-3'></div>
               <div className=''>
                 <svg aria-label="Direct" className="_ab6-" color="#fff" fill="#fff" height="96" role="img" viewBox="0 0 96 96" width="96">
@@ -84,8 +86,8 @@ class Messages extends Component {
                 </svg>
               </div>
               <div className='text-center'>
-                <h1 className=' font-extrabold'>Your Messages</h1>
-                <p className=' font-bold'>Send private photos and messages to your connections</p>
+                <h1 className='font-extrabold'>Your Messages</h1>
+                <p className=' font-medium text-gray-700 font-serif'>Send end to end encrypt private photos and messages to your connections</p>
               </div>
             </div>
             {/* <img src="Nit_patna.jpeg" className='h-full' alt="" /> */}
