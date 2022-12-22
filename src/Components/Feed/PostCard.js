@@ -128,7 +128,7 @@ function PostCard({ post, id, fetchPosts }) {
         // @TODO-> what if post is deleted and someone wants to connect 
         try {
             const commentRef = doc(db, 'posts', id)
-            if (textComment?.length !== "") {
+            if (textComment?.length !== 0) {
                 updateDoc(commentRef, {
                     comments: arrayUnion({
                         user: profileData.uid,
@@ -141,7 +141,7 @@ function PostCard({ post, id, fetchPosts }) {
                     setTextComment("")
                 });
             } else {
-                alert("please enter ")
+                alert("Please enter something")
             }
         } catch (error) {
             console.log(error)

@@ -5,6 +5,7 @@ import { db } from '../../Firebase';
 import Loader from '../Loader/Loader';
 import { AiFillDelete } from 'react-icons/ai'
 import Moment from 'react-moment';
+import { toast } from 'react-toastify';
 function Comments({ comment, post, id }) {
     // console.log(comment);
     // console.log(post)
@@ -41,6 +42,7 @@ function Comments({ comment, post, id }) {
                     }),
                 }).then(() => {
                     console.log("Comment Deleted")
+                    toast.success("Comment Deleted")
                 });
             } catch (error) {
                 console.log(error)
