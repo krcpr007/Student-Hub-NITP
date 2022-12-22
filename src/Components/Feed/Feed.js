@@ -3,12 +3,10 @@ import {
   collection,
   getDocs,
   query,
-  // where,
   orderBy,
   doc,
   getDoc,
-  // limit,
-  // startAfter,
+  limit,
 } from 'firebase/firestore'
 import { db } from '../../Firebase'
 import GroupsClub from './GroupsClub'
@@ -20,6 +18,7 @@ import Opportunities from './Opportunities'
 import { toast } from "react-toastify";
 import React, { Component } from "react";
 import Loader from '../Loader/Loader';
+import { Link } from 'react-router-dom';
 class Feed extends Component {
   static contextType = ContextProvider;
   constructor() {
@@ -27,6 +26,7 @@ class Feed extends Component {
     this.state = {
       posts: [],
       loading: true,
+      noOfPosts: 10,
     }
   }
   async componentDidMount() {
@@ -54,7 +54,7 @@ class Feed extends Component {
       const q = query(
         listingsRef,
         orderBy('postedAt', 'desc'),
-        // limit(10)
+        limit(parseInt(this.state.noOfPosts))
       )
       // Execute query
       const querySnap = await getDocs(q)
@@ -67,6 +67,34 @@ class Feed extends Component {
         // post.push({ id: doc?.id, data: doc?.data() })
       })
       this.setState({ posts: post, loading: false })
+    } catch (error) {
+      console.log(error);
+      this.setState({ loading: false })
+      toast.error('Could not fetch Posts')
+    }
+  }
+  async fetchMorePosts() {
+    try {
+      // Get reference
+      // this.setState({ loading: true })
+      const listingsRef = collection(db, 'posts')
+      // Create a query
+      const q = query(
+        listingsRef,
+        orderBy('postedAt', 'desc'),
+        limit(parseInt(this.state.noOfPosts) + 10)
+      )
+      // Execute query
+      const querySnap = await getDocs(q)
+
+      const post = []
+      querySnap.forEach((doc) => {
+        if (this.context.profileData?.connections?.includes(doc?.data()?.uid)) { //only connected people can see each others posts
+          post.push({ id: doc?.id, data: doc?.data() })
+        }
+        // post.push({ id: doc?.id, data: doc?.data() })
+      })
+      this.setState({ posts: post, loading: false, noOfPosts: parseInt(this.state.noOfPosts) + 10 })
     } catch (error) {
       console.log(error);
       this.setState({ loading: false })
@@ -89,10 +117,13 @@ class Feed extends Component {
             </div>
             <div className="col-span-3">
               <NewPost fetchPosts={this.fetchPosts} />
+              {this.state.posts.length === 0 ? <><h1 className='m-1 text-slate-700 text-xl text-center'><Link to="/connections" className='text-yellow-700 underline'>Connect</Link> with people to view posts</h1></> : null}
               {this.state.posts?.map((post) => {
                 return <PostCard key={post.id} post={post.data} id={post.id} fetchPosts={this.fetchPosts} />
               })}
-
+              {this.state.posts.length !== 0 ? <div className='px-2.5'>
+                <button className='w-full font-medium font-serif p-1 dark:bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 text-white border border-yellow-500' onClick={() => this.fetchMorePosts()}>Load More...</button>
+              </div> : null}
             </div>
             <div className="hidden lg:inline md:mr-5">
               <PeersNews />
