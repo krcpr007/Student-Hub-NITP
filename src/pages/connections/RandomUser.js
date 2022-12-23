@@ -103,7 +103,7 @@ class RandomUser extends Component {
             })}
           </div>
           <div className='p-1'>
-            <button onClick={() => this.findMoreUsers()} className="font-medium font-serif p-1 dark:bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 text-white border border-yellow-500">Load More</button>
+            <button onClick={() => this.findMoreUsers()} className="font-medium font-serif p-1 bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 dark:text-white text-gray-300 rounded border border-yellow-500">Load More</button>
           </div>
         </div>
       </>)

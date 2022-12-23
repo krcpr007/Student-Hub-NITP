@@ -122,7 +122,7 @@ class Feed extends Component {
                 return <PostCard key={post.id} post={post.data} id={post.id} fetchPosts={this.fetchPosts} />
               })}
               {this.state.posts.length !== 0 ? <div className='px-2.5'>
-                <button className='w-full font-medium font-serif p-1 dark:bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 text-white border border-yellow-500' onClick={() => this.fetchMorePosts()}>Load More...</button>
+                <button className='w-full font-medium font-serif p-1 bg-gradient-to-r from-yellow-500 via-gray-600 to-gray-800 text-yellow-600 rounded border border-yellow-500' onClick={() => this.fetchMorePosts()}>Load More...</button>
               </div> : null}
             </div>
             <div className="hidden lg:inline md:mr-5">
