@@ -19,8 +19,8 @@ function LeftAboutCard() {
             <div className=''>
                 <hr className='' />
                 <div className='px-5 text-sm text-gray-500 text-center'>
-                    <p >Number of connections <a href="/"> <span className='text-yellow-500'>: {profileData?.connections?.length}</span> </a></p>
-                    <p>connections Requests <a href="/"><span className='text-yellow-500'>: {profileData?.connectionRequests?.length}</span></a> </p>
+                    <p >Number of connections <Link to="/connections"> <span className='text-yellow-500'>: {profileData?.connections?.length}</span> </Link></p>
+                    <p>connections Requests <Link to="/connections"><span className='text-yellow-500'>: {profileData?.connectionRequests?.length}</span></Link> </p>
                 </div>
             </div>
         </div>
