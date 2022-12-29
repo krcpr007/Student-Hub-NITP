@@ -66,31 +66,23 @@ class Messages extends Component {
     }
     return (
       <div className="dark:bg-slate-700 dark:text-white">
-        <div className='content-center md:grid md:grid-cols-6 lg:grid-cols-8 '>
-          <div></div>
-          <div className='col-span-2 m-2  shadow-lg'>
-            <p className={`p-2 font-bold dark:bg-slate-900 dark:text-white`}>Messages</p>
+        <div className='md:flex px-1 md:p-5 md:h-[40rem]'>
+          <div className='my-1 md:w-1/2 shadow-lg sm:overflow-y-scroll snap-y'>
+            <p className="p-2 font-bold dark:bg-slate-900 dark:text-white">Messages</p>
             {this.state.users?.map((sender) => {
               return <SenderProfile key={sender.uid} sender={sender} user1={this.localAuth?.uid} />
             })}
           </div>
-          <div className={`m-2 ml-0 w-full  sm:invisible md:visible md:col-span-3 lg:col-span-4 shadow-lg  dark:bg-slate-900 dark:text-white bg-gradient-to-r from-yellow-200 to-yellow-500`}>
-            <div className='grid grid-rows-6 place-items-center'>
+          <div className="hidden sm:block m-2 ml-0 w-full shadow-lg  dark:text-white bg-gradient-to-r from-yellow-200 to-yellow-500">
+            <div className=''>
               {this.state.users.length === 0 ? <><h1 className='m-1 text-gray-500 text-xl text-center font-serif'><Link to="/connections" className='text--600 underline'>Connect</Link> with people to send messages</h1></> : null}
-              <div className='row-span-3'></div>
-              <div className=''>
-                <svg aria-label="Direct" className="_ab6-" color="#fff" fill="#fff" height="96" role="img" viewBox="0 0 96 96" width="96">
-                  <circle cx="48" cy="48" fill="none" r="47" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className={` dark:stroke-white stroke-black`}></circle>
-                  <line fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" x1="69.286" x2="41.447" y1="33.21" y2="48.804" className={`strokeWidth-2  dark:stroke-white stroke-black`}></line>
-                  <polygon fill="none" points="47.254 73.123 71.376 31.998 24.546 32.002 41.448 48.805 47.254 73.123" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" className={` dark:stroke-white stroke-black`}></polygon>
-                </svg>
-              </div>
-              <div className='text-center'>
-                <h1 className='font-extrabold'>Your Messages</h1>
-                <p className=' font-medium text-gray-700 font-serif'>Send end to end encrypt private photos and messages to your connections</p>
+              <div className='flex h-screen justify-center items-center'>
+                <div className='text-center'>
+                  <h1 className='font-extrabold'>Your Messages</h1>
+                  <p className=' font-medium text-gray-700 font-serif'>Send end to end encrypt private photos and messages to your connections</p>
+                </div>
               </div>
             </div>
-            {/* <img src="Nit_patna.jpeg" className='h-full' alt="" /> */}
           </div>
         </div>
       </div>
