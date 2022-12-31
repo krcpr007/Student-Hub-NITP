@@ -14,7 +14,7 @@ function LeftAboutCard() {
             </div>
             <div className='relative bottom-16'>
                 <h1 className='font-medium text-xl text-center px-5'>{profileData?.name}</h1>
-                <p className='text-sm text-gray-500 px-5 text-center'>{profileData?.headline}</p>
+                <p className='text-sm text-gray-500 px-5 text-center'>{profileData.headline || "---"}</p>
             </div>
             <div className=''>
                 <hr className='' />

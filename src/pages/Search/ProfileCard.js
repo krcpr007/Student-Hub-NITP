@@ -18,7 +18,7 @@ function ProfileCard({ user }) {
                 </div>
                 <div className='text-center relative bottom-8'>
                     <h1>{user.name}</h1>
-                    <p className='opacity-75 text-sm'>{user.headline ? `${user.headline?.substring(0, 20)}...` : null}</p>
+                    <p className='opacity-75 text-sm'>{user.headline ? `${user.headline?.substring(0, 20)}...` : "---"}</p>
                     {(user?.connections?.includes(profileData?.uid) && profileData?.connections?.includes(user?.uid)) ? <>
                         <Link to={`/chat/${user.uid}`} title="Message"><button className="text-md shadow-2xl mx-2 mt-2 text-yellow-400 outline-2 outline-yellow-400 hover:bg-yellow-400 border border-yellow-300 hover:text-white px-3 py-1 rounded-md">Message</button></Link>
                     </> : user?.connectionRequests?.includes(profileData?.uid) ? (<>

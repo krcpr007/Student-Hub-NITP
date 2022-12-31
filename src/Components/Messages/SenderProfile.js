@@ -41,22 +41,24 @@ function SenderProfile({ sender, user1 }) {
     }, [lastMsgData?.msg])
     // function for when user read the msg so that badge will Disappear
     const msgRead = async () => {
-        const docSnap = await getDoc(doc(db, 'lastMsg', id));
-        //   if user1 who send msg and also read the msg so badge will not work perfectly 
-        if (docSnap.data()?.from !== user1) {
-            await updateDoc(doc(db, 'lastMsg', id), {
-                unread: false
-            })
-        } else {
-            console.log('can not update');
+        try {
+            const docSnap = await getDoc(doc(db, 'lastMsg', id));
+            if (docSnap.data()?.from !== user1) {
+                await updateDoc(doc(db, 'lastMsg', id), {
+                    unread: false
+                })
+            }
+        } catch (error) {
+            console.log(error, 'Can not update');
         }
+
     }
     return (
         <div className="dark:bg-slate-900 dark:text-white">
             <div className='flex p-3'>
                 <div className='mt-2'>
                     <Link to={`/user/${sender.uid}`}>
-                        <img src={sender.profileImg || Img} alt="" className='w-16 rounded-full border border-yellow-400' />
+                        <img src={sender?.profileImg || Img} alt="" className='w-16 rounded-full border border-yellow-400' />
                     </Link>
                 </div>
                 <div className='mx-2.5 my-2.5'>
@@ -65,7 +67,7 @@ function SenderProfile({ sender, user1 }) {
                         {lastMsgData?.from !== user1 && lastMsgData?.unread && (<span className="animate-pulse bg-gray-100 text-gray-800 text-xs font-extralight ml-2 px-1.5 rounded-full pt-1 dark:bg-gray-700 dark:text-gray-300">New</span>)}
                     </Link>
 
-                    <p className='text-xs'>{sender.headline ? sender.headline.substring(0, 30) : null}</p>
+                    <p className='text-xs'>{sender.headline ? sender.headline.substring(0, 30) :"---"}</p>
                     {lastMsgData ? (
                         <small>
                             <span>{lastMsgData.from === user1 ? 'Me: ' : null}</span>

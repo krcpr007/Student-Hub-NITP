@@ -101,12 +101,13 @@ function Profile() {
                   </div>
                 </div>
                 <h1 className="text-3xl font-medium">{profileData?.name}</h1>
-                <span className="text-sm">{profileData && profileData.headline}</span> <br />
+                <span className="text-sm">{profileData.headline || "---"}</span> <br />
                 <MdPlace title="Live in" className="inline" />
                 <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
               </div>
             </div>
             <div>
+              {/*  The idea is to display connections request in profile page as well */}
               {/* <ConnectionRequests /> */}
             </div>
           </div>

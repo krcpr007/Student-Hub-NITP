@@ -58,7 +58,7 @@ function UserProfile() {
             <div className="relative -top-10 md:-top-24 px-5">
               <h1 className="text-3xl font-medium">{user.name}</h1>
 
-              <span className="text-sm">{user && user.headline}</span> <br />
+              <span className="text-sm">{user.headline || "---"}</span> <br />
               <MdPlace title="Live in" className="inline" />
               <span className="text-xs">{user.contactInfo?.home}</span>
               {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<><span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}>Contact info</span></>) : null}
