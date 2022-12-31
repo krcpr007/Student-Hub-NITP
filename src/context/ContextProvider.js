@@ -10,6 +10,7 @@ export function ContextProvider({ children }) {
     const [profileData, setProfileData] = useState([]);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [fullName, setFullName] = useState('');
     // fetching loggedIn user Information 
     const userInformation = async () => {
         const localAuth = JSON.parse(localStorage.getItem('st-hub'));
@@ -32,46 +33,49 @@ export function ContextProvider({ children }) {
     //Register user with email and password only
     const handleSignUp = (e) => {
         e.preventDefault()
-        try {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(async (userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
+        if (fullName !== '' && email !== '' && password !== '') {
+            try {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then(async (userCredential) => {
+                        // Signed in 
+                        const user = userCredential.user;
 
-                    // console.log(user);
-                    localStorage.setItem('st-hub', JSON.stringify(user));
+                        // console.log(user);
+                        localStorage.setItem('st-hub', JSON.stringify(user));
 
-                    await setDoc(doc(db, "users", user.uid), {
-                        uid: user.uid,
-                        name: '',
-                        headline: '',
-                        bio: '',
-                        CurrentPosition: '',
-                        contactInfo: {
-                            phoneNo: '',
-                            home: '',
-                            email: user.email,
-                        },
-                        socialMedia_urls: [`${''}`, `${''}`, `${''}`],
-                        skills: ['', '', '', '', ''],
-                        connections: [],
-                        connectionRequests: [],
-                        profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
-                        profileImgPath: "",
-                        timeStamp: serverTimestamp()
+                        await setDoc(doc(db, "users", user.uid), {
+                            uid: user.uid,
+                            name: fullName,
+                            headline: '---',
+                            bio: '',
+                            CurrentPosition: '',
+                            contactInfo: {
+                                phoneNo: '',
+                                home: '',
+                                email: user.email,
+                            },
+                            socialMedia_urls: [`${''}`, `${''}`, `${''}`],
+                            skills: ['', '', '', '', ''],
+                            connections: [],
+                            connectionRequests: [],
+                            profileImg: "https://www.w3schools.com/howto/img_avatar.png ",
+                            profileImgPath: "",
+                            timeStamp: serverTimestamp()
+                        });
+                        navigate("/");
+                        // ...
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.log(errorMessage, errorCode);
+                        // ..
                     });
-                    navigate("/");
-
-                    // ...
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorMessage, errorCode);
-                    // ..
-                });
-        } catch (error) {
-            console.log(error);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            alert("Please enter correct details")
         }
     }
     // login work 
@@ -106,7 +110,7 @@ export function ContextProvider({ children }) {
             await setDoc(doc(db, 'users', user.uid), {
                 uid: user.uid,
                 name: user.displayName,
-                headline: '',
+                headline: '---',
                 bio: '',
                 CurrentPosition: '',
                 connections: [],
@@ -139,7 +143,7 @@ export function ContextProvider({ children }) {
             await setDoc(doc(db, 'users', user.uid), {
                 uid: user.uid,
                 name: user.displayName,
-                headline: '',
+                headline: '---',
                 bio: '',
                 CurrentPosition: '',
                 connections: [],
@@ -250,7 +254,7 @@ export function ContextProvider({ children }) {
         < DataContext.Provider value={{
             googleSignIn,
             githubSignIn,
-            email, setEmail, password, setPassword,
+            email, setEmail, password, setPassword, fullName, setFullName,
             handleLogin,
             handleSignUp,
             // everyOnes profile
