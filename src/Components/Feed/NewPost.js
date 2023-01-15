@@ -55,7 +55,7 @@ function NewPost({ fetchPosts }) { // sending the function so that it will autom
     <div className={`shadow rounded mx-2 lg:my-2 dark:bg-slate-900 dark:bg-gradient-to-r from-gray-700 via-gray-900 to-black dark:text-white dark:shadow-yellow-500`}>
       <div className='flex py-3 px-2'>
         <Link to='/profile'>
-          <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border border-gray-400' />
+          <img src={profileData?.profileImg || avatar} alt="" className='w-10 rounded-3xl border border-gray-400' />
         </Link>
         <input type="text" className='px-8 border-2 mx-2 w-full border-gray-300 rounded-3xl bg-gray-200 text-gray-900' placeholder='Start a conversation' onClick={showAndHideModal} />
       </div>

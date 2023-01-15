@@ -7,8 +7,6 @@ import { AiFillDelete } from 'react-icons/ai'
 import Moment from 'react-moment';
 import { toast } from 'react-toastify';
 function Comments({ comment, post, id }) {
-    // console.log(comment);
-    // console.log(post)
     const localAuth = JSON.parse(localStorage.getItem('st-hub'));
     const [loader, setLoader] = useState(false);
     const [user, setUser] = useState();
@@ -17,7 +15,6 @@ function Comments({ comment, post, id }) {
         const docRef = doc(db, "users", comment?.user);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            // console.log(docSnap.data());
             setUser(docSnap.data());
             setLoader(false);
         }

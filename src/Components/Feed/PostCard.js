@@ -154,7 +154,7 @@ function PostCard({ post, id, fetchPosts }) {
             <div className={`mt-3 shadow rounded mb-5 m-2 dark:bg-slate-900  dark:bg-gradient-to-r from-gray-700 via-gray-900 to-black dark:text-white dark:shadow-yellow-500`}>
                 <div className='flex relative'>
                     <div className='m-1'>
-                        <Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}><img src={user.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
+                        <Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}><img src={user?.profileImg} alt="" className='w-10 rounded-3xl border border-gray-400' loading='lazy' /></Link>
                     </div>
                     <div className='m-1'>
                         <div className='flex'>  <h1 className='font-medium'><Link to={post?.uid === profileData?.uid ? "/profile" : `/user/${user?.uid}`}>{user.name}</Link></h1><small className='text-xs opacity-50 m-1'>{<Moment fromNow>{post?.postedAt.toDate()}</Moment>}</small></div>
@@ -188,7 +188,7 @@ function PostCard({ post, id, fetchPosts }) {
                 <hr />
                 <div className='flex p-2'>
                     <div className='mx-2'>
-                        <img src={profileData.profileImg || avatar} alt="" className='w-10 rounded-3xl border-1 border-gray-400' loading='lazy' />
+                        <img src={profileData?.profileImg || avatar} alt="" className='w-10 rounded-3xl border-1 border-gray-400' loading='lazy' />
                     </div>
                     <div className='w-full'>
                         <div className="flex overflow-hidden border rounded-lg border-yellow-500 lg:flex-row  focus-within:ring focus-within:ring-opacity-40 focus-within:border-yellow-500 focus-within:ring-yellow-500">

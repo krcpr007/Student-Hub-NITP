@@ -10,7 +10,7 @@ function LeftAboutCard() {
         <div className="shadow mt-2 rounded ml-5 dark:bg-slate-900 dark:text-white dark:shadow-yellow-500 w-60">
             <img src={mainBuilding} alt="cover" className='rounded' />
             <div className='w-1/2 pt-2 hero container max-w-screen-lg mx-auto flex justify-center relative bottom-20'>
-                <Link to="/profile"><img src={profileData.profileImg ? profileData.profileImg : avatar} alt="profile-pic" className='rounded-full border-2 border-yellow-400 ' /></Link>
+                <Link to="/profile"><img src={profileData?.profileImg ? profileData?.profileImg : avatar} alt="profile-pic" className='rounded-full border-2 border-yellow-400 ' /></Link>
             </div>
             <div className='relative bottom-16'>
                 <h1 className='font-medium text-xl text-center px-5'>{profileData?.name}</h1>
