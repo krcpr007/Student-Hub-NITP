@@ -90,6 +90,7 @@ export function ContextProvider({ children }) {
                 localStorage.setItem("st-hub", JSON.stringify(userCredential.user));
             }
         } catch (error) {
+            toast.error("Invalid credentials")
             console.log(error);
             // setEmail('');
             // setPassword('')
