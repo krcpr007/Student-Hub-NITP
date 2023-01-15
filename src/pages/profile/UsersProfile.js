@@ -30,7 +30,7 @@ function UserProfile() {
     const q = query(usersRef, where("uid", '==', uid));
     // execute query
     const unsub = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => { 
+      querySnapshot.forEach((doc) => {
         setUser(doc.data()); //only one doc we will get
       })
       setLoader(false);
@@ -59,15 +59,16 @@ function UserProfile() {
               <h1 className="text-3xl font-medium">{user.name}</h1>
 
               <span className="text-sm">{user.headline || "---"}</span> <br />
-              <MdPlace title="Live in" className="inline" />
-              <span className="text-xs">{user.contactInfo?.home}</span>
-              {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<><span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}>Contact info</span></>) : null}
+              {user.contactInfo?.home?.length !== 0 ? <>
+                <MdPlace title="Live in" className="inline" />
+                <span className="text-xs">{user.contactInfo?.home}</span></> : null}
+              {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<><span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}> Contact info</span></>) : null}
               <Connection user={user} />
             </div>
           </div>
-          {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<>
-            <UserPosts uid={user.uid} />
-          </>) : null}
+          <UserPosts uid={user.uid} />
+          {/* {((user?.connections?.includes(localAuth?.uid)) && (profileData.connections?.includes(user?.uid))) ? (<>
+          </>) : null} */} {/* Now, if users are not even connected then also we can see their post only in their profile section not in feed */}
         </div>
         {showModal ? (
           <>
