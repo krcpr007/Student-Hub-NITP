@@ -39,6 +39,7 @@ function EditProfile() {
     const [home, setHome] = useState(profileData?.contactInfo?.home);
     const [phoneNo, setPhoneNo] = useState(profileData?.contactInfo?.phoneNo);
     contactInfo = {
+        email:profileData?.contactInfo?.email,
         home: home,
         phoneNo: phoneNo,
     }
