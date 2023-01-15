@@ -11,7 +11,6 @@ import { auth } from '../../Firebase';
 import ContextProvider from "../../context/ContextProvider";
 import { toast } from "react-toastify";
 function Navbar() {
-  // console.log("Hii i am navbar")
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const { profileData, } = useContext(ContextProvider);
