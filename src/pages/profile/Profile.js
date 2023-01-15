@@ -108,9 +108,10 @@ function Profile() {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-600 outline-none focus:outline-none">
                   {/*header*/}
                   <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                    <h3 className="text-xl font-medium">
-                      Profile picture
-                    </h3>
+                    <div>
+                      <h3 className="text-xl font-medium">Profile picture</h3>
+                      <p className="text-xs font-medium">Upload 1x1 Ratio image for better UI experience</p>
+                    </div>
                     <button className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onClick={() => setShowModal(false)}>
                       <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                         ×
