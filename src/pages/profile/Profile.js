@@ -83,27 +83,14 @@ function Profile() {
             <div className="shadow-lg md:rounded-t-lg dark:bg-slate-900 dark:text-white w-full">
               <div>
                 <img src={mainBuilding} alt="post-pic" className="md:rounded-t-lg w-full md:h-72" loading="lazy" />
-                <img src={profileData.profileImg || avatar} alt="" onClick={() => setShowModal(true)} className="cursor-pointer relative w-1/3 -top-12 md:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400" />
+                <img src={profileData.profileImg || avatar} alt="" onClick={() => setShowModal(true)} className="cursor-pointer relative w-1/3 -top-12 sm:-top-20 md:-top-20 lg:-top-28 left-5 md:w-1/5 rounded-full border-2 border-yellow-400" />
               </div>
-              <div className="relative -top-10 md:-top-24 md:left-5">
-                <div className='absolute -top-14 left-40 md:left-3/4 '>
-                  <div className='flex'>
-                    <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
-                      <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
-                    </a>
-                    <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
-                      <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
-                    </a>
-                    <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
-                      <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
-                    </a>
-                    <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
-                  </div>
+              <div className="relative -top-10 md:-top-24 px-2.5">
+                <div className="flex justify-between">
+                  <h1 className="text-3xl font-medium">{profileData?.name}</h1> {(profileData.contactInfo?.home?.length <= 2 || profileData.bio?.length <= 2) ? <><span className="animate-pulse text-rose-600 text-sm">Please filled the <Link className="text-blue-500 hover:underline" to="/editProfile">account details</Link> </span></> : null}
                 </div>
-                <h1 className="text-3xl font-medium">{profileData?.name}</h1>
                 <span className="text-sm">{profileData.headline || "---"}</span> <br />
-                <MdPlace title="Live in" className="inline" />
-                <span className="text-xs">{profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span>
+                {profileData.contactInfo?.home ? <><span className="text-xs"> <MdPlace className="inline" /> {profileData.contactInfo?.home}</span> <span className="text-sm text-blue-600 cursor-pointer" onClick={e => setShowContactModal(true)}  >Contact info</span></> : null}
               </div>
             </div>
             <div>
@@ -183,6 +170,18 @@ function Profile() {
                     <MdHome className="text-2xl text-yellow-500" />
                     <p className="mx-2">{profileData.contactInfo?.home}</p>
                   </div>
+                </div>
+                <div className='flex justify-center'>
+                  <a href={profileData?.socialMedia_urls?.[2]} target='_blank' rel='noreferrer'>
+                    <ImLinkedin title={'Linkedin Profile Link'} className={'text-2xl mx-2 text-blue-500'} />
+                  </a>
+                  <a href={profileData?.socialMedia_urls?.[0]} target='_blank' rel='noreferrer'>
+                    <RiInstagramFill title={'Instagram Profile Link'} className={'text-2xl mx-2 text-rose-600'} />
+                  </a>
+                  <a href={profileData?.socialMedia_urls?.[1]} target='_blank' rel='noreferrer'>
+                    <FaGithub title={'Github Account Link'} className={'text-2xl mx-2 text-indigo-500'} />
+                  </a>
+                  <Link to="/editProfile"><BiMessageSquareEdit title={'Edit Profile Details'} className="relative text-rose-600 text-2xl cursor-pointer" /></Link>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
