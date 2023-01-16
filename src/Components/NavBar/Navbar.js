@@ -82,7 +82,7 @@ function Navbar() {
             </li>
             <li className="border-t md:border-none flex md:block ">
               <Link to="/profile" className="block md:inline-block px-4 py-3 no-underline text-grey-darkest transition ease-in-out delay-150   duration-300 hover:text-grey-darker">
-                <img src={profileData.profileImg || avatar} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
+                <img src={profileData?.profileImg || avatar} alt="" className='w-7 rounded-full border-2 border-gray-400 inline lg:block' />
                 <span className='text-sm mx-2 lg:-mx-1.5 font-medium' id="menu-button" aria-expanded="true" aria-haspopup="true">Profile</span>
               </Link>
               <AiFillCaretDown className='inline cursor-pointer -ml-3 mt-0' aria-expanded="true" aria-haspopup="true" onClick={showAndHideDropDown} />
