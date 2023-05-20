@@ -4,7 +4,7 @@ import logo from '../../assets/nitlogo.png'
 function Opportunities() {
     return (
         <div className="shadow mt-2 rounded-lg rounded-t-none  w-full dark:bg-slate-900 dark:text-white dark:shadow-yellow-500 ">
-            <h1 className='px-3 font-medium text-sm text-center'>Top opportunities for you</h1>
+            <h1 className='px-3 font-medium text-sm text-center'>Opportunities in club and societies</h1>
             <div className='px-2'>
                 <div className='text-sm flex mt-1'>
                     <img src={logo} alt="pic" className='w-10 rounded-md p-1' />
