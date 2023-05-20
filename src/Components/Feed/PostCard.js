@@ -163,7 +163,7 @@ function PostCard({ post, id, fetchPosts }) {
                     <div className=''>
                         {user.uid === profileData.uid && (<>
                             <div className=''>
-                                {loader ? <><FiLoader className="text-xl absolute" /></> : <><RiDeleteBin2Fill className='text-2xl cursor-pointer absolute right-3 top-1 hover:text-red-600' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
+                                {loader ? <><FiLoader className="text-xl absolute right-3 top-1" /></> : <><RiDeleteBin2Fill className='text-2xl cursor-pointer absolute right-3 top-1 hover:text-red-600' title='Delete Post' onClick={e => handleDeletePost(id)} /></>}
                             </div>
                         </>)}
                     </div>
